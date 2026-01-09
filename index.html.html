@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Report - Projeto NID Alphaville - Kit Personalizado</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      --card-bg: #ffffff;
+      --primary: #0052cc;
+      --text-main: #172b4d;
+      --text-muted: #6b778c;
+      --border: #dfe1e6;
+      --green: #36b37e;
+      --yellow: #ffab00;
+      --red: #ff5630;
+      --blue-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gray-chip: #a8b2c1;
+      --shadow-sm: 0 2px 8px rgba(9, 30, 66, 0.08);
+      --shadow-md: 0 8px 24px rgba(9, 30, 66, 0.15);
+      --shadow-lg: 0 12px 32px rgba(9, 30, 66, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      padding: 12px 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header compacto */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-md);
+      color: white;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-left h1 {
+      font-size: 18px;
+      margin-bottom: 2px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .header-left h2 {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 11px;
+      opacity: 0.95;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 10px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-right div:last-child {
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.7fr 1.3fr;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    /* Cards mais baixos */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 12px 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .section-title .emoji {
+      font-size: 16px;
+    }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: linear-gradient(135deg, #e6f4ff 0%, #d1e9ff 100%);
+      color: #0060df;
+      font-weight: 600;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 4px rgba(0, 96, 223, 0.15);
+    }
+
+    .status-pill .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.9); }
+    }
+
+    /* Resumo executivo */
+    .project-description {
+      font-size: 12px;
+      margin: 8px 0;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .project-description .label {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .project-dates {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 11px;
+      margin: 10px 0 6px;
+    }
+
+    .date-box {
+      background: #f8f9fa;
+      padding: 6px;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .date-box .label {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .date-box .value {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--text-main);
+    }
+
+    /* Progress bar */
+    .progress-wrapper {
+      margin-top: 8px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .progress-label .percentage {
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #e9ecef;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary) 0%, #0066ff 100%);
+      border-radius: 999px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px rgba(0, 82, 204, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: shimmer 1.8s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Tabelas */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 11px;
+      margin-top: 4px;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    tbody tr {
+      transition: background 0.2s ease;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f4f5f7;
+      font-weight: 600;
+    }
+
+    .badge .status-dot { 
+      width: 6px; 
+      height: 6px; 
+      border-radius: 50%; 
+    }
+
+    .badge.red {
+      background: rgba(255, 86, 48, 0.1);
+      color: var(--red);
+    }
+    
+    .badge.red .status-dot { 
+      background: var(--red); 
+    }
+
+    .badge.yellow {
+      background: rgba(255, 171, 0, 0.1);
+      color: #d97706;
+    }
+    
+    .badge.yellow .status-dot { 
+      background: var(--yellow); 
+    }
+
+    .badge.green {
+      background: rgba(54, 179, 126, 0.1);
+      color: var(--green);
+    }
+    
+    .badge.green .status-dot { 
+      background: var(--green); 
+    }
+
+    /* Lista de riscos */
+    ul {
+      margin-left: 0;
+      padding-left: 0;
+      list-style: none;
+      font-size: 11px;
+      color: var(--text-main);
+    }
+
+    ul li {
+      margin-bottom: 6px;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    ul li strong {
+      color: var(--text-main);
+    }
+
+    /* Gantt (tela) mais compacto */
+    .gantt-section {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .gantt-header {
+      display: grid;
+      grid-template-columns: 1.3fr 2fr;
+      background: var(--blue-gradient);
+      color: white;
+    }
+
+    .gantt-header-left {
+      padding: 8px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .gantt-header-right {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .gantt-header-month {
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 700;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      white-space: nowrap;
+    }
+
+    .gantt-header-month:first-child {
+      border-left: none;
+    }
+
+    .gantt-grid {
+      background: white;
+    }
+
+    .gantt-row {
+      display: grid;
+      grid-template-columns: 1.3fr 2fr;
+      align-items: center;
+      min-height: 56px;
+      border-top: 1px solid #f0f2f6;
+    }
+
+    .gantt-row:first-child {
+      border-top: none;
+    }
+
+    .gantt-row-left {
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .process-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .process-date {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .gantt-row-right {
+      padding: 8px 10px;
+      position: relative;
+      border-left: 1px solid #f0f2f6;
+    }
+
+    .gantt-lane {
+      position: relative;
+      width: 100%;
+      height: 22px;
+      background: #f8f9fa;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      height: 18px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: white;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+      padding: 0 10px;
+      top: 2px;
+      transition: all 0.2s ease;
+    }
+
+    /* Status chips */
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .status-concluido {
+      background: linear-gradient(135deg, #36b37e 0%, #2d9f6f 100%);
+    }
+
+    .status-em-andamento {
+      background: var(--blue-gradient);
+    }
+
+    .status-aguardando {
+      background: linear-gradient(135deg, var(--gray-chip) 0%, #909dad 100%);
+    }
+
+    /* Tabela compacta do cronograma para impressão (escondida na tela) */
+    .cronograma-print-table {
+      display: none;
+    }
+
+    /* Botões flutuantes */
+    .floating-edit-button {
+      position: fixed;
+      bottom: 104px;
+      right: 20px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background: #0f766e;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .floating-update-button {
+      position: fixed;
+      bottom: 64px;
+      right: 20px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background-image: var(--blue-gradient);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .floating-export-button {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background: #444;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* Modal de edição */
+    .editor-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+    }
+
+    .editor-panel {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      max-width: 960px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 18px;
+    }
+
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .editor-header h3 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .editor-close-btn {
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .editor-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .editor-tabs button {
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      background: #f3f4f6;
+      color: #4b5563;
+      font-weight: 600;
+    }
+
+    .editor-tabs button.active {
+      background: #0f766e;
+      color: #ffffff;
+    }
+
+    .editor-content {
+      flex: 1;
+      overflow: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px;
+      background: #f9fafb;
+      margin-bottom: 10px;
+    }
+
+    .editor-tab {
+      display: none;
+    }
+
+    .editor-tab.active {
+      display: block;
+    }
+
+    .editor-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .editor-table th,
+    .editor-table td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      text-align: left;
+    }
+
+    .editor-table th {
+      background: #eef2ff;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.4px;
+    }
+
+    .editor-table input {
+      width: 100%;
+      font-size: 11px;
+      padding: 3px 4px;
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+    }
+
+    .editor-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .editor-footer button {
+      border-radius: 999px;
+      border: none;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .editor-footer .cancel-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .editor-footer .save-btn {
+      background: #0f766e;
+      color: #ffffff;
+    }
+
+    .editor-add-btn {
+      margin-top: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+
+    .row-delete-btn {
+      padding: 2px 8px;
+      font-size: 10px;
+      border-radius: 999px;
+      border: 1px solid #fecaca;
+      background: #fee2e2;
+      color: #b91c1c;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Responsividade */
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-right {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      .header {
+        padding: 10px 12px;
+      }
+      .header-left h1 {
+        font-size: 16px;
+      }
+      .project-dates {
+        grid-template-columns: 1fr;
+      }
+      .gantt-header,
+      .gantt-row {
+        grid-template-columns: 1fr;
+      }
+      .gantt-row-right {
+        border-left: none;
+        border-top: 1px solid #f0f2f6;
+      }
+    }
+
+    /* Impressão básica (não usada para botão Exportar, mas deixei se imprimir via navegador) */
+    @page {
+      size: A4 portrait;
+      margin: 5mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        font-size: 10px;
+      }
+      .container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 4mm !important;
+      }
+      .floating-edit-button,
+      .floating-update-button,
+      .floating-export-button,
+      #excel-file {
+        display: none !important;
+      }
+      .gantt-section {
+        display: none !important;
+      }
+      .cronograma-print-table {
+        display: block !important;
+      }
+      .cronograma-print-table table {
+        font-size: 9px;
+      }
+      .cronograma-print-table th,
+      .cronograma-print-table td {
+        padding: 3px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Cabeçalho -->
+    <div class="header">
+      <div class="header-content">
+        <div class="header-left">
+          <h1 id="project-name">Projeto NID Alphaville - Kit Personalizado</h1>
+          <h2>Relatório de Status do Projeto</h2>
+        </div>
+        <div class="header-right">
+          <div>📅 Data do relatório</div>
+          <div><span id="report-date"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- COLUNA ESQUERDA -->
+      <div>
+        <!-- Resumo Executivo -->
+        <div class="card">
+          <div class="section-title">
+            <span class="emoji">🎯</span>
+            <span>Resumo Executivo</span>
+          </div>
+
+          <div class="status-pill">
+            <span class="status-dot" id="status-geral-dot"></span>
+            <span id="status-geral-text">Status Geral: Em andamento</span>
+          </div>
+
+          <div class="project-description">
+            <span class="label">Descrição do Projeto:</span><br>
+            <span id="project-description-text">
+              Desenvolvimento de uma solução que permita ao cliente NID Alphaville a compra de Kits de Personalização de sua Unidade.
+            </span>
+          </div>
+
+          <div class="project-dates">
+            <div class="date-box">
+              <span class="label">Data de Início</span>
+              <span class="value" id="project-start-date">15/07/2025</span>
+            </div>
+            <div class="date-box">
+              <span class="label">Previsão de Conclusão</span>
+              <span class="value" id="project-end-date">28/11/2025</span>
+            </div>
+          </div>
+
+          <div class="progress-wrapper">
+            <div class="progress-label">
+              <span>Progresso Geral do Projeto</span>
+              <span class="percentage" id="project-progress-percent">80%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar-inner" id="progress"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cronograma Macro -->
+        <div class="card" style="padding: 10px 10px 8px; overflow: hidden;">
+          <div class="section-title" style="border: none; margin-bottom: 6px; padding-bottom: 0;">
+            <span class="emoji">📋</span>
+            <span>Cronograma Macro (Gantt)</span>
+          </div>
+
+          <!-- Versão com Gantt (tela) -->
+          <div class="gantt-section">
+            <div class="gantt-header">
+              <div class="gantt-header-left">PROCESSO</div>
+              <div class="gantt-header-right" id="gantt-header-months">
+                <div class="gantt-header-month">JUL</div>
+                <div class="gantt-header-month">AGO</div>
+                <div class="gantt-header-month">SET</div>
+                <div class="gantt-header-month">OUT</div>
+                <div class="gantt-header-month">NOV</div>
+              </div>
+            </div>
+
+            <div class="gantt-grid" id="gantt-grid">
+              <!-- Fallback inicial -->
+              <div class="gantt-row">
+                <div class="gantt-row-left">
+                  <div class="process-title">Concepção</div>
+                  <span class="status-chip status-concluido">Concluído</span>
+                  <span class="process-date">15/07/2025 – 15/08/2025</span>
+                </div>
+                <div class="gantt-row-right">
+                  <div class="gantt-lane">
+                    <div class="gantt-bar status-concluido" style="left:0%;width:20%;">100%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gantt-row">
+                <div class="gantt-row-left">
+                  <div class="process-title">Planejamento</div>
+                  <span class="status-chip status-concluido">Concluído</span>
+                  <span class="process-date">15/08/2025 – 15/09/2025</span>
+                </div>
+                <div class="gantt-row-right">
+                  <div class="gantt-lane">
+                    <div class="gantt-bar status-concluido" style="left:20%;width:20%;">100%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gantt-row">
+                <div class="gantt-row-left">
+                  <div class="process-title">Desenvolvimento</div>
+                  <span class="status-chip status-concluido">Concluído</span>
+                  <span class="process-date">22/09/2025 – 31/10/2025</span>
+                </div>
+                <div class="gantt-row-right">
+                  <div class="gantt-lane">
+                    <div class="gantt-bar status-concluido" style="left:40%;width:30%;">100%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gantt-row">
+                <div class="gantt-row-left">
+                  <div class="process-title">Homologação</div>
+                  <span class="status-chip status-em-andamento">Em andamento</span>
+                  <span class="process-date">03/11/2025 – 26/11/2025</span>
+                </div>
+                <div class="gantt-row-right">
+                  <div class="gantt-lane">
+                    <div class="gantt-bar status-em-andamento" style="left:75%;width:15%;">50%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gantt-row">
+                <div class="gantt-row-left">
+                  <div class="process-title">Implantação</div>
+                  <span class="status-chip status-aguardando">Aguardando</span>
+                  <span class="process-date">27/11/2025 – 28/11/2025</span>
+                </div>
+                <div class="gantt-row-right">
+                  <div class="gantt-lane">
+                    <div class="gantt-bar status-aguardando" style="left:90%;width:10%;">0%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Versão compacta para impressão (tabela) -->
+          <div class="cronograma-print-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fase</th>
+                  <th>Período</th>
+                  <th>Status</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody id="gantt-print-body">
+                <!-- preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA -->
+      <div>
+        <!-- Marcos principais -->
+        <div class="card">
+          <div class="section-title">
+            <span class="emoji">📈</span>
+            <span>Marcos Principais</span>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Marco</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="marcos-body">
+              <tr>
+                <td><strong>15/08/2025</strong></td>
+                <td>Conclusão da Concepção</td>
+                <td>
+                  <span class="badge green">
+                    <span class="status-dot"></span>
+                    Concluído
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>15/09/2025</strong></td>
+                <td>Conclusão do Planejamento</td>
+                <td>
+                  <span class="badge green">
+                    <span class="status-dot"></span>
+                    Concluído
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>15/10/2025</strong></td>
+                <td>Conclusão do Desenvolvimento</td>
+                <td>
+                  <span class="badge green">
+                    <span class="status-dot"></span>
+                    Concluído
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>27/11/2025</strong></td>
+                <td>Homologação concluída</td>
+                <td>
+                  <span class="badge yellow">
+                    <span class="status-dot"></span>
+                    Em andamento
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>28/11/2025</strong></td>
+                <td>Implantação do Kit</td>
+                <td>
+                  <span class="badge yellow">
+                    <span class="status-dot"></span>
+                    Planejado
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Riscos -->
+        <div class="card">
+          <div class="section-title">
+            <span class="emoji">⚠️</span>
+            <span>Riscos e Pendências Críticas</span>
+          </div>
+          <ul id="risk-list">
+            <li><strong>Disponibilidade de fornecedores</strong> – Risco de atraso na entrega dos kits. Impacto alto, probabilidade média.</li>
+            <li><strong>Aprovação de layout</strong> – Pode postergar a homologação se houver muitas alterações. Impacto médio, probabilidade média.</li>
+          </ul>
+        </div>
+
+        <!-- Próximos passos -->
+        <div class="card">
+          <div class="section-title">
+            <span class="emoji">➡️</span>
+            <span>Próximos Passos</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Atividade</th>
+                <th>Data Prevista</th>
+                <th>Responsável</th>
+              </tr>
+            </thead>
+            <tbody id="next-steps-body">
+              <tr>
+                <td>Finalizar testes de homologação</td>
+                <td><strong>27/11/2025</strong></td>
+                <td>Time de Projeto</td>
+              </tr>
+              <tr>
+                <td>Implantação da solução em produção</td>
+                <td><strong>28/11/2025</strong></td>
+                <td>Time de Projeto</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botões flutuantes + input escondido -->
+  <button class="floating-edit-button" id="edit-button">Editar</button>
+  <button class="floating-update-button" id="update-button">Atualizar</button>
+  <button class="floating-export-button" id="export-button">Exportar</button>
+  <input type="file" id="excel-file" accept=".xlsx,.xls" style="display:none" />
+
+  <!-- Modal de edição -->
+  <div class="editor-backdrop" id="editor-modal">
+    <div class="editor-panel">
+      <div class="editor-header">
+        <h3>Editar dados do projeto</h3>
+        <button type="button" class="editor-close-btn" id="editor-close">&times;</button>
+      </div>
+      <div class="editor-tabs">
+        <button type="button" data-tab="meta" class="active">Dados gerais</button>
+        <button type="button" data-tab="processos">Cronograma</button>
+        <button type="button" data-tab="marcos">Marcos</button>
+        <button type="button" data-tab="riscos">Riscos</button>
+        <button type="button" data-tab="proximos">Próximos passos</button>
+      </div>
+      <div class="editor-content">
+        <div class="editor-tab active" id="editor-tab-meta" data-tab="meta"></div>
+        <div class="editor-tab" id="editor-tab-processos" data-tab="processos"></div>
+        <div class="editor-tab" id="editor-tab-marcos" data-tab="marcos"></div>
+        <div class="editor-tab" id="editor-tab-riscos" data-tab="riscos"></div>
+        <div class="editor-tab" id="editor-tab-proximos" data-tab="proximos"></div>
+      </div>
+      <div class="editor-footer">
+        <button type="button" class="cancel-btn" id="editor-cancel">Cancelar</button>
+        <button type="button" class="save-btn" id="editor-save">Salvar alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Biblioteca Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <script>
+    // Data do relatório
+    document.getElementById('report-date').textContent =
+      new Date().toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      });
+
+    // Barra de progresso inicial
+    setTimeout(() => {
+      const progressBar = document.getElementById('progress');
+      if (progressBar) {
+        progressBar.style.width = '80%';
+      }
+    }, 300);
+
+    let currentData = null;
+
+    function toDate(value) {
+      if (!value) return null;
+      if (value instanceof Date) return value;
+
+      if (typeof value === 'number' && window.XLSX && XLSX.SSF && XLSX.SSF.parse_date_code) {
+        const o = XLSX.SSF.parse_date_code(value);
+        if (o) return new Date(o.y, o.m - 1, o.d);
+      }
+
+      if (typeof value === 'string') {
+        const str = value.trim();
+        if (!str) return null;
+
+        let m = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+        if (m) {
+          const y = parseInt(m[1], 10);
+          const mo = parseInt(m[2], 10) - 1;
+          const d = parseInt(m[3], 10);
+          return new Date(y, mo, d);
+        }
+
+        m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (m) {
+          const d = parseInt(m[1], 10);
+          const mo = parseInt(m[2], 10) - 1;
+          const y = parseInt(m[3], 10);
+          return new Date(y, mo, d);
+        }
+
+        const parsed = new Date(str);
+        if (!isNaN(parsed.getTime())) return parsed;
+      }
+      return null;
+    }
+
+    function formatDate(value) {
+      const d = toDate(value);
+      if (!d) return value ? String(value) : '';
+      return d.toLocaleDateString('pt-BR');
+    }
+
+    function toISODateInput(value) {
+      const d = toDate(value);
+      if (!d) return '';
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function mapColorClass(cor) {
+      if (!cor) return 'green';
+      const v = String(cor).toLowerCase();
+      if (v.includes('verm') || v.includes('red')) return 'red';
+      if (v.includes('amar') || v.includes('yellow')) return 'yellow';
+      return 'green';
+    }
+
+    function mapStatusChipClass(status) {
+      const s = (status || '').toString().toLowerCase();
+      if (s.includes('aguard')) return 'status-aguardando';
+      if (s.includes('andamento')) return 'status-em-andamento';
+      return 'status-concluido';
+    }
+
+    function applyMeta(meta) {
+      const nameEl = document.getElementById('project-name');
+      if (nameEl && meta.NomeProjeto) {
+        nameEl.textContent = meta.NomeProjeto;
+      }
+
+      const descEl = document.getElementById('project-description-text');
+      if (descEl && meta.DescricaoProjeto) {
+        descEl.textContent = meta.DescricaoProjeto;
+      }
+
+      const startEl = document.getElementById('project-start-date');
+      if (startEl && meta.DataInicio) {
+        startEl.textContent = formatDate(meta.DataInicio);
+      }
+
+      const endEl = document.getElementById('project-end-date');
+      if (endEl && meta.DataFimPrevista) {
+        endEl.textContent = formatDate(meta.DataFimPrevista);
+      }
+
+      const statusTextEl = document.getElementById('status-geral-text');
+      if (statusTextEl && meta.StatusGeral) {
+        statusTextEl.textContent = 'Status Geral: ' + meta.StatusGeral;
+      }
+
+      const dotEl = document.getElementById('status-geral-dot');
+      if (dotEl && meta.CorStatusGeral) {
+        const colorClass = mapColorClass(meta.CorStatusGeral);
+        if (colorClass === 'red') dotEl.style.background = 'var(--red)';
+        else if (colorClass === 'yellow') dotEl.style.background = 'var(--yellow)';
+        else dotEl.style.background = 'var(--green)';
+      }
+
+      const percEl = document.getElementById('project-progress-percent');
+      const progressBar = document.getElementById('progress');
+      if (meta.ProgressoGeralPercentual !== undefined && meta.ProgressoGeralPercentual !== null) {
+        const val = Number(meta.ProgressoGeralPercentual) || 0;
+        if (percEl) percEl.textContent = val + '%';
+        if (progressBar) progressBar.style.width = val + '%';
+      }
+    }
+
+    function renderGantt(processos, meta) {
+      const grid = document.getElementById('gantt-grid');
+      const headerMonths = document.getElementById('gantt-header-months');
+      if (!grid || !processos || !processos.length) return;
+
+      let minStart = null;
+      let maxEnd = null;
+
+      processos.forEach(p => {
+        const s = toDate(p.dataInicio);
+        const e = toDate(p.dataFim);
+        if (!s || !e) return;
+        if (!minStart || s < minStart) minStart = s;
+        if (!maxEnd || e > maxEnd) maxEnd = e;
+      });
+
+      if (!minStart || !maxEnd) return;
+      const totalMs = maxEnd - minStart;
+      if (totalMs <= 0) return;
+
+      // Cabeçalho de meses do Gantt (dinâmico)
+      if (headerMonths) {
+        headerMonths.innerHTML = '';
+        let d = new Date(minStart.getFullYear(), minStart.getMonth(), 1);
+        const endMonth = new Date(maxEnd.getFullYear(), maxEnd.getMonth(), 1);
+        while (d <= endMonth) {
+          const div = document.createElement('div');
+          div.className = 'gantt-header-month';
+          const label = d.toLocaleDateString('pt-BR', { month: 'short' })
+                        .replace('.', '')
+                        .toUpperCase();
+          div.textContent = label;
+          headerMonths.appendChild(div);
+          d.setMonth(d.getMonth() + 1);
+        }
+      }
+
+      // Gantt gráfico na tela
+      grid.innerHTML = '';
+      processos.forEach(p => {
+        const s = toDate(p.dataInicio);
+        const e = toDate(p.dataFim);
+        if (!s || !e) return;
+
+        const startPercent = ((s - minStart) / totalMs) * 100;
+        const endPercent = ((e - minStart) / totalMs) * 100;
+
+        let left = Math.max(0, Math.min(100, startPercent));
+        let right = Math.max(0, Math.min(100, endPercent));
+        if (right < left) right = left;
+
+        let width = right - left;
+        const minWidth = 8;
+        if (width < minWidth) {
+          width = minWidth;
+          if (left + width > 100) {
+            left = Math.max(0, 100 - width);
+          }
+        }
+        if (left + width > 100) {
+          width = 100 - left;
+        }
+
+        const statusClass = mapStatusChipClass(p.status);
+
+        const row = document.createElement('div');
+        row.className = 'gantt-row';
+
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'gantt-row-left';
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'process-title';
+        titleDiv.textContent = p.nome || '';
+        leftDiv.appendChild(titleDiv);
+
+        const statusSpan = document.createElement('span');
+        statusSpan.className = 'status-chip ' + statusClass;
+        statusSpan.textContent = p.status || '';
+        leftDiv.appendChild(statusSpan);
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'process-date';
+        dateSpan.textContent = (formatDate(p.dataInicio) || '') + ' – ' + (formatDate(p.dataFim) || '');
+        leftDiv.appendChild(dateSpan);
+
+        const rightDiv = document.createElement('div');
+        rightDiv.className = 'gantt-row-right';
+
+        const laneDiv = document.createElement('div');
+        laneDiv.className = 'gantt-lane';
+
+        const barDiv = document.createElement('div');
+        barDiv.className = 'gantt-bar ' + statusClass;
+        barDiv.style.left = left + '%';
+        barDiv.style.width = width + '%';
+        barDiv.textContent = p.progresso != null ? p.progresso + '%' : '';
+
+        laneDiv.appendChild(barDiv);
+        rightDiv.appendChild(laneDiv);
+
+        row.appendChild(leftDiv);
+        row.appendChild(rightDiv);
+
+        grid.appendChild(row);
+      });
+
+      // Tabela compacta para impressão
+      const printBody = document.getElementById('gantt-print-body');
+      if (printBody) {
+        printBody.innerHTML = '';
+        processos.forEach(p => {
+          const s = formatDate(p.dataInicio);
+          const e = formatDate(p.dataFim);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${p.nome || ''}</td>
+            <td>${s} – ${e}</td>
+            <td>${p.status || ''}</td>
+            <td>${p.progresso != null ? p.progresso + '%' : ''}</td>
+          `;
+          printBody.appendChild(tr);
+        });
+      }
+    }
+
+    function renderMarcos(marcos) {
+      const tbody = document.getElementById('marcos-body');
+      if (!tbody || !marcos || !marcos.length) {
+        if (tbody) tbody.innerHTML = '';
+        return;
+      }
+      tbody.innerHTML = '';
+      marcos.forEach(m => {
+        const colorClass = mapColorClass(m.cor);
+        const tr = document.createElement('tr');
+
+        const tdData = document.createElement('td');
+        tdData.innerHTML = '<strong>' + (formatDate(m.data) || '') + '</strong>';
+
+        const tdMarco = document.createElement('td');
+        tdMarco.textContent = m.marco || '';
+
+        const tdStatus = document.createElement('td');
+        const span = document.createElement('span');
+        span.className = 'badge ' + colorClass;
+        const dot = document.createElement('span');
+        dot.className = 'status-dot';
+        span.appendChild(dot);
+        span.appendChild(document.createTextNode(' ' + (m.status || '')));
+        tdStatus.appendChild(span);
+
+        tr.appendChild(tdData);
+        tr.appendChild(tdMarco);
+        tr.appendChild(tdStatus);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderRiscos(riscos) {
+      const ul = document.getElementById('risk-list');
+      if (!ul || !riscos || !riscos.length) {
+        if (ul) ul.innerHTML = '';
+        return;
+      }
+      ul.innerHTML = '';
+      riscos.forEach(r => {
+        const li = document.createElement('li');
+        let texto = '';
+        if (r.risco) texto += '<strong>' + r.risco + '</strong> – ';
+        if (r.descricao) texto += r.descricao;
+        const extras = [];
+        if (r.impacto) extras.push('Impacto ' + r.impacto);
+        if (r.severidade) extras.push('Severidade ' + r.severidade);
+        if (extras.length) texto += ' (' + extras.join(', ') + ')';
+        li.innerHTML = texto;
+        ul.appendChild(li);
+      });
+    }
+
+    function renderNextSteps(steps) {
+      const tbody = document.getElementById('next-steps-body');
+      if (!tbody || !steps || !steps.length) {
+        if (tbody) tbody.innerHTML = '';
+        return;
+      }
+      tbody.innerHTML = '';
+      steps.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${s.atividade || ''}</td>
+          <td><strong>${formatDate(s.data) || ''}</strong></td>
+          <td>${s.responsavel || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function parseProjetoSheet(sheet) {
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true });
+      const data = { meta: {}, processos: [], marcos: [], riscos: [], proximos: [] };
+
+      if (!rows || !rows.length) return data;
+
+      // Metadados até "PROCESSOS (CRONOGRAMA MACRO)"
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i] || [];
+        const first = row[0];
+        if (!first) continue;
+        const label = String(first).trim();
+        if (label === 'PROCESSOS (CRONOGRAMA MACRO)') break;
+        const value = row[1];
+        data.meta[label] = value;
+      }
+
+      function findRow(label) {
+        return rows.findIndex(r => r && String(r[0]).trim() === label);
+      }
+
+      // Processos
+      const idxProcHeader = findRow('IDProcesso');
+      if (idxProcHeader >= 0) {
+        for (let r = idxProcHeader + 1; r < rows.length; r++) {
+          const row = rows[r] || [];
+          const first = row[0];
+          if (!first || String(first).trim() === 'MARCOS PRINCIPAIS') break;
+          data.processos.push({
+            id: row[0],
+            nome: row[1],
+            status: row[2],
+            dataInicio: row[3],
+            dataFim: row[4],
+            progresso: row[5],
+            ordem: row[6]
+          });
+        }
+      }
+
+      // Marcos
+      const idxMarcosLabel = findRow('MARCOS PRINCIPAIS');
+      if (idxMarcosLabel >= 0) {
+        const start = idxMarcosLabel + 2;
+        for (let r = start; r < rows.length; r++) {
+          const row = rows[r] || [];
+          const first = row[0];
+          if (!first || String(first).trim() === 'RISCOS E PENDÊNCIAS CRÍTICAS') break;
+          data.marcos.push({
+            data: row[0],
+            marco: row[1],
+            status: row[2],
+            cor: row[3],
+            ordem: row[4]
+          });
+        }
+      }
+
+      // Riscos
+      const idxRiscosLabel = findRow('RISCOS E PENDÊNCIAS CRÍTICAS');
+      if (idxRiscosLabel >= 0) {
+        const start = idxRiscosLabel + 2;
+        for (let r = start; r < rows.length; r++) {
+          const row = rows[r] || [];
+          const first = row[0];
+          if (!first || String(first).trim() === 'PRÓXIMOS PASSOS') break;
+          data.riscos.push({
+            risco: row[0],
+            descricao: row[1],
+            impacto: row[2],
+            severidade: row[3],
+            ordem: row[4]
+          });
+        }
+      }
+
+      // Próximos passos
+      const idxProxLabel = findRow('PRÓXIMOS PASSOS');
+      if (idxProxLabel >= 0) {
+        const start = idxProxLabel + 2;
+        for (let r = start; r < rows.length; r++) {
+          const row = rows[r] || [];
+          const first = row[0];
+          if (!first) break;
+          data.proximos.push({
+            atividade: row[0],
+            data: row[1],
+            responsavel: row[2],
+            ordem: row[3]
+          });
+        }
+      }
+
+      return data;
+    }
+
+    /* === Construção do editor (modal) === */
+
+    function populateMetaTab() {
+      const tab = document.getElementById('editor-tab-meta');
+      if (!tab || !currentData) return;
+      tab.innerHTML = '';
+
+      const table = document.createElement('table');
+      table.className = 'editor-table';
+      const tbody = document.createElement('tbody');
+
+      const fields = [
+        { key: 'NomeProjeto', label: 'Nome do Projeto', type: 'text' },
+        { key: 'DescricaoProjeto', label: 'Descrição do Projeto', type: 'text' },
+        { key: 'DataInicio', label: 'Data de Início', type: 'date' },
+        { key: 'DataFimPrevista', label: 'Previsão de Conclusão', type: 'date' },
+        { key: 'StatusGeral', label: 'Status Geral', type: 'text' },
+        { key: 'CorStatusGeral', label: 'Cor do Status (verde, amarelo, vermelho)', type: 'text' },
+        { key: 'ProgressoGeralPercentual', label: 'Progresso Geral (%)', type: 'number' }
+      ];
+
+      fields.forEach(f => {
+        const tr = document.createElement('tr');
+        const tdLabel = document.createElement('td');
+        tdLabel.textContent = f.label;
+        const tdInput = document.createElement('td');
+        const input = document.createElement('input');
+        input.setAttribute('data-meta-key', f.key);
+        input.type = f.type || 'text';
+        if (f.type === 'number') {
+          input.min = '0';
+          input.max = '100';
+        }
+
+        const value = currentData.meta[f.key];
+        if (f.type === 'date') {
+          input.value = toISODateInput(value);
+        } else {
+          input.value = value != null ? value : '';
+        }
+
+        tdInput.appendChild(input);
+        tr.appendChild(tdLabel);
+        tr.appendChild(tdInput);
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      tab.appendChild(table);
+    }
+
+    function createProcessoRow(p) {
+      const tr = document.createElement('tr');
+      const fields = [
+        { field: 'id', label: 'ID', type: 'text' },
+        { field: 'nome', label: 'Processo', type: 'text' },
+        { field: 'status', label: 'Status', type: 'text' },
+        { field: 'dataInicio', label: 'Data Início', type: 'date' },
+        { field: 'dataFim', label: 'Data Fim', type: 'date' },
+        { field: 'progresso', label: '%', type: 'number' },
+        { field: 'ordem', label: 'Ordem', type: 'number' }
+      ];
+
+      fields.forEach(cfg => {
+        const td = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = cfg.type;
+        input.setAttribute('data-field', cfg.field);
+        let val = p ? p[cfg.field] : '';
+        if (cfg.type === 'date') {
+          input.value = toISODateInput(val);
+        } else if (cfg.type === 'number') {
+          input.value = val != null ? val : '';
+        } else {
+          input.value = val != null ? val : '';
+        }
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+
+      // Coluna de ações (excluir)
+      const tdActions = document.createElement('td');
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'row-delete-btn';
+      delBtn.textContent = 'Excluir';
+      tdActions.appendChild(delBtn);
+      tr.appendChild(tdActions);
+
+      return tr;
+    }
+
+    function populateProcessosTab() {
+      const tab = document.getElementById('editor-tab-processos');
+      if (!tab || !currentData) return;
+      tab.innerHTML = '';
+
+      const table = document.createElement('table');
+      table.className = 'editor-table';
+
+      const thead = document.createElement('thead');
+      const headRow = document.createElement('tr');
+      ['ID', 'Processo', 'Status', 'Data Início', 'Data Fim', '%', 'Ordem', ''].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      (currentData.processos || []).forEach(p => {
+        tbody.appendChild(createProcessoRow(p));
+      });
+      table.appendChild(tbody);
+
+      tab.appendChild(table);
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'editor-add-btn';
+      addBtn.textContent = 'Adicionar linha';
+      addBtn.addEventListener('click', function () {
+        tbody.appendChild(createProcessoRow({}));
+      });
+      tab.appendChild(addBtn);
+    }
+
+    function createMarcoRow(m) {
+      const tr = document.createElement('tr');
+      const fields = [
+        { field: 'data', type: 'date' },
+        { field: 'marco', type: 'text' },
+        { field: 'status', type: 'text' },
+        { field: 'cor', type: 'text' },
+        { field: 'ordem', type: 'number' }
+      ];
+      fields.forEach(cfg => {
+        const td = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = cfg.type;
+        input.setAttribute('data-field', cfg.field);
+        let val = m ? m[cfg.field] : '';
+        if (cfg.type === 'date') {
+          input.value = toISODateInput(val);
+        } else {
+          input.value = val != null ? val : '';
+        }
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+
+      const tdActions = document.createElement('td');
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'row-delete-btn';
+      delBtn.textContent = 'Excluir';
+      tdActions.appendChild(delBtn);
+      tr.appendChild(tdActions);
+
+      return tr;
+    }
+
+    function populateMarcosTab() {
+      const tab = document.getElementById('editor-tab-marcos');
+      if (!tab || !currentData) return;
+      tab.innerHTML = '';
+
+      const table = document.createElement('table');
+      table.className = 'editor-table';
+      const thead = document.createElement('thead');
+      const headRow = document.createElement('tr');
+      ['Data', 'Marco', 'Status', 'Cor', 'Ordem', ''].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      (currentData.marcos || []).forEach(m => {
+        tbody.appendChild(createMarcoRow(m));
+      });
+      table.appendChild(tbody);
+
+      tab.appendChild(table);
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'editor-add-btn';
+      addBtn.textContent = 'Adicionar linha';
+      addBtn.addEventListener('click', function () {
+        tbody.appendChild(createMarcoRow({}));
+      });
+      tab.appendChild(addBtn);
+    }
+
+    function createRiscoRow(r) {
+      const tr = document.createElement('tr');
+      const fields = [
+        { field: 'risco', type: 'text' },
+        { field: 'descricao', type: 'text' },
+        { field: 'impacto', type: 'text' },
+        { field: 'severidade', type: 'text' },
+        { field: 'ordem', type: 'number' }
+      ];
+      fields.forEach(cfg => {
+        const td = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = cfg.type;
+        input.setAttribute('data-field', cfg.field);
+        let val = r ? r[cfg.field] : '';
+        input.value = val != null ? val : '';
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+
+      const tdActions = document.createElement('td');
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'row-delete-btn';
+      delBtn.textContent = 'Excluir';
+      tdActions.appendChild(delBtn);
+      tr.appendChild(tdActions);
+
+      return tr;
+    }
+
+    function populateRiscosTab() {
+      const tab = document.getElementById('editor-tab-riscos');
+      if (!tab || !currentData) return;
+      tab.innerHTML = '';
+
+      const table = document.createElement('table');
+      table.className = 'editor-table';
+      const thead = document.createElement('thead');
+      const headRow = document.createElement('tr');
+      ['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem', ''].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      (currentData.riscos || []).forEach(r => {
+        tbody.appendChild(createRiscoRow(r));
+      });
+      table.appendChild(tbody);
+
+      tab.appendChild(table);
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'editor-add-btn';
+      addBtn.textContent = 'Adicionar linha';
+      addBtn.addEventListener('click', function () {
+        tbody.appendChild(createRiscoRow({}));
+      });
+      tab.appendChild(addBtn);
+    }
+
+    function createProximoRow(p) {
+      const tr = document.createElement('tr');
+      const fields = [
+        { field: 'atividade', type: 'text' },
+        { field: 'data', type: 'date' },
+        { field: 'responsavel', type: 'text' },
+        { field: 'ordem', type: 'number' }
+      ];
+      fields.forEach(cfg => {
+        const td = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = cfg.type;
+        input.setAttribute('data-field', cfg.field);
+        let val = p ? p[cfg.field] : '';
+        if (cfg.type === 'date') {
+          input.value = toISODateInput(val);
+        } else {
+          input.value = val != null ? val : '';
+        }
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+
+      const tdActions = document.createElement('td');
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'row-delete-btn';
+      delBtn.textContent = 'Excluir';
+      tdActions.appendChild(delBtn);
+      tr.appendChild(tdActions);
+
+      return tr;
+    }
+
+    function populateProximosTab() {
+      const tab = document.getElementById('editor-tab-proximos');
+      if (!tab || !currentData) return;
+      tab.innerHTML = '';
+
+      const table = document.createElement('table');
+      table.className = 'editor-table';
+      const thead = document.createElement('thead');
+      const headRow = document.createElement('tr');
+      ['Atividade', 'Data prevista', 'Responsável', 'Ordem', ''].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      (currentData.proximos || []).forEach(p => {
+        tbody.appendChild(createProximoRow(p));
+      });
+      table.appendChild(tbody);
+
+      tab.appendChild(table);
+
+      const addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'editor-add-btn';
+      addBtn.textContent = 'Adicionar linha';
+      addBtn.addEventListener('click', function () {
+        tbody.appendChild(createProximoRow({}));
+      });
+      tab.appendChild(addBtn);
+    }
+
+    function openEditor() {
+      if (!currentData) {
+        alert('Para editar na tela, primeiro clique em "Atualizar" e carregue a planilha do projeto.');
+        return;
+      }
+      populateMetaTab();
+      populateProcessosTab();
+      populateMarcosTab();
+      populateRiscosTab();
+      populateProximosTab();
+
+      const modal = document.getElementById('editor-modal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+
+      setActiveEditorTab('meta');
+    }
+
+    function closeEditor() {
+      const modal = document.getElementById('editor-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function setActiveEditorTab(tabName) {
+      const modal = document.getElementById('editor-modal');
+      if (!modal) return;
+      const buttons = modal.querySelectorAll('.editor-tabs button');
+      const tabs = modal.querySelectorAll('.editor-tab');
+      buttons.forEach(btn => {
+        const t = btn.getAttribute('data-tab');
+        btn.classList.toggle('active', t === tabName);
+      });
+      tabs.forEach(div => {
+        const t = div.getAttribute('data-tab');
+        div.classList.toggle('active', t === tabName);
+      });
+    }
+
+    function readEditorDataAndSave() {
+      if (!currentData) return;
+
+      // Meta
+      const metaInputs = document.querySelectorAll('#editor-tab-meta [data-meta-key]');
+      metaInputs.forEach(input => {
+        const key = input.getAttribute('data-meta-key');
+        let val = input.value;
+        if (key === 'ProgressoGeralPercentual') {
+          val = Number(val) || 0;
+        }
+        currentData.meta[key] = val;
+      });
+
+      // Processos
+      const procTab = document.getElementById('editor-tab-processos');
+      if (procTab) {
+        const tbody = procTab.querySelector('tbody');
+        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
+        const novos = [];
+        rows.forEach(row => {
+          const getVal = (field) => {
+            const input = row.querySelector('input[data-field="' + field + '"]');
+            return input ? input.value : '';
+          };
+          const nome = getVal('nome').trim();
+          const status = getVal('status').trim();
+          const dataInicio = getVal('dataInicio').trim();
+          const dataFim = getVal('dataFim').trim();
+          const progressoStr = getVal('progresso').trim();
+          const id = getVal('id').trim();
+          const ordemStr = getVal('ordem').trim();
+
+          if (!nome && !status && !dataInicio && !dataFim) return;
+
+          novos.push({
+            id: id || null,
+            nome: nome,
+            status: status,
+            dataInicio: dataInicio,
+            dataFim: dataFim,
+            progresso: progressoStr ? Number(progressoStr) || 0 : null,
+            ordem: ordemStr ? Number(ordemStr) || null : null
+          });
+        });
+        currentData.processos = novos;
+      }
+
+      // Marcos
+      const marcosTab = document.getElementById('editor-tab-marcos');
+      if (marcosTab) {
+        const tbody = marcosTab.querySelector('tbody');
+        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
+        const novos = [];
+        rows.forEach(row => {
+          const getVal = (field) => {
+            const input = row.querySelector('input[data-field="' + field + '"]');
+            return input ? input.value : '';
+          };
+          const data = getVal('data').trim();
+          const marco = getVal('marco').trim();
+          const status = getVal('status').trim();
+          const cor = getVal('cor').trim();
+          const ordemStr = getVal('ordem').trim();
+          if (!data && !marco && !status) return;
+          novos.push({
+            data: data,
+            marco: marco,
+            status: status,
+            cor: cor,
+            ordem: ordemStr ? Number(ordemStr) || null : null
+          });
+        });
+        currentData.marcos = novos;
+      }
+
+      // Riscos
+      const riscosTab = document.getElementById('editor-tab-riscos');
+      if (riscosTab) {
+        const tbody = riscosTab.querySelector('tbody');
+        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
+        const novos = [];
+        rows.forEach(row => {
+          const getVal = (field) => {
+            const input = row.querySelector('input[data-field="' + field + '"]');
+            return input ? input.value : '';
+          };
+          const risco = getVal('risco').trim();
+          const descricao = getVal('descricao').trim();
+          const impacto = getVal('impacto').trim();
+          const severidade = getVal('severidade').trim();
+          const ordemStr = getVal('ordem').trim();
+          if (!risco && !descricao) return;
+          novos.push({
+            risco: risco,
+            descricao: descricao,
+            impacto: impacto,
+            severidade: severidade,
+            ordem: ordemStr ? Number(ordemStr) || null : null
+          });
+        });
+        currentData.riscos = novos;
+      }
+
+      // Próximos passos
+      const proxTab = document.getElementById('editor-tab-proximos');
+      if (proxTab) {
+        const tbody = proxTab.querySelector('tbody');
+        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
+        const novos = [];
+        rows.forEach(row => {
+          const getVal = (field) => {
+            const input = row.querySelector('input[data-field="' + field + '"]');
+            return input ? input.value : '';
+          };
+          const atividade = getVal('atividade').trim();
+          const data = getVal('data').trim();
+          const responsavel = getVal('responsavel').trim();
+          const ordemStr = getVal('ordem').trim();
+          if (!atividade && !data && !responsavel) return;
+          novos.push({
+            atividade: atividade,
+            data: data,
+            responsavel: responsavel,
+            ordem: ordemStr ? Number(ordemStr) || null : null
+          });
+        });
+        currentData.proximos = novos;
+      }
+
+      // Re-renderiza tudo
+      applyMeta(currentData.meta);
+      renderGantt(currentData.processos, currentData.meta);
+      renderMarcos(currentData.marcos);
+      renderRiscos(currentData.riscos);
+      renderNextSteps(currentData.proximos);
+    }
+
+    function exportToExcel() {
+      if (!currentData) {
+        alert('Não há dados carregados para exportar. Primeiro clique em "Atualizar" e importe uma planilha.');
+        return;
+      }
+
+      const meta = currentData.meta || {};
+      const processos = currentData.processos || [];
+      const marcos = currentData.marcos || [];
+      const riscos = currentData.riscos || [];
+      const proximos = currentData.proximos || [];
+
+      const rows = [];
+
+      // Metadados (labels fixos que usamos no HTML)
+      rows.push(['NomeProjeto', meta.NomeProjeto || '']);
+      rows.push(['DescricaoProjeto', meta.DescricaoProjeto || '']);
+      rows.push(['DataInicio', formatDate(meta.DataInicio || '')]);
+      rows.push(['DataFimPrevista', formatDate(meta.DataFimPrevista || '')]);
+      rows.push(['StatusGeral', meta.StatusGeral || '']);
+      rows.push(['CorStatusGeral', meta.CorStatusGeral || '']);
+      rows.push(['ProgressoGeralPercentual', meta.ProgressoGeralPercentual != null ? meta.ProgressoGeralPercentual : '']);
+
+      // Separador de seção de processos
+      rows.push(['PROCESSOS (CRONOGRAMA MACRO)', '']);
+
+      // Cabeçalho de processos (compatível com parseProjetoSheet)
+      rows.push(['IDProcesso', 'NomeProcesso', 'Status', 'DataInicio', 'DataFim', 'Progresso', 'Ordem']);
+
+      // Linhas de processos
+      processos.forEach(p => {
+        rows.push([
+          p.id || '',
+          p.nome || '',
+          p.status || '',
+          formatDate(p.dataInicio || ''),
+          formatDate(p.dataFim || ''),
+          p.progresso != null ? p.progresso : '',
+          p.ordem != null ? p.ordem : ''
+        ]);
+      });
+
+      // Seção de marcos
+      rows.push(['MARCOS PRINCIPAIS', '']);
+      rows.push(['Data', 'Marco', 'Status', 'Cor', 'Ordem']); // cabeçalho
+
+      marcos.forEach(m => {
+        rows.push([
+          formatDate(m.data || ''),
+          m.marco || '',
+          m.status || '',
+          m.cor || '',
+          m.ordem != null ? m.ordem : ''
+        ]);
+      });
+
+      // Seção de riscos
+      rows.push(['RISCOS E PENDÊNCIAS CRÍTICAS', '']);
+      rows.push(['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem']); // cabeçalho
+
+      riscos.forEach(r => {
+        rows.push([
+          r.risco || '',
+          r.descricao || '',
+          r.impacto || '',
+          r.severidade || '',
+          r.ordem != null ? r.ordem : ''
+        ]);
+      });
+
+      // Seção de próximos passos
+      rows.push(['PRÓXIMOS PASSOS', '']);
+      rows.push(['Atividade', 'DataPrevista', 'Responsavel', 'Ordem']); // cabeçalho
+
+      proximos.forEach(p => {
+        rows.push([
+          p.atividade || '',
+          formatDate(p.data || ''),
+          p.responsavel || '',
+          p.ordem != null ? p.ordem : ''
+        ]);
+      });
+
+      // Cria workbook e sheet
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, 'Projeto');
+
+      // Nome do arquivo
+      const projectName = meta.NomeProjeto ? String(meta.NomeProjeto).replace(/[\\\/:*?"<>|]/g, '') : 'Projeto';
+      const fileName = projectName ? `${projectName}_Status_Exportado.xlsx` : 'Projeto_Status_Exportado.xlsx';
+
+      XLSX.writeFile(wb, fileName);
+    }
+
+    (function initExcelImport() {
+      const btn = document.getElementById('update-button');
+      const input = document.getElementById('excel-file');
+
+      if (!btn || !input) return;
+
+      btn.addEventListener('click', function () {
+        input.click();
+      });
+
+      input.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+
+          const sheet = workbook.Sheets['Projeto'] || workbook.Sheets[workbook.SheetNames[0]];
+          if (!sheet) return;
+
+          const parsed = parseProjetoSheet(sheet);
+          currentData = parsed;
+
+          applyMeta(parsed.meta);
+          renderGantt(parsed.processos, parsed.meta);
+          renderMarcos(parsed.marcos);
+          renderRiscos(parsed.riscos);
+          renderNextSteps(parsed.proximos);
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+    })();
+
+    (function initExportButton() {
+      const exportBtn = document.getElementById('export-button');
+      if (!exportBtn) return;
+      exportBtn.addEventListener('click', exportToExcel);
+    })();
+
+    (function initEditorUI() {
+      const editBtn = document.getElementById('edit-button');
+      const closeBtn = document.getElementById('editor-close');
+      const cancelBtn = document.getElementById('editor-cancel');
+      const saveBtn = document.getElementById('editor-save');
+      const modal = document.getElementById('editor-modal');
+
+      if (editBtn) {
+        editBtn.addEventListener('click', openEditor);
+      }
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeEditor);
+      }
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeEditor);
+      }
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          readEditorDataAndSave();
+          closeEditor();
+        });
+      }
+
+      if (modal) {
+        const tabButtons = modal.querySelectorAll('.editor-tabs button');
+        tabButtons.forEach(btn => {
+          btn.addEventListener('click', function () {
+            const tab = btn.getAttribute('data-tab');
+            setActiveEditorTab(tab);
+          });
+        });
+
+        // Delegação para botões de excluir linha
+        modal.addEventListener('click', function (e) {
+          const target = e.target;
+          if (target && target.classList.contains('row-delete-btn')) {
+            const tr = target.closest('tr');
+            if (tr) {
+              tr.remove();
+            }
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
