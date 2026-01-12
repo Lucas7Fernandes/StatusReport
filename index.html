@@ -1035,24 +1035,27 @@
       let text = String(desc);
       let result = '';
       
-      // Extrair DESCRIÇÃO
-      const descMatch = text.match(/\[DESCRIÇÃO:\s*\[(.*?)\]\s*\]/is);
+      // Extrair DESCRIÇÃO (o que está entre DESCRIÇÃO:[ e ])
+      const descMatch = text.match(/DESCRIÇÃO:\s*\[\s*([\s\S]*?)\s*\]\s*(?:GANHOS:|$)/i);
       if (descMatch) {
-        result += descMatch[1].trim();
+        result = descMatch[1].trim();
       }
       
-      // Extrair GANHOS
-      const ganhosMatch = text.match(/\[GANHOS:\s*\[(.*?)\]\s*\]/is);
+      // Extrair GANHOS (o que está entre GANHOS:[ e ])
+      const ganhosMatch = text.match(/GANHOS:\s*\[\s*([\s\S]*?)\s*\]\s*(?:%SEMANA|$)/i);
       if (ganhosMatch) {
-        if (result) result += '\n\n';
-        result += '💡 GANHOS:\n' + ganhosMatch[1].trim();
+        const ganhosTexto = ganhosMatch[1].trim();
+        if (ganhosTexto) {
+          if (result) result += '\n\n';
+          result += 'Ganhos do Projeto:\n' + ganhosTexto;
+        }
       }
       
-      // Se não encontrou padrão, retorna texto completo limpo
+      // Se não encontrou nenhum padrão, retorna texto original limpo
       if (!result) {
         result = text
           .replace(/\[DESCRIÇÃO:\s*/gi, '')
-          .replace(/\[GANHOS:\s*/gi, '💡 GANHOS:\n')
+          .replace(/\[GANHOS:\s*/gi, '')
           .replace(/\[%SEMANA ANTERIOR:.*?\]/gi, '')
           .replace(/\]/g, '')
           .trim();
