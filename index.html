@@ -21,767 +21,129 @@
       --shadow-md: 0 8px 24px rgba(9, 30, 66, 0.15);
       --shadow-lg: 0 12px 32px rgba(9, 30, 66, 0.2);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text-main);
-      padding: 12px 16px;
-      line-height: 1.5;
-      min-height: 100vh;
-      font-size: 13px;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow-md);
-      color: white;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-left h1 {
-      font-size: 18px;
-      margin-bottom: 2px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    .header-left h2 {
-      font-size: 11px;
-      font-weight: 400;
-      opacity: 0.9;
-    }
-
-    .header-right {
-      text-align: right;
-      font-size: 11px;
-      opacity: 0.95;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 6px 10px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-    }
-
-    .header-right div:last-child {
-      font-weight: 700;
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.7fr 1.3fr;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 12px 12px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      transition: box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-md);
-    }
-
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-main);
-      padding-bottom: 6px;
-      border-bottom: 1px solid #f0f2f5;
-    }
-
-    .section-title .emoji {
-      font-size: 16px;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      background: linear-gradient(135deg, #e6f4ff 0%, #d1e9ff 100%);
-      color: #0060df;
-      font-weight: 600;
-      margin-bottom: 8px;
-      box-shadow: 0 1px 4px rgba(0, 96, 223, 0.15);
-    }
-
-    .status-pill .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(0.9); }
-    }
-
-    .project-description {
-      font-size: 12px;
-      margin: 8px 0;
-      line-height: 1.6;
-      color: var(--text-main);
-      white-space: pre-line;
-    }
-
-    .project-description .label {
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .project-dates {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 11px;
-      margin: 10px 0 6px;
-    }
-
-    .date-box {
-      background: #f8f9fa;
-      padding: 6px;
-      border-radius: 6px;
-      border-left: 3px solid var(--primary);
-    }
-
-    .date-box .label {
-      font-weight: 600;
-      color: var(--text-muted);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 2px;
-      display: block;
-    }
-
-    .date-box .value {
-      font-weight: 700;
-      font-size: 12px;
-      color: var(--text-main);
-    }
-
-    .progress-wrapper {
-      margin-top: 8px;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--text-main);
-      margin-bottom: 4px;
-      font-weight: 600;
-    }
-
-    .progress-label .percentage {
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      border-radius: 999px;
-      background: #e9ecef;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-bar-inner {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--primary) 0%, #0066ff 100%);
-      border-radius: 999px;
-      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 8px rgba(0, 82, 204, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar-inner::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-      animation: shimmer 1.8s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-size: 11px;
-      margin-top: 4px;
-      overflow: hidden;
-      border-radius: 6px;
-    }
-
-    th, td {
-      padding: 6px 8px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-
-    th {
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      font-weight: 700;
-      color: var(--text-main);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    tbody tr {
-      transition: background 0.2s ease;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #f4f5f7;
-      font-weight: 600;
-    }
-
-    .badge .status-dot { 
-      width: 6px; 
-      height: 6px; 
-      border-radius: 50%; 
-    }
-
-    .badge.red {
-      background: rgba(255, 86, 48, 0.1);
-      color: var(--red);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { background: var(--bg); color: var(--text-main); padding: 12px 16px; line-height: 1.5; min-height: 100vh; font-size: 13px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-md); color: white; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .header-left h1 { font-size: 18px; margin-bottom: 2px; font-weight: 700; letter-spacing: -0.3px; }
+    .header-left h2 { font-size: 11px; font-weight: 400; opacity: 0.9; }
+    .header-right { text-align: right; font-size: 11px; opacity: 0.95; background: rgba(255, 255, 255, 0.15); padding: 6px 10px; border-radius: 8px; backdrop-filter: blur(10px); }
+    .header-right div:last-child { font-weight: 700; font-size: 12px; margin-top: 2px; }
     
-    .badge.red .status-dot { 
-      background: var(--red); 
-    }
-
-    .badge.yellow {
-      background: rgba(255, 171, 0, 0.1);
-      color: #d97706;
-    }
+    /* CORREÇÃO 1: Layout com alinhamento vertical stretch */
+    .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; margin-bottom: 12px; }
+    .layout > div { display: flex; flex-direction: column; gap: 10px; }
+    .layout > div:first-child { display: flex; flex-direction: column; }
+    .layout > div:first-child > .card { flex: 1; display: flex; flex-direction: column; }
+    .layout > div:first-child > .card > .project-description { flex: 1; }
     
-    .badge.yellow .status-dot { 
-      background: var(--yellow); 
-    }
-
-    .badge.green {
-      background: rgba(54, 179, 126, 0.1);
-      color: var(--green);
-    }
+    .gantt-full-width { grid-column: 1 / -1; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 12px 12px; box-shadow: var(--shadow-sm); margin-bottom: 0; border: 1px solid rgba(0, 0, 0, 0.04); transition: box-shadow 0.2s ease; }
+    .card:hover { box-shadow: var(--shadow-md); }
+    .section-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; color: var(--text-main); padding-bottom: 6px; border-bottom: 1px solid #f0f2f5; }
+    .section-title .emoji { font-size: 16px; }
+    .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; background: linear-gradient(135deg, #e6f4ff 0%, #d1e9ff 100%); color: #0060df; font-weight: 600; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0, 96, 223, 0.15); }
+    .status-pill .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.9); } }
+    .project-description { font-size: 12px; margin: 8px 0; line-height: 1.6; color: var(--text-main); white-space: pre-line; }
+    .project-description .label { font-weight: 700; color: var(--primary); }
+    .project-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; margin: 10px 0 6px; }
+    .date-box { background: #f8f9fa; padding: 6px; border-radius: 6px; border-left: 3px solid var(--primary); }
+    .date-box .label { font-weight: 600; color: var(--text-muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; display: block; }
+    .date-box .value { font-weight: 700; font-size: 12px; color: var(--text-main); }
+    .progress-wrapper { margin-top: auto; padding-top: 10px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-main); margin-bottom: 4px; font-weight: 600; }
+    .progress-label .percentage { color: var(--primary); font-size: 14px; font-weight: 700; }
+    .progress-bar { width: 100%; height: 8px; border-radius: 999px; background: #e9ecef; overflow: hidden; position: relative; }
+    .progress-bar-inner { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary) 0%, #0066ff 100%); border-radius: 999px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px rgba(0, 82, 204, 0.3); position: relative; overflow: hidden; }
+    .progress-bar-inner::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); animation: shimmer 1.8s infinite; }
+    @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 11px; margin-top: 4px; overflow: hidden; border-radius: 6px; }
+    th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); font-weight: 700; color: var(--text-main); font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
+    tbody tr { transition: background 0.2s ease; }
+    tbody tr:last-child td { border-bottom: none; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #f4f5f7; font-weight: 600; }
+    .badge .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .badge.red { background: rgba(255, 86, 48, 0.1); color: var(--red); }
+    .badge.red .status-dot { background: var(--red); }
+    .badge.yellow { background: rgba(255, 171, 0, 0.1); color: #d97706; }
+    .badge.yellow .status-dot { background: var(--yellow); }
+    .badge.green { background: rgba(54, 179, 126, 0.1); color: var(--green); }
+    .badge.green .status-dot { background: var(--green); }
+    ul { margin-left: 0; padding-left: 0; list-style: none; font-size: 11px; color: var(--text-main); }
+    ul li { margin-bottom: 6px; padding-left: 16px; position: relative; line-height: 1.4; }
+    ul li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-weight: bold; font-size: 12px; }
+    ul li strong { color: var(--text-main); }
+    .gantt-section { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid rgba(0, 0, 0, 0.04); }
+    .gantt-wrapper { overflow-x: auto; overflow-y: visible; }
+    .gantt-container { min-width: 100%; width: max-content; }
+    .gantt-header { display: grid; grid-template-columns: 280px minmax(600px, 1fr); background: var(--blue-gradient); color: white; }
+    .gantt-header-left { padding: 8px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; display: flex; align-items: center; position: sticky; left: 0; background: inherit; z-index: 2; }
+    .gantt-header-right { display: flex; min-width: 600px; }
+    .gantt-header-month { flex: 1; min-width: 70px; padding: 8px 4px; text-align: center; font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; border-left: 1px solid rgba(255, 255, 255, 0.15); white-space: nowrap; }
+    .gantt-header-month:first-child { border-left: none; }
+    .gantt-grid { background: white; }
+    .gantt-row { display: grid; grid-template-columns: 280px minmax(600px, 1fr); align-items: stretch; min-height: 48px; border-top: 1px solid #f0f2f6; }
+    .gantt-row.historia-row { min-height: 36px; background: #fafbfc; display: none; }
+    .gantt-row.historia-row.expanded { display: grid; }
+    .gantt-row:first-child { border-top: none; }
+    .gantt-row-left { padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; position: sticky; left: 0; background: white; z-index: 1; border-right: 1px solid #f0f2f6; }
+    .gantt-row.historia-row .gantt-row-left { padding-left: 24px; background: #fafbfc; }
+    .process-title { font-size: 12px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+    .expand-toggle { cursor: pointer; font-size: 10px; color: var(--text-muted); padding: 2px 6px; border-radius: 4px; background: #f1f3f5; border: 1px solid #dee2e6; transition: all 0.2s ease; user-select: none; flex-shrink: 0; }
+    .expand-toggle:hover { background: #e9ecef; color: var(--text-main); }
+    .expand-toggle.has-historias { color: var(--primary); border-color: var(--primary); }
+    .historia-count { font-size: 10px; color: var(--text-muted); background: #f8f9fa; padding: 2px 6px; border-radius: 999px; font-weight: 600; }
+    .historia-row .process-title { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .historia-row .process-title::before { content: '└ '; color: #cbd5e1; margin-right: 4px; }
+    .process-date { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+    .gantt-row-right { padding: 8px 10px; position: relative; min-width: 600px; }
+    .gantt-lane { position: relative; width: 100%; height: 22px; background: #f8f9fa; border-radius: 999px; overflow: hidden; }
+    .gantt-bar { position: absolute; height: 18px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; box-shadow: var(--shadow-sm); white-space: nowrap; padding: 0 10px; top: 2px; transition: all 0.2s ease; }
+    .status-chip { display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.4px; }
+    .status-concluido { background: linear-gradient(135deg, #36b37e 0%, #2d9f6f 100%); }
+    .status-em-andamento { background: var(--blue-gradient); }
+    .status-aguardando { background: linear-gradient(135deg, var(--gray-chip) 0%, #909dad 100%); }
+    .cronograma-print-table { display: none; }
+    .floating-edit-button { position: fixed; bottom: 64px; right: 20px; padding: 8px 18px; border-radius: 999px; border: none; background: #0f766e; color: #ffffff; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
+    .floating-update-button { position: fixed; bottom: 24px; right: 20px; padding: 8px 18px; border-radius: 999px; border: none; background-image: var(--blue-gradient); color: #ffffff; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
+    .alert-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin: 10px 0; font-size: 12px; color: #856404; }
+    .alert-box strong { display: block; margin-bottom: 4px; }
     
-    .badge.green .status-dot { 
-      background: var(--green); 
-    }
-
-    ul {
-      margin-left: 0;
-      padding-left: 0;
-      list-style: none;
-      font-size: 11px;
-      color: var(--text-main);
-    }
-
-    ul li {
-      margin-bottom: 6px;
-      padding-left: 16px;
-      position: relative;
-      line-height: 1.4;
-    }
-
-    ul li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--red);
-      font-weight: bold;
-      font-size: 12px;
-    }
-
-    ul li strong {
-      color: var(--text-main);
-    }
-
-    .gantt-section {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(0, 0, 0, 0.04);
-    }
-
-    .gantt-header {
-      display: grid;
-      grid-template-columns: 1.3fr 2fr;
-      background: var(--blue-gradient);
-      color: white;
-    }
-
-    .gantt-header-left {
-      padding: 8px 10px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-    }
-
-    .gantt-header-right {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-      border-left: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .gantt-header-month {
-      padding: 8px 4px;
-      text-align: center;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      font-weight: 700;
-      border-left: 1px solid rgba(255, 255, 255, 0.15);
-      white-space: nowrap;
-    }
-
-    .gantt-header-month:first-child {
-      border-left: none;
-    }
-
-    .gantt-grid {
-      background: white;
-    }
-
-    .gantt-row {
-      display: grid;
-      grid-template-columns: 1.3fr 2fr;
-      align-items: center;
-      min-height: 56px;
-      border-top: 1px solid #f0f2f6;
-    }
-
-    .gantt-row:first-child {
-      border-top: none;
-    }
-
-    .gantt-row-left {
-      padding: 8px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .process-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .process-date {
-      font-size: 10px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .gantt-row-right {
-      padding: 8px 10px;
-      position: relative;
-      border-left: 1px solid #f0f2f6;
-    }
-
-    .gantt-lane {
-      position: relative;
-      width: 100%;
-      height: 22px;
-      background: #f8f9fa;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .gantt-bar {
-      position: absolute;
-      height: 18px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: white;
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
-      white-space: nowrap;
-      padding: 0 10px;
-      top: 2px;
-      transition: all 0.2s ease;
-    }
-
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 9px;
-      font-weight: 700;
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .status-concluido {
-      background: linear-gradient(135deg, #36b37e 0%, #2d9f6f 100%);
-    }
-
-    .status-em-andamento {
-      background: var(--blue-gradient);
-    }
-
-    .status-aguardando {
-      background: linear-gradient(135deg, var(--gray-chip) 0%, #909dad 100%);
-    }
-
-    .cronograma-print-table {
-      display: none;
-    }
-
-    .floating-edit-button {
-      position: fixed;
-      bottom: 64px;
-      right: 20px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: none;
-      background: #0f766e;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 12px;
-      box-shadow: var(--shadow-md);
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .floating-update-button {
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: none;
-      background-image: var(--blue-gradient);
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 12px;
-      box-shadow: var(--shadow-md);
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .alert-box {
-      background: #fff3cd;
-      border: 1px solid #ffc107;
-      border-radius: 8px;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 12px;
-      color: #856404;
-    }
-
-    .alert-box strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    /* Modal de edição */
-    .editor-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1100;
-    }
-
-    .editor-panel {
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: var(--shadow-lg);
-      max-width: 960px;
-      width: 95%;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      padding: 16px 18px;
-    }
-
-    .editor-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .editor-header h3 {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .editor-close-btn {
-      border: none;
-      background: transparent;
-      font-size: 18px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .editor-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-
-    .editor-tabs button {
-      border: none;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 11px;
-      cursor: pointer;
-      background: #f3f4f6;
-      color: #4b5563;
-      font-weight: 600;
-    }
-
-    .editor-tabs button.active {
-      background: #0f766e;
-      color: #ffffff;
-    }
-
-    .editor-content {
-      flex: 1;
-      overflow: auto;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 8px;
-      background: #f9fafb;
-      margin-bottom: 10px;
-    }
-
-    .editor-tab {
-      display: none;
-    }
-
-    .editor-tab.active {
-      display: block;
-    }
-
-    .editor-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-    }
-
-    .editor-table th,
-    .editor-table td {
-      border-bottom: 1px solid #e5e7eb;
-      padding: 4px 6px;
-      text-align: left;
-    }
-
-    .editor-table th {
-      background: #eef2ff;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 0.4px;
-    }
-
-    .editor-table input,
-    .editor-table textarea {
-      width: 100%;
-      font-size: 11px;
-      padding: 3px 4px;
-      border-radius: 4px;
-      border: 1px solid #d1d5db;
-      font-family: inherit;
-    }
-
-    .editor-table textarea {
-      min-height: 60px;
-      resize: vertical;
-    }
-
-    .editor-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .editor-footer button {
-      border-radius: 999px;
-      border: none;
-      padding: 6px 14px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .editor-footer .cancel-btn {
-      background: #e5e7eb;
-      color: #374151;
-    }
-
-    .editor-footer .save-btn {
-      background: #0f766e;
-      color: #ffffff;
-    }
-
-    .editor-add-btn {
-      margin-top: 6px;
-      padding: 4px 10px;
-      font-size: 11px;
-      border-radius: 999px;
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      cursor: pointer;
-    }
-
-    .row-delete-btn {
-      padding: 2px 8px;
-      font-size: 10px;
-      border-radius: 999px;
-      border: 1px solid #fecaca;
-      background: #fee2e2;
-      color: #b91c1c;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 1024px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .header-right {
-        text-align: left;
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
-      .header {
-        padding: 10px 12px;
-      }
-      .header-left h1 {
-        font-size: 16px;
-      }
-      .project-dates {
-        grid-template-columns: 1fr;
-      }
-      .gantt-header,
-      .gantt-row {
-        grid-template-columns: 1fr;
-      }
-      .gantt-row-right {
-        border-left: none;
-        border-top: 1px solid #f0f2f6;
-      }
-    }
-
-    @page {
-      size: A4 portrait;
-      margin: 5mm;
-    }
-
-    @media print {
-      body {
-        background: #ffffff !important;
-        padding: 0 !important;
-        font-size: 10px;
-      }
-      .container {
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 4mm !important;
-      }
-      .floating-update-button,
-      #excel-file,
-      .alert-box {
-        display: none !important;
-      }
-      .gantt-section {
-        display: none !important;
-      }
-      .cronograma-print-table {
-        display: block !important;
-      }
-      .cronograma-print-table table {
-        font-size: 9px;
-      }
-      .cronograma-print-table th,
-      .cronograma-print-table td {
-        padding: 3px 4px;
-      }
-    }
+    /* CORREÇÃO 2: Estilos para botões de expandir/colapsar todos */
+    .gantt-controls { display: flex; gap: 8px; padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; flex-wrap: wrap; }
+    .gantt-control-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; border: 1px solid #dee2e6; background: white; color: var(--text-main); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .gantt-control-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .gantt-control-btn svg { width: 14px; height: 14px; }
+    
+    .editor-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); display: none; align-items: center; justify-content: center; z-index: 1100; }
+    .editor-panel { background: #ffffff; border-radius: 12px; box-shadow: var(--shadow-lg); max-width: 960px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 16px 18px; }
+    .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .editor-header h3 { font-size: 14px; font-weight: 700; }
+    .editor-close-btn { border: none; background: transparent; font-size: 18px; cursor: pointer; line-height: 1; }
+    .editor-tabs { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .editor-tabs button { border: none; border-radius: 999px; padding: 4px 10px; font-size: 11px; cursor: pointer; background: #f3f4f6; color: #4b5563; font-weight: 600; }
+    .editor-tabs button.active { background: #0f766e; color: #ffffff; }
+    .editor-content { flex: 1; overflow: auto; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px; background: #f9fafb; margin-bottom: 10px; }
+    .editor-tab { display: none; }
+    .editor-tab.active { display: block; }
+    .editor-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .editor-table th, .editor-table td { border-bottom: 1px solid #e5e7eb; padding: 4px 6px; text-align: left; }
+    .editor-table th { background: #eef2ff; font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: 0.4px; }
+    .editor-table input, .editor-table textarea { width: 100%; font-size: 11px; padding: 3px 4px; border-radius: 4px; border: 1px solid #d1d5db; font-family: inherit; }
+    .editor-table textarea { min-height: 60px; resize: vertical; }
+    .editor-footer { display: flex; justify-content: flex-end; gap: 8px; }
+    .editor-footer button { border-radius: 999px; border: none; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
+    .editor-footer .cancel-btn { background: #e5e7eb; color: #374151; }
+    .editor-footer .save-btn { background: #0f766e; color: #ffffff; }
+    .editor-add-btn { margin-top: 6px; padding: 4px 10px; font-size: 11px; border-radius: 999px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; }
+    .row-delete-btn { padding: 2px 8px; font-size: 10px; border-radius: 999px; border: 1px solid #fecaca; background: #fee2e2; color: #b91c1c; cursor: pointer; white-space: nowrap; }
+    @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } .header-content { flex-direction: column; align-items: flex-start; } .header-right { text-align: left; } }
+    @media (max-width: 768px) { body { padding: 10px; } .header { padding: 10px 12px; } .header-left h1 { font-size: 16px; } .project-dates { grid-template-columns: 1fr; } .gantt-header, .gantt-row { grid-template-columns: 1fr; } .gantt-row-right { border-left: none; border-top: 1px solid #f0f2f6; } }
+    @page { size: A4 portrait; margin: 5mm; }
+    @media print { body { background: #ffffff !important; padding: 0 !important; font-size: 10px; } .container { max-width: 100% !important; margin: 0 !important; padding: 0 4mm !important; } .floating-update-button, .floating-edit-button, #excel-file, .alert-box, .gantt-controls { display: none !important; } .gantt-section { display: none !important; } .cronograma-print-table { display: block !important; } .cronograma-print-table table { font-size: 9px; } .cronograma-print-table th, .cronograma-print-table td { padding: 3px 4px; } }
   </style>
 </head>
 <body>
@@ -798,157 +160,71 @@
         </div>
       </div>
     </div>
-
     <div id="validation-alerts"></div>
-
     <div class="layout">
       <div>
         <div class="card">
-          <div class="section-title">
-            <span class="emoji">🎯</span>
-            <span>Resumo Executivo</span>
-          </div>
-
-          <div class="status-pill">
-            <span class="status-dot" id="status-geral-dot"></span>
-            <span id="status-geral-text">Aguardando importação...</span>
-          </div>
-
-          <div class="project-description">
-            <span class="label">Descrição do Projeto:</span><br>
-            <span id="project-description-text">
-              Clique em "Atualizar" e carregue a planilha extraída do sistema.
-            </span>
-          </div>
-
+          <div class="section-title"><span class="emoji">🎯</span><span>Resumo Executivo</span></div>
+          <div class="status-pill"><span class="status-dot" id="status-geral-dot"></span><span id="status-geral-text">Aguardando importação...</span></div>
+          <div class="project-description"><span class="label">Descrição do Projeto:</span><br><span id="project-description-text">Clique em "Atualizar" e carregue a planilha extraída do sistema.</span></div>
           <div class="project-dates">
-            <div class="date-box">
-              <span class="label">Data de Início</span>
-              <span class="value" id="project-start-date">--/--/----</span>
-            </div>
-            <div class="date-box">
-              <span class="label">Previsão de Conclusão</span>
-              <span class="value" id="project-end-date">--/--/----</span>
-            </div>
+            <div class="date-box"><span class="label">Data de Início</span><span class="value" id="project-start-date">--/--/----</span></div>
+            <div class="date-box"><span class="label">Previsão de Conclusão</span><span class="value" id="project-end-date">--/--/----</span></div>
           </div>
-
           <div class="progress-wrapper">
-            <div class="progress-label">
-              <span>Progresso Geral do Projeto</span>
-              <span class="percentage" id="project-progress-percent">0%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar-inner" id="progress"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="padding: 10px 10px 8px; overflow: hidden;">
-          <div class="section-title" style="border: none; margin-bottom: 6px; padding-bottom: 0;">
-            <span class="emoji">📋</span>
-            <span>Cronograma Macro (Gantt)</span>
-          </div>
-
-          <div class="gantt-section">
-            <div class="gantt-header">
-              <div class="gantt-header-left">ÉPICO/PROCESSO</div>
-              <div class="gantt-header-right" id="gantt-header-months">
-                <div class="gantt-header-month">--</div>
-              </div>
-            </div>
-
-            <div class="gantt-grid" id="gantt-grid">
-              <div style="padding: 20px; text-align: center; color: #6b778c;">
-                Aguardando dados...
-              </div>
-            </div>
-          </div>
-
-          <div class="cronograma-print-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Épico</th>
-                  <th>Período</th>
-                  <th>Status</th>
-                  <th>%</th>
-                </tr>
-              </thead>
-              <tbody id="gantt-print-body">
-              </tbody>
-            </table>
+            <div class="progress-label"><span>Progresso Geral do Projeto</span><span class="percentage" id="project-progress-percent">0%</span></div>
+            <div class="progress-bar"><div class="progress-bar-inner" id="progress"></div></div>
           </div>
         </div>
       </div>
-
       <div>
         <div class="card">
-          <div class="section-title">
-            <span class="emoji">📈</span>
-            <span>Marcos Principais</span>
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Data</th>
-                <th>Marco</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="marcos-body">
-              <tr>
-                <td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="section-title"><span class="emoji">📈</span><span>Marcos Principais</span></div>
+          <table><thead><tr><th>Data</th><th>Marco</th><th>Status</th></tr></thead><tbody id="marcos-body"><tr><td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td></tr></tbody></table>
         </div>
-
         <div class="card">
-          <div class="section-title">
-            <span class="emoji">⚠️</span>
-            <span>Riscos e Pendências Críticas</span>
-          </div>
-          <ul id="risk-list">
-            <li>Aguardando dados...</li>
-          </ul>
+          <div class="section-title"><span class="emoji">⚠️</span><span>Riscos e Pendências Críticas</span></div>
+          <ul id="risk-list"><li>Aguardando dados...</li></ul>
         </div>
-
         <div class="card">
-          <div class="section-title">
-            <span class="emoji">➡️</span>
-            <span>Próximos Passos</span>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Atividade</th>
-                <th>Data Prevista</th>
-                <th>Responsável</th>
-              </tr>
-            </thead>
-            <tbody id="next-steps-body">
-              <tr>
-                <td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="section-title"><span class="emoji">➡️</span><span>Próximos Passos</span></div>
+          <table><thead><tr><th>Atividade</th><th>Data Prevista</th><th>Responsável</th></tr></thead><tbody id="next-steps-body"><tr><td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td></tr></tbody></table>
         </div>
       </div>
     </div>
+    <div class="card gantt-full-width" style="padding: 10px 10px 8px; overflow: hidden;">
+      <div class="section-title" style="border: none; margin-bottom: 6px; padding-bottom: 0;"><span class="emoji">📋</span><span>Cronograma Macro (Gantt)</span></div>
+      <div class="gantt-section">
+        <!-- CORREÇÃO 2: Botões de Expandir/Colapsar Todos -->
+        <div class="gantt-controls">
+          <button type="button" class="gantt-control-btn" id="btn-expand-all">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            Expandir Todos
+          </button>
+          <button type="button" class="gantt-control-btn" id="btn-collapse-all">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            Colapsar Todos
+          </button>
+        </div>
+        <div class="gantt-wrapper">
+          <div class="gantt-container">
+            <div class="gantt-header">
+              <div class="gantt-header-left">ÉPICO/HISTÓRIA</div>
+              <div class="gantt-header-right" id="gantt-header-months"><div class="gantt-header-month">--</div></div>
+            </div>
+            <div class="gantt-grid" id="gantt-grid"><div style="padding: 20px; text-align: center; color: #6b778c;">Aguardando dados...</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cronograma-print-table"><table><thead><tr><th>Épico/História</th><th>Período</th><th>Status</th><th>%</th></tr></thead><tbody id="gantt-print-body"></tbody></table></div>
+    </div>
   </div>
-
   <button class="floating-edit-button" id="edit-button">✏️ Editar</button>
   <button class="floating-update-button" id="update-button">📥 Atualizar</button>
   <input type="file" id="excel-file" accept=".xlsx,.xls" style="display:none" />
-
-  <!-- Modal de edição -->
   <div class="editor-backdrop" id="editor-modal">
     <div class="editor-panel">
-      <div class="editor-header">
-        <h3>Editar dados do projeto</h3>
-        <button type="button" class="editor-close-btn" id="editor-close">&times;</button>
-      </div>
+      <div class="editor-header"><h3>Editar dados do projeto</h3><button type="button" class="editor-close-btn" id="editor-close">&times;</button></div>
       <div class="editor-tabs">
         <button type="button" data-tab="meta" class="active">Dados gerais</button>
         <button type="button" data-tab="processos">Cronograma</button>
@@ -969,48 +245,25 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
   <script>
-    document.getElementById('report-date').textContent =
-      new Date().toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric'
-      });
-
+    document.getElementById('report-date').textContent = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     let currentData = null;
 
     function toDate(value) {
       if (!value) return null;
       if (value instanceof Date) return value;
-
       if (typeof value === 'number' && window.XLSX && XLSX.SSF && XLSX.SSF.parse_date_code) {
         const o = XLSX.SSF.parse_date_code(value);
         if (o) return new Date(o.y, o.m - 1, o.d);
       }
-
       if (typeof value === 'string') {
         const str = value.trim();
         if (!str) return null;
-
         let m = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
-        if (m) {
-          const y = parseInt(m[1], 10);
-          const mo = parseInt(m[2], 10) - 1;
-          const d = parseInt(m[3], 10);
-          return new Date(y, mo, d);
-        }
-
+        if (m) return new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
         m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-        if (m) {
-          const d = parseInt(m[1], 10);
-          const mo = parseInt(m[2], 10) - 1;
-          const y = parseInt(m[3], 10);
-          return new Date(y, mo, d);
-        }
-
+        if (m) return new Date(parseInt(m[3], 10), parseInt(m[2], 10) - 1, parseInt(m[1], 10));
         const parsed = new Date(str);
         if (!isNaN(parsed.getTime())) return parsed;
       }
@@ -1025,42 +278,20 @@
 
     function cleanPercentage(value) {
       if (!value) return 0;
-      const str = String(value).replace('%', '').trim();
-      return Number(str) || 0;
+      return Number(String(value).replace('%', '').trim()) || 0;
     }
 
     function formatDescription(desc) {
       if (!desc) return '';
-      
-      let text = String(desc);
-      let result = '';
-      
-      // Extrair DESCRIÇÃO (o que está entre DESCRIÇÃO:[ e ])
+      let text = String(desc), result = '';
       const descMatch = text.match(/DESCRIÇÃO:\s*\[\s*([\s\S]*?)\s*\]\s*(?:GANHOS:|$)/i);
-      if (descMatch) {
-        result = descMatch[1].trim();
-      }
-      
-      // Extrair GANHOS (o que está entre GANHOS:[ e ])
+      if (descMatch) result = descMatch[1].trim();
       const ganhosMatch = text.match(/GANHOS:\s*\[\s*([\s\S]*?)\s*\]\s*(?:%SEMANA|$)/i);
-      if (ganhosMatch) {
-        const ganhosTexto = ganhosMatch[1].trim();
-        if (ganhosTexto) {
-          if (result) result += '\n\n';
-          result += 'Ganhos do Projeto:\n' + ganhosTexto;
-        }
+      if (ganhosMatch && ganhosMatch[1].trim()) {
+        if (result) result += '\n\n';
+        result += 'Ganhos do Projeto:\n' + ganhosMatch[1].trim();
       }
-      
-      // Se não encontrou nenhum padrão, retorna texto original limpo
-      if (!result) {
-        result = text
-          .replace(/\[DESCRIÇÃO:\s*/gi, '')
-          .replace(/\[GANHOS:\s*/gi, '')
-          .replace(/\[%SEMANA ANTERIOR:.*?\]/gi, '')
-          .replace(/\]/g, '')
-          .trim();
-      }
-      
+      if (!result) result = text.replace(/\[DESCRIÇÃO:\s*/gi, '').replace(/\[GANHOS:\s*/gi, '').replace(/\[%SEMANA ANTERIOR:.*?\]/gi, '').replace(/\]/g, '').trim();
       return result;
     }
 
@@ -1102,27 +333,14 @@
     }
 
     function parseSistemaExcel(workbook) {
-      const data = {
-        meta: {},
-        epicos: [],
-        itens: [],
-        processos: [],
-        marcos: [],
-        riscos: [],
-        proximos: [],
-        warnings: []
-      };
-
-      // ABA 1: Dados do projeto
+      const data = { meta: {}, epicos: [], itens: [], processos: [], marcos: [], riscos: [], proximos: [], warnings: [] };
+      
       const dadosSheet = workbook.Sheets['Dados do projeto'];
       if (dadosSheet) {
         const rows = XLSX.utils.sheet_to_json(dadosSheet, { header: 1, raw: true });
         if (rows && rows.length > 0) {
-          const headers = rows[0];
-          const values = rows[1] || [];
-          
+          const headers = rows[0], values = rows[1] || [];
           const idx = (field) => headers.findIndex(h => h && String(h).includes(field));
-          
           data.meta.NomeProjeto = values[idx('Nome')] || '';
           data.meta.DescricaoProjeto = formatDescription(values[idx('Descrição')]);
           data.meta.ProgressoGeralPercentual = cleanPercentage(values[idx('Percentual Projeto')]);
@@ -1133,267 +351,134 @@
           data.meta.Responsavel = values[idx('Responsável')] || '';
           data.meta.Owner = values[idx('Owner')] || '';
         }
-      } else {
-        data.warnings.push('Aba "Dados do projeto" não encontrada');
-      }
+      } else { data.warnings.push('Aba "Dados do projeto" não encontrada'); }
 
-      // ABA 2: Épicos
       const epicosSheet = workbook.Sheets['Épicos'];
       if (epicosSheet) {
         const rows = XLSX.utils.sheet_to_json(epicosSheet, { header: 1, raw: true });
         if (rows && rows.length > 1) {
           const headers = rows[0];
           const idx = (field) => headers.findIndex(h => h && String(h).includes(field));
-          
-          const nomeIdx = idx('Nome');
-          const progressoIdx = idx('Progresso');
-          const statusIdx = idx('Status');
-          const dataInicioIdx = idx('Data de início');
-          const dataEntregaIdx = idx('Data prevista de entrega');
-          const responsavelIdx = idx('Responsável');
-          
           for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
-            if (!row || !row[nomeIdx]) continue;
-            
+            if (!row || !row[idx('Nome')]) continue;
             data.epicos.push({
-              nome: removeNumericPrefix(row[nomeIdx]),
-              nomeOriginal: row[nomeIdx],
-              progresso: cleanPercentage(row[progressoIdx]),
-              status: row[statusIdx] || '',
-              dataInicio: row[dataInicioIdx] || null,
-              dataFim: row[dataEntregaIdx] || null,
-              responsavel: row[responsavelIdx] || ''
+              nome: removeNumericPrefix(row[idx('Nome')]),
+              nomeOriginal: row[idx('Nome')],
+              progresso: cleanPercentage(row[idx('Progresso')]),
+              status: row[idx('Status')] || '',
+              dataInicio: row[idx('Data de início')] || null,
+              dataFim: row[idx('Data prevista de entrega')] || null,
+              responsavel: row[idx('Responsável')] || ''
             });
           }
         }
-      } else {
-        data.warnings.push('Aba "Épicos" não encontrada');
-      }
+      } else { data.warnings.push('Aba "Épicos" não encontrada'); }
 
-      // ABA 3: Itens do projeto
       const itensSheet = workbook.Sheets['Itens do projeto'];
       if (itensSheet) {
         const rows = XLSX.utils.sheet_to_json(itensSheet, { header: 1, raw: true });
         if (rows && rows.length > 1) {
           const headers = rows[0];
           const idx = (field) => headers.findIndex(h => h && String(h).includes(field));
-          
-          const idIdx = idx('Id');
-          const itemIdx = idx('Item');
-          const tipoIdx = idx('Tipo');
-          const momentoIdx = idx('Momento');
-          const epicoIdx = idx('Épico');
           const dataInicioIdx = idx('Data de Início') >= 0 ? idx('Data de Início') : idx('Data Início');
-          const dataPrevistaIdx = idx('Data Prevista');
-          const dataEntregaIdx = idx('Data de Entrega');
-          const responsavelIdx = idx('Responsável');
-          const iteracaoIdx = idx('Iteração');
-          
           for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
-            if (!row || !row[itemIdx]) continue;
-            
+            if (!row || !row[idx('Item')]) continue;
             data.itens.push({
-              id: row[idIdx] || '',
-              item: row[itemIdx] || '',
-              tipo: row[tipoIdx] || '',
-              momento: row[momentoIdx] || '',
-              epico: row[epicoIdx] || '',
+              id: row[idx('Id')] || '',
+              item: row[idx('Item')] || '',
+              tipo: row[idx('Tipo')] || '',
+              momento: row[idx('Momento')] || '',
+              epico: row[idx('Épico')] || '',
               dataInicio: row[dataInicioIdx] || null,
-              dataPrevista: row[dataPrevistaIdx] || null,
-              dataEntrega: row[dataEntregaIdx] || null,
-              responsavel: row[responsavelIdx] || '',
-              iteracao: row[iteracaoIdx] || ''
+              dataPrevista: row[idx('Data Prevista')] || null,
+              dataEntrega: row[idx('Data de Entrega')] || null,
+              responsavel: row[idx('Responsável')] || '',
+              iteracao: row[idx('Iteração')] || ''
             });
           }
         }
-      } else {
-        data.warnings.push('Aba "Itens do projeto" não encontrada');
-      }
+      } else { data.warnings.push('Aba "Itens do projeto" não encontrada'); }
 
-      // PROCESSAR DADOS DERIVADOS
       processarDadosDerivados(data);
-
       return data;
     }
 
     function processarDadosDerivados(data) {
-      // 1. PROCESSOS (do Gantt) - baseado em Épicos + Itens
       data.epicos.forEach((epico, index) => {
-        // Encontrar itens deste épico
-        const itensDoEpico = data.itens.filter(item => 
-          item.epico && item.epico.includes(epico.nomeOriginal)
-        );
+        const itensDoEpico = data.itens.filter(item => item.epico && item.epico.includes(epico.nomeOriginal));
+        let dataInicio = epico.dataInicio, dataFim = epico.dataFim, progresso = epico.progresso, status = epico.status;
 
-        let dataInicio = epico.dataInicio;
-        let dataFim = epico.dataFim;
-        let progresso = epico.progresso;
-        let status = epico.status;
-
-        // Se épico não tem datas, calcular dos itens
         if (itensDoEpico.length > 0) {
-          const datasInicio = itensDoEpico
-            .map(i => i.dataInicio)
-            .filter(d => d)
-            .map(d => toDate(d))
-            .filter(d => d);
-          
-          const datasEntrega = itensDoEpico
-            .map(i => i.dataEntrega || i.dataPrevista)
-            .filter(d => d)
-            .map(d => toDate(d))
-            .filter(d => d);
-
-          if (datasInicio.length > 0 && !dataInicio) {
-            dataInicio = new Date(Math.min(...datasInicio));
-          }
-          
-          if (datasEntrega.length > 0 && !dataFim) {
-            dataFim = new Date(Math.max(...datasEntrega));
-          }
-
-          // Calcular progresso se não existe
+          const datasInicio = itensDoEpico.map(i => i.dataInicio).filter(d => d).map(d => toDate(d)).filter(d => d);
+          const datasEntrega = itensDoEpico.map(i => i.dataEntrega || i.dataPrevista).filter(d => d).map(d => toDate(d)).filter(d => d);
+          if (datasInicio.length > 0 && !dataInicio) dataInicio = new Date(Math.min(...datasInicio));
+          if (datasEntrega.length > 0 && !dataFim) dataFim = new Date(Math.max(...datasEntrega));
           if (progresso === 0 || !progresso) {
-            const finalizados = itensDoEpico.filter(i => 
-              i.momento && String(i.momento).toUpperCase().includes('FINALIZADO')
-            ).length;
-            if (itensDoEpico.length > 0) {
-              progresso = Math.round((finalizados / itensDoEpico.length) * 100);
-            }
+            const finalizados = itensDoEpico.filter(i => i.momento && String(i.momento).toUpperCase().includes('FINALIZADO')).length;
+            if (itensDoEpico.length > 0) progresso = Math.round((finalizados / itensDoEpico.length) * 100);
           }
-
-          // Determinar status baseado em itens
-          const temEmAndamento = itensDoEpico.some(i => 
-            i.momento && String(i.momento).toUpperCase().includes('EM ANDAMENTO')
-          );
-          const todosFinalizado = itensDoEpico.every(i => 
-            i.momento && String(i.momento).toUpperCase().includes('FINALIZADO')
-          );
-          
-          if (todosFinalizado) {
-            status = 'Concluído';
-          } else if (temEmAndamento) {
-            status = 'Em andamento';
-          } else if (!status) {
-            status = 'Aguardando';
-          }
+          const todosFinalizado = itensDoEpico.every(i => i.momento && String(i.momento).toUpperCase().includes('FINALIZADO'));
+          const temEmAndamento = itensDoEpico.some(i => i.momento && String(i.momento).toUpperCase().includes('EM ANDAMENTO'));
+          if (todosFinalizado) status = 'Concluído';
+          else if (temEmAndamento) status = 'Em andamento';
+          else if (!status) status = 'Aguardando';
         }
+        if (!dataInicio || !dataFim) data.warnings.push('Épico "' + epico.nome + '" sem datas definidas');
 
-        // Validar se tem datas
-        if (!dataInicio || !dataFim) {
-          data.warnings.push(`Épico "${epico.nome}" sem datas definidas`);
-        }
-
-        // Mapear status
         let statusMapeado = status;
         const statusUpper = String(status).toUpperCase();
-        if (statusUpper.includes('EMANDAMENTO') || statusUpper === 'EM ANDAMENTO') {
-          statusMapeado = 'Em andamento';
-        } else if (statusUpper.includes('BACKLOG')) {
-          statusMapeado = 'Aguardando';
-        } else if (statusUpper.includes('FINALIZADO')) {
-          statusMapeado = 'Concluído';
-        }
+        if (statusUpper.includes('EMANDAMENTO') || statusUpper === 'EM ANDAMENTO') statusMapeado = 'Em andamento';
+        else if (statusUpper.includes('BACKLOG')) statusMapeado = 'Aguardando';
+        else if (statusUpper.includes('FINALIZADO')) statusMapeado = 'Concluído';
 
-        data.processos.push({
-          id: 'E' + (index + 1),
-          nome: epico.nome,
-          status: statusMapeado,
-          dataInicio: dataInicio,
-          dataFim: dataFim,
-          progresso: progresso,
-          ordem: index + 1
-        });
+        const historias = itensDoEpico.filter(item => {
+          const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
+          return tipo === 'historia' || tipo === 'história';
+        }).map(h => {
+          const statusHistoria = mapStatusFromMomento(h.momento);
+          let progressoHistoria = 0;
+          if (statusHistoria === 'Concluído') progressoHistoria = 100;
+          else if (statusHistoria === 'Em andamento') progressoHistoria = 50;
+          return { nome: h.item || '', status: statusHistoria, dataInicio: h.dataInicio, dataFim: h.dataPrevista || h.dataEntrega, progresso: progressoHistoria };
+        }).filter(h => h.dataInicio || h.dataFim);
+
+        data.processos.push({ id: 'E' + (index + 1), nome: epico.nome, status: statusMapeado, dataInicio: dataInicio, dataFim: dataFim, progresso: progresso, ordem: index + 1, historias: historias });
       });
 
-      // 2. MARCOS - Épicos concluídos
       data.epicos.forEach((epico, index) => {
         if (epico.progresso >= 100 || String(epico.status).toUpperCase().includes('FINALIZADO')) {
-          const itensDoEpico = data.itens.filter(item => 
-            item.epico && item.epico.includes(epico.nomeOriginal)
-          );
-          
+          const itensDoEpico = data.itens.filter(item => item.epico && item.epico.includes(epico.nomeOriginal));
           let dataMarco = epico.dataFim;
           if (!dataMarco && itensDoEpico.length > 0) {
-            const datasEntrega = itensDoEpico
-              .map(i => i.dataEntrega || i.dataPrevista)
-              .filter(d => d)
-              .map(d => toDate(d))
-              .filter(d => d);
-            if (datasEntrega.length > 0) {
-              dataMarco = new Date(Math.max(...datasEntrega));
-            }
+            const datasEntrega = itensDoEpico.map(i => i.dataEntrega || i.dataPrevista).filter(d => d).map(d => toDate(d)).filter(d => d);
+            if (datasEntrega.length > 0) dataMarco = new Date(Math.max(...datasEntrega));
           }
-
-          if (dataMarco) {
-            data.marcos.push({
-              data: dataMarco,
-              marco: `Conclusão: ${epico.nome}`,
-              status: 'Concluído',
-              cor: 'verde',
-              ordem: index + 1
-            });
-          }
+          if (dataMarco) data.marcos.push({ data: dataMarco, marco: 'Conclusão: ' + epico.nome, status: 'Concluído', cor: 'verde', ordem: index + 1 });
         }
       });
 
-      // 3. RISCOS - Itens bloqueados
-      const itensBloqueados = data.itens.filter(item => 
-        item.momento && String(item.momento).toUpperCase().includes('BLOQUEADO')
-      );
-
-      itensBloqueados.forEach((item, index) => {
-        data.riscos.push({
-          risco: `Bloqueio: ${item.item}`,
-          descricao: `Item ${item.id} está bloqueado. Épico: ${item.epico || 'N/A'}`,
-          impacto: 'Alto',
-          severidade: 'Crítica',
-          ordem: index + 1
-        });
+      data.itens.filter(item => item.momento && String(item.momento).toUpperCase().includes('BLOQUEADO')).forEach((item, index) => {
+        data.riscos.push({ risco: 'Bloqueio: ' + item.item, descricao: 'Item ' + item.id + ' está bloqueado. Épico: ' + (item.epico || 'N/A'), impacto: 'Alto', severidade: 'Crítica', ordem: index + 1 });
       });
 
-      // 4. PRÓXIMOS PASSOS - Itens em andamento
-      const itensEmAndamento = data.itens.filter(item => 
-        item.momento && String(item.momento).toUpperCase().includes('EM ANDAMENTO')
-      );
-
-      itensEmAndamento.forEach((item, index) => {
-        data.proximos.push({
-          atividade: item.item,
-          data: item.dataPrevista || item.dataEntrega || '',
-          responsavel: item.responsavel || 'A definir',
-          ordem: index + 1
-        });
+      data.itens.filter(item => item.momento && String(item.momento).toUpperCase().includes('EM ANDAMENTO')).forEach((item, index) => {
+        data.proximos.push({ atividade: item.item, data: item.dataPrevista || item.dataEntrega || '', responsavel: item.responsavel || 'A definir', ordem: index + 1 });
       });
     }
 
     function applyMeta(meta) {
       const nameEl = document.getElementById('project-name');
-      if (nameEl && meta.NomeProjeto) {
-        nameEl.textContent = meta.NomeProjeto;
-      }
-
+      if (nameEl && meta.NomeProjeto) nameEl.textContent = meta.NomeProjeto;
       const descEl = document.getElementById('project-description-text');
-      if (descEl && meta.DescricaoProjeto) {
-        descEl.textContent = meta.DescricaoProjeto;
-      }
-
+      if (descEl && meta.DescricaoProjeto) descEl.textContent = meta.DescricaoProjeto;
       const startEl = document.getElementById('project-start-date');
-      if (startEl && meta.DataInicio) {
-        startEl.textContent = formatDate(meta.DataInicio);
-      }
-
+      if (startEl && meta.DataInicio) startEl.textContent = formatDate(meta.DataInicio);
       const endEl = document.getElementById('project-end-date');
-      if (endEl && meta.DataFimPrevista) {
-        endEl.textContent = formatDate(meta.DataFimPrevista);
-      }
-
+      if (endEl && meta.DataFimPrevista) endEl.textContent = formatDate(meta.DataFimPrevista);
       const statusTextEl = document.getElementById('status-geral-text');
-      if (statusTextEl && meta.StatusGeral) {
-        statusTextEl.textContent = 'Status Geral: ' + meta.StatusGeral;
-      }
-
+      if (statusTextEl && meta.StatusGeral) statusTextEl.textContent = 'Status Geral: ' + meta.StatusGeral;
       const dotEl = document.getElementById('status-geral-dot');
       if (dotEl && meta.CorStatusGeral) {
         const colorClass = mapColorClass(meta.CorStatusGeral);
@@ -1401,72 +486,64 @@
         else if (colorClass === 'yellow') dotEl.style.background = 'var(--yellow)';
         else dotEl.style.background = 'var(--green)';
       }
-
       const percEl = document.getElementById('project-progress-percent');
       const progressBar = document.getElementById('progress');
       if (meta.ProgressoGeralPercentual !== undefined && meta.ProgressoGeralPercentual !== null) {
         const val = Number(meta.ProgressoGeralPercentual) || 0;
         if (percEl) percEl.textContent = val + '%';
-        if (progressBar) {
-          setTimeout(() => {
-            progressBar.style.width = val + '%';
-          }, 100);
-        }
+        if (progressBar) setTimeout(() => { progressBar.style.width = val + '%'; }, 100);
       }
     }
 
     function showWarnings(warnings) {
       const alertDiv = document.getElementById('validation-alerts');
       if (!alertDiv) return;
-      
       alertDiv.innerHTML = '';
-      
       if (warnings && warnings.length > 0) {
         const alert = document.createElement('div');
         alert.className = 'alert-box';
         alert.innerHTML = '<strong>⚠️ Atenções:</strong>';
         const ul = document.createElement('ul');
         ul.style.marginTop = '8px';
-        ul.style.marginLeft = '0';
-        warnings.forEach(w => {
-          const li = document.createElement('li');
-          li.textContent = w;
-          li.style.marginBottom = '4px';
-          ul.appendChild(li);
-        });
+        warnings.forEach(w => { const li = document.createElement('li'); li.textContent = w; li.style.marginBottom = '4px'; ul.appendChild(li); });
         alert.appendChild(ul);
         alertDiv.appendChild(alert);
       }
     }
 
+    // CORREÇÃO 2: Funções para expandir/colapsar todos
+    function expandAllGantt() {
+      const grid = document.getElementById('gantt-grid');
+      if (!grid) return;
+      grid.querySelectorAll('.historia-row').forEach(row => row.classList.add('expanded'));
+      grid.querySelectorAll('.expand-toggle.has-historias').forEach(btn => btn.textContent = '▼');
+    }
+
+    function collapseAllGantt() {
+      const grid = document.getElementById('gantt-grid');
+      if (!grid) return;
+      grid.querySelectorAll('.historia-row').forEach(row => row.classList.remove('expanded'));
+      grid.querySelectorAll('.expand-toggle.has-historias').forEach(btn => btn.textContent = '▶');
+    }
+
     function renderGantt(processos) {
       const grid = document.getElementById('gantt-grid');
       const headerMonths = document.getElementById('gantt-header-months');
-      if (!grid || !processos || !processos.length) {
-        if (grid) grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Nenhum processo disponível</div>';
-        return;
-      }
-
-      let minStart = null;
-      let maxEnd = null;
-
-      processos.forEach(p => {
-        const s = toDate(p.dataInicio);
-        const e = toDate(p.dataFim);
+      if (!grid || !processos || !processos.length) { if (grid) grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Nenhum processo disponível</div>'; return; }
+      
+      let minStart = null, maxEnd = null;
+      const allItems = [...processos];
+      processos.forEach(p => { if (p.historias && p.historias.length > 0) allItems.push(...p.historias); });
+      allItems.forEach(p => {
+        const s = toDate(p.dataInicio), e = toDate(p.dataFim);
         if (!s || !e) return;
         if (!minStart || s < minStart) minStart = s;
         if (!maxEnd || e > maxEnd) maxEnd = e;
       });
-
-      if (!minStart || !maxEnd) {
-        grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Processos sem datas válidas</div>';
-        return;
-      }
-
+      if (!minStart || !maxEnd) { grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Processos sem datas válidas</div>'; return; }
       const totalMs = maxEnd - minStart;
       if (totalMs <= 0) return;
 
-      // Cabeçalho de meses
       if (headerMonths) {
         headerMonths.innerHTML = '';
         let d = new Date(minStart.getFullYear(), minStart.getMonth(), 1);
@@ -1474,137 +551,116 @@
         while (d <= endMonth) {
           const div = document.createElement('div');
           div.className = 'gantt-header-month';
-          const label = d.toLocaleDateString('pt-BR', { month: 'short' })
-                        .replace('.', '')
-                        .toUpperCase();
-          div.textContent = label;
+          div.textContent = d.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '').toUpperCase() + '/' + d.getFullYear().toString().slice(-2);
           headerMonths.appendChild(div);
           d.setMonth(d.getMonth() + 1);
         }
       }
 
-      // Gantt grid
       grid.innerHTML = '';
       processos.forEach(p => {
-        const s = toDate(p.dataInicio);
-        const e = toDate(p.dataFim);
-        if (!s || !e) return;
-
-        const startPercent = ((s - minStart) / totalMs) * 100;
-        const endPercent = ((e - minStart) / totalMs) * 100;
-
-        let left = Math.max(0, Math.min(100, startPercent));
-        let right = Math.max(0, Math.min(100, endPercent));
-        if (right < left) right = left;
-
-        let width = right - left;
-        const minWidth = 8;
-        if (width < minWidth) {
-          width = minWidth;
-          if (left + width > 100) {
-            left = Math.max(0, 100 - width);
-          }
-        }
-        if (left + width > 100) {
-          width = 100 - left;
-        }
-
-        const statusClass = mapStatusChipClass(p.status);
-
-        const row = document.createElement('div');
-        row.className = 'gantt-row';
-
-        const leftDiv = document.createElement('div');
-        leftDiv.className = 'gantt-row-left';
-
-        const titleDiv = document.createElement('div');
-        titleDiv.className = 'process-title';
-        titleDiv.textContent = p.nome || '';
-        leftDiv.appendChild(titleDiv);
-
-        const statusSpan = document.createElement('span');
-        statusSpan.className = 'status-chip ' + statusClass;
-        statusSpan.textContent = p.status || '';
-        leftDiv.appendChild(statusSpan);
-
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'process-date';
-        dateSpan.textContent = (formatDate(p.dataInicio) || '') + ' – ' + (formatDate(p.dataFim) || '');
-        leftDiv.appendChild(dateSpan);
-
-        const rightDiv = document.createElement('div');
-        rightDiv.className = 'gantt-row-right';
-
-        const laneDiv = document.createElement('div');
-        laneDiv.className = 'gantt-lane';
-
-        const barDiv = document.createElement('div');
-        barDiv.className = 'gantt-bar ' + statusClass;
-        barDiv.style.left = left + '%';
-        barDiv.style.width = width + '%';
-        barDiv.textContent = p.progresso != null ? p.progresso + '%' : '';
-
-        laneDiv.appendChild(barDiv);
-        rightDiv.appendChild(laneDiv);
-
-        row.appendChild(leftDiv);
-        row.appendChild(rightDiv);
-
-        grid.appendChild(row);
+        renderGanttRow(p, minStart, totalMs, grid, false);
+        if (p.historias && p.historias.length > 0) p.historias.forEach(h => renderGanttRow(h, minStart, totalMs, grid, true, p.id));
       });
 
-      // Tabela para impressão
       const printBody = document.getElementById('gantt-print-body');
       if (printBody) {
         printBody.innerHTML = '';
         processos.forEach(p => {
-          const s = formatDate(p.dataInicio);
-          const e = formatDate(p.dataFim);
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${p.nome || ''}</td>
-            <td>${s} – ${e}</td>
-            <td>${p.status || ''}</td>
-            <td>${p.progresso != null ? p.progresso + '%' : ''}</td>
-          `;
+          tr.innerHTML = '<td><strong>' + (p.nome || '') + '</strong></td><td>' + formatDate(p.dataInicio) + ' – ' + formatDate(p.dataFim) + '</td><td>' + (p.status || '') + '</td><td>' + (p.progresso != null ? p.progresso + '%' : '') + '</td>';
           printBody.appendChild(tr);
+          if (p.historias && p.historias.length > 0) p.historias.forEach(h => {
+            const htr = document.createElement('tr');
+            htr.innerHTML = '<td style="padding-left: 20px;">└ ' + (h.nome || '') + '</td><td>' + formatDate(h.dataInicio) + ' – ' + formatDate(h.dataFim) + '</td><td>' + (h.status || '') + '</td><td>' + (h.progresso != null ? h.progresso + '%' : '') + '</td>';
+            printBody.appendChild(htr);
+          });
         });
       }
+    }
+
+    function renderGanttRow(item, minStart, totalMs, container, isHistoria, epicoId) {
+      const s = toDate(item.dataInicio), e = toDate(item.dataFim);
+      if (!s || !e) return;
+      const startPercent = ((s - minStart) / totalMs) * 100;
+      const endPercent = ((e - minStart) / totalMs) * 100;
+      let left = Math.max(0, Math.min(100, startPercent));
+      let right = Math.max(0, Math.min(100, endPercent));
+      if (right < left) right = left;
+      let width = right - left;
+      if (width < 5) { width = 5; if (left + width > 100) left = Math.max(0, 100 - width); }
+      if (left + width > 100) width = 100 - left;
+      const statusClass = mapStatusChipClass(item.status);
+
+      const row = document.createElement('div');
+      row.className = 'gantt-row' + (isHistoria ? ' historia-row' : '');
+      if (isHistoria && epicoId) row.setAttribute('data-epico-id', epicoId);
+
+      const leftDiv = document.createElement('div');
+      leftDiv.className = 'gantt-row-left';
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'process-title';
+
+      if (!isHistoria && item.historias && item.historias.length > 0) {
+        const toggleBtn = document.createElement('span');
+        toggleBtn.className = 'expand-toggle has-historias';
+        toggleBtn.textContent = '▶';
+        toggleBtn.setAttribute('data-epico-id', item.id);
+        toggleBtn.addEventListener('click', function(ev) {
+          ev.stopPropagation();
+          const eid = this.getAttribute('data-epico-id');
+          const hrows = container.querySelectorAll('.historia-row[data-epico-id="' + eid + '"]');
+          if (this.textContent === '▼') { this.textContent = '▶'; hrows.forEach(r => r.classList.remove('expanded')); }
+          else { this.textContent = '▼'; hrows.forEach(r => r.classList.add('expanded')); }
+        });
+        titleDiv.appendChild(toggleBtn);
+      }
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = item.nome || '';
+      titleDiv.appendChild(nameSpan);
+      if (!isHistoria && item.historias && item.historias.length > 0) {
+        const countSpan = document.createElement('span');
+        countSpan.className = 'historia-count';
+        countSpan.textContent = item.historias.length + ' história' + (item.historias.length > 1 ? 's' : '');
+        titleDiv.appendChild(countSpan);
+      }
+      leftDiv.appendChild(titleDiv);
+
+      const statusSpan = document.createElement('span');
+      statusSpan.className = 'status-chip ' + statusClass;
+      statusSpan.textContent = item.status || '';
+      leftDiv.appendChild(statusSpan);
+
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'process-date';
+      dateSpan.textContent = (formatDate(item.dataInicio) || '') + ' – ' + (formatDate(item.dataFim) || '');
+      leftDiv.appendChild(dateSpan);
+
+      const rightDiv = document.createElement('div');
+      rightDiv.className = 'gantt-row-right';
+      const laneDiv = document.createElement('div');
+      laneDiv.className = 'gantt-lane';
+      const barDiv = document.createElement('div');
+      barDiv.className = 'gantt-bar ' + statusClass;
+      barDiv.style.left = left + '%';
+      barDiv.style.width = width + '%';
+      barDiv.textContent = item.progresso != null ? item.progresso + '%' : '';
+      laneDiv.appendChild(barDiv);
+      rightDiv.appendChild(laneDiv);
+
+      row.appendChild(leftDiv);
+      row.appendChild(rightDiv);
+      container.appendChild(row);
     }
 
     function renderMarcos(marcos) {
       const tbody = document.getElementById('marcos-body');
       if (!tbody) return;
-      
-      if (!marcos || !marcos.length) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum marco disponível</td></tr>';
-        return;
-      }
-      
+      if (!marcos || !marcos.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum marco disponível</td></tr>'; return; }
       tbody.innerHTML = '';
       marcos.forEach(m => {
-        const colorClass = mapColorClass(m.cor);
         const tr = document.createElement('tr');
-
-        const tdData = document.createElement('td');
-        tdData.innerHTML = '<strong>' + (formatDate(m.data) || '') + '</strong>';
-
-        const tdMarco = document.createElement('td');
-        tdMarco.textContent = m.marco || '';
-
-        const tdStatus = document.createElement('td');
-        const span = document.createElement('span');
-        span.className = 'badge ' + colorClass;
-        const dot = document.createElement('span');
-        dot.className = 'status-dot';
-        span.appendChild(dot);
-        span.appendChild(document.createTextNode(' ' + (m.status || '')));
-        tdStatus.appendChild(span);
-
-        tr.appendChild(tdData);
-        tr.appendChild(tdMarco);
-        tr.appendChild(tdStatus);
-
+        tr.innerHTML = '<td><strong>' + (formatDate(m.data) || '') + '</strong></td><td>' + (m.marco || '') + '</td><td><span class="badge ' + mapColorClass(m.cor) + '"><span class="status-dot"></span> ' + (m.status || '') + '</span></td>';
         tbody.appendChild(tr);
       });
     }
@@ -1612,21 +668,12 @@
     function renderRiscos(riscos) {
       const ul = document.getElementById('risk-list');
       if (!ul) return;
-      
-      if (!riscos || !riscos.length) {
-        ul.innerHTML = '<li>Nenhum risco identificado</li>';
-        return;
-      }
-      
+      if (!riscos || !riscos.length) { ul.innerHTML = '<li>Nenhum risco identificado</li>'; return; }
       ul.innerHTML = '';
       riscos.forEach(r => {
         const li = document.createElement('li');
-        let texto = '';
-        if (r.risco) texto += '<strong>' + r.risco + '</strong>';
-        if (r.descricao) {
-          if (texto) texto += ' – ';
-          texto += r.descricao;
-        }
+        let texto = r.risco ? '<strong>' + r.risco + '</strong>' : '';
+        if (r.descricao) texto += (texto ? ' – ' : '') + r.descricao;
         const extras = [];
         if (r.impacto) extras.push('Impacto ' + r.impacto);
         if (r.severidade) extras.push('Severidade ' + r.severidade);
@@ -1639,247 +686,45 @@
     function renderNextSteps(steps) {
       const tbody = document.getElementById('next-steps-body');
       if (!tbody) return;
-      
-      if (!steps || !steps.length) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum próximo passo definido</td></tr>';
-        return;
-      }
-      
+      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum próximo passo definido</td></tr>'; return; }
       tbody.innerHTML = '';
       steps.forEach(s => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${s.atividade || ''}</td>
-          <td><strong>${formatDate(s.data) || ''}</strong></td>
-          <td>${s.responsavel || ''}</td>
-        `;
+        tr.innerHTML = '<td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '') + '</strong></td><td>' + (s.responsavel || '') + '</td>';
         tbody.appendChild(tr);
       });
-    }
-
-    function exportToExcel() {
-      if (!currentData) {
-        alert('Não há dados carregados para exportar. Primeiro clique em "Atualizar" e importe a planilha.');
-        return;
-      }
-
-      const meta = currentData.meta || {};
-      const processos = currentData.processos || [];
-      const marcos = currentData.marcos || [];
-      const riscos = currentData.riscos || [];
-      const proximos = currentData.proximos || [];
-
-      const rows = [];
-
-      // Metadados
-      rows.push(['NomeProjeto', meta.NomeProjeto || '']);
-      rows.push(['DescricaoProjeto', meta.DescricaoProjeto || '']);
-      rows.push(['DataInicio', formatDate(meta.DataInicio || '')]);
-      rows.push(['DataFimPrevista', formatDate(meta.DataFimPrevista || '')]);
-      rows.push(['StatusGeral', meta.StatusGeral || '']);
-      rows.push(['CorStatusGeral', meta.CorStatusGeral || '']);
-      rows.push(['ProgressoGeralPercentual', meta.ProgressoGeralPercentual != null ? meta.ProgressoGeralPercentual : '']);
-      rows.push(['Responsavel', meta.Responsavel || '']);
-      rows.push(['Owner', meta.Owner || '']);
-
-      // Processos
-      rows.push(['PROCESSOS (CRONOGRAMA MACRO)', '']);
-      rows.push(['IDProcesso', 'NomeProcesso', 'Status', 'DataInicio', 'DataFim', 'Progresso', 'Ordem']);
-
-      processos.forEach(p => {
-        rows.push([
-          p.id || '',
-          p.nome || '',
-          p.status || '',
-          formatDate(p.dataInicio || ''),
-          formatDate(p.dataFim || ''),
-          p.progresso != null ? p.progresso : '',
-          p.ordem != null ? p.ordem : ''
-        ]);
-      });
-
-      // Marcos
-      rows.push(['MARCOS PRINCIPAIS', '']);
-      rows.push(['Data', 'Marco', 'Status', 'Cor', 'Ordem']);
-
-      marcos.forEach(m => {
-        rows.push([
-          formatDate(m.data || ''),
-          m.marco || '',
-          m.status || '',
-          m.cor || '',
-          m.ordem != null ? m.ordem : ''
-        ]);
-      });
-
-      // Riscos
-      rows.push(['RISCOS E PENDÊNCIAS CRÍTICAS', '']);
-      rows.push(['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem']);
-
-      riscos.forEach(r => {
-        rows.push([
-          r.risco || '',
-          r.descricao || '',
-          r.impacto || '',
-          r.severidade || '',
-          r.ordem != null ? r.ordem : ''
-        ]);
-      });
-
-      // Próximos passos
-      rows.push(['PRÓXIMOS PASSOS', '']);
-      rows.push(['Atividade', 'DataPrevista', 'Responsavel', 'Ordem']);
-
-      proximos.forEach(p => {
-        rows.push([
-          p.atividade || '',
-          formatDate(p.data || ''),
-          p.responsavel || '',
-          p.ordem != null ? p.ordem : ''
-        ]);
-      });
-
-      const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet(rows);
-      XLSX.utils.book_append_sheet(wb, ws, 'Projeto');
-
-      const projectName = meta.NomeProjeto ? String(meta.NomeProjeto).replace(/[\\\/:*?"<>|]/g, '') : 'Projeto';
-      const fileName = projectName ? `${projectName}_Status_Exportado.xlsx` : 'Projeto_Status_Exportado.xlsx';
-
-      XLSX.writeFile(wb, fileName);
-    }
-
-    function exportToExcel() {
-      if (!currentData) {
-        alert('Não há dados carregados para exportar. Primeiro clique em "Atualizar" e importe a planilha.');
-        return;
-      }
-
-      const meta = currentData.meta || {};
-      const processos = currentData.processos || [];
-      const marcos = currentData.marcos || [];
-      const riscos = currentData.riscos || [];
-      const proximos = currentData.proximos || [];
-
-      const rows = [];
-
-      // Metadados
-      rows.push(['NomeProjeto', meta.NomeProjeto || '']);
-      rows.push(['DescricaoProjeto', meta.DescricaoProjeto || '']);
-      rows.push(['DataInicio', formatDate(meta.DataInicio || '')]);
-      rows.push(['DataFimPrevista', formatDate(meta.DataFimPrevista || '')]);
-      rows.push(['StatusGeral', meta.StatusGeral || '']);
-      rows.push(['CorStatusGeral', meta.CorStatusGeral || '']);
-      rows.push(['ProgressoGeralPercentual', meta.ProgressoGeralPercentual != null ? meta.ProgressoGeralPercentual : '']);
-      rows.push(['Responsavel', meta.Responsavel || '']);
-      rows.push(['Owner', meta.Owner || '']);
-
-      // Processos
-      rows.push(['PROCESSOS (CRONOGRAMA MACRO)', '']);
-      rows.push(['IDProcesso', 'NomeProcesso', 'Status', 'DataInicio', 'DataFim', 'Progresso', 'Ordem']);
-
-      processos.forEach(p => {
-        rows.push([
-          p.id || '',
-          p.nome || '',
-          p.status || '',
-          formatDate(p.dataInicio || ''),
-          formatDate(p.dataFim || ''),
-          p.progresso != null ? p.progresso : '',
-          p.ordem != null ? p.ordem : ''
-        ]);
-      });
-
-      // Marcos
-      rows.push(['MARCOS PRINCIPAIS', '']);
-      rows.push(['Data', 'Marco', 'Status', 'Cor', 'Ordem']);
-
-      marcos.forEach(m => {
-        rows.push([
-          formatDate(m.data || ''),
-          m.marco || '',
-          m.status || '',
-          m.cor || '',
-          m.ordem != null ? m.ordem : ''
-        ]);
-      });
-
-      // Riscos
-      rows.push(['RISCOS E PENDÊNCIAS CRÍTICAS', '']);
-      rows.push(['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem']);
-
-      riscos.forEach(r => {
-        rows.push([
-          r.risco || '',
-          r.descricao || '',
-          r.impacto || '',
-          r.severidade || '',
-          r.ordem != null ? r.ordem : ''
-        ]);
-      });
-
-      // Próximos passos
-      rows.push(['PRÓXIMOS PASSOS', '']);
-      rows.push(['Atividade', 'DataPrevista', 'Responsavel', 'Ordem']);
-
-      proximos.forEach(p => {
-        rows.push([
-          p.atividade || '',
-          formatDate(p.data || ''),
-          p.responsavel || '',
-          p.ordem != null ? p.ordem : ''
-        ]);
-      });
-
-      const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet(rows);
-      XLSX.utils.book_append_sheet(wb, ws, 'Projeto');
-
-      const projectName = meta.NomeProjeto ? String(meta.NomeProjeto).replace(/[\\\/:*?"<>|]/g, '') : 'Projeto';
-      const fileName = projectName ? `${projectName}_Status_Report.xlsx` : 'Projeto_Status_Report.xlsx';
-
-      XLSX.writeFile(wb, fileName);
     }
 
     function toISODateInput(value) {
       const d = toDate(value);
       if (!d) return '';
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return y + '-' + m + '-' + day;
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     }
-
-    /* === Construção do editor (modal) === */
 
     function populateMetaTab() {
       const tab = document.getElementById('editor-tab-meta');
       if (!tab || !currentData) return;
       tab.innerHTML = '';
-
       const table = document.createElement('table');
       table.className = 'editor-table';
       const tbody = document.createElement('tbody');
-
       const fields = [
         { key: 'NomeProjeto', label: 'Nome do Projeto', type: 'text' },
         { key: 'DescricaoProjeto', label: 'Descrição do Projeto', type: 'textarea' },
         { key: 'DataInicio', label: 'Data de Início', type: 'date' },
         { key: 'DataFimPrevista', label: 'Previsão de Conclusão', type: 'date' },
         { key: 'StatusGeral', label: 'Status Geral', type: 'text' },
-        { key: 'CorStatusGeral', label: 'Cor do Status (verde, amarelo, vermelho)', type: 'text' },
-        { key: 'ProgressoGeralPercentual', label: 'Progresso Geral (%)', type: 'number' },
+        { key: 'CorStatusGeral', label: 'Cor do Status', type: 'text' },
+        { key: 'ProgressoGeralPercentual', label: 'Progresso (%)', type: 'number' },
         { key: 'Responsavel', label: 'Responsável', type: 'text' },
-        { key: 'Owner', label: 'Owner (Dono)', type: 'text' }
+        { key: 'Owner', label: 'Owner', type: 'text' }
       ];
-
       fields.forEach(f => {
         const tr = document.createElement('tr');
         const tdLabel = document.createElement('td');
         tdLabel.textContent = f.label;
         tdLabel.style.width = '40%';
         const tdInput = document.createElement('td');
-        
         if (f.type === 'textarea') {
           const textarea = document.createElement('textarea');
           textarea.setAttribute('data-meta-key', f.key);
@@ -1889,58 +734,30 @@
           const input = document.createElement('input');
           input.setAttribute('data-meta-key', f.key);
           input.type = f.type || 'text';
-          if (f.type === 'number') {
-            input.min = '0';
-            input.max = '100';
-          }
-
-          const value = currentData.meta[f.key];
-          if (f.type === 'date') {
-            input.value = toISODateInput(value);
-          } else {
-            input.value = value != null ? value : '';
-          }
+          if (f.type === 'number') { input.min = '0'; input.max = '100'; }
+          input.value = f.type === 'date' ? toISODateInput(currentData.meta[f.key]) : (currentData.meta[f.key] != null ? currentData.meta[f.key] : '');
           tdInput.appendChild(input);
         }
-        
         tr.appendChild(tdLabel);
         tr.appendChild(tdInput);
         tbody.appendChild(tr);
       });
-
       table.appendChild(tbody);
       tab.appendChild(table);
     }
 
-    function createProcessoRow(p) {
+    function createTableRow(fields, data) {
       const tr = document.createElement('tr');
-      const fields = [
-        { field: 'id', label: 'ID', type: 'text' },
-        { field: 'nome', label: 'Processo', type: 'text' },
-        { field: 'status', label: 'Status', type: 'text' },
-        { field: 'dataInicio', label: 'Data Início', type: 'date' },
-        { field: 'dataFim', label: 'Data Fim', type: 'date' },
-        { field: 'progresso', label: '%', type: 'number' },
-        { field: 'ordem', label: 'Ordem', type: 'number' }
-      ];
-
       fields.forEach(cfg => {
         const td = document.createElement('td');
         const input = document.createElement('input');
         input.type = cfg.type;
         input.setAttribute('data-field', cfg.field);
-        let val = p ? p[cfg.field] : '';
-        if (cfg.type === 'date') {
-          input.value = toISODateInput(val);
-        } else if (cfg.type === 'number') {
-          input.value = val != null ? val : '';
-        } else {
-          input.value = val != null ? val : '';
-        }
+        let val = data ? data[cfg.field] : '';
+        input.value = cfg.type === 'date' ? toISODateInput(val) : (val != null ? val : '');
         td.appendChild(input);
         tr.appendChild(td);
       });
-
       const tdActions = document.createElement('td');
       const delBtn = document.createElement('button');
       delBtn.type = 'button';
@@ -1948,7 +765,6 @@
       delBtn.textContent = 'Excluir';
       tdActions.appendChild(delBtn);
       tr.appendChild(tdActions);
-
       return tr;
     }
 
@@ -1956,526 +772,200 @@
       const tab = document.getElementById('editor-tab-processos');
       if (!tab || !currentData) return;
       tab.innerHTML = '';
-
       const table = document.createElement('table');
       table.className = 'editor-table';
-
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['ID', 'Processo', 'Status', 'Data Início', 'Data Fim', '%', 'Ordem', ''].forEach(text => {
-        const th = document.createElement('th');
-        th.textContent = text;
-        headRow.appendChild(th);
-      });
+      ['ID', 'Processo', 'Status', 'Data Início', 'Data Fim', '%', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
-
       const tbody = document.createElement('tbody');
-      (currentData.processos || []).forEach(p => {
-        tbody.appendChild(createProcessoRow(p));
-      });
+      const fields = [{ field: 'id', type: 'text' }, { field: 'nome', type: 'text' }, { field: 'status', type: 'text' }, { field: 'dataInicio', type: 'date' }, { field: 'dataFim', type: 'date' }, { field: 'progresso', type: 'number' }, { field: 'ordem', type: 'number' }];
+      (currentData.processos || []).forEach(p => tbody.appendChild(createTableRow(fields, p)));
       table.appendChild(tbody);
-
       tab.appendChild(table);
-
       const addBtn = document.createElement('button');
       addBtn.type = 'button';
       addBtn.className = 'editor-add-btn';
       addBtn.textContent = '+ Adicionar processo';
-      addBtn.addEventListener('click', function () {
-        tbody.appendChild(createProcessoRow({}));
-      });
+      addBtn.addEventListener('click', () => tbody.appendChild(createTableRow(fields, {})));
       tab.appendChild(addBtn);
-    }
-
-    function createMarcoRow(m) {
-      const tr = document.createElement('tr');
-      const fields = [
-        { field: 'data', type: 'date' },
-        { field: 'marco', type: 'text' },
-        { field: 'status', type: 'text' },
-        { field: 'cor', type: 'text' },
-        { field: 'ordem', type: 'number' }
-      ];
-      fields.forEach(cfg => {
-        const td = document.createElement('td');
-        const input = document.createElement('input');
-        input.type = cfg.type;
-        input.setAttribute('data-field', cfg.field);
-        let val = m ? m[cfg.field] : '';
-        if (cfg.type === 'date') {
-          input.value = toISODateInput(val);
-        } else {
-          input.value = val != null ? val : '';
-        }
-        td.appendChild(input);
-        tr.appendChild(td);
-      });
-
-      const tdActions = document.createElement('td');
-      const delBtn = document.createElement('button');
-      delBtn.type = 'button';
-      delBtn.className = 'row-delete-btn';
-      delBtn.textContent = 'Excluir';
-      tdActions.appendChild(delBtn);
-      tr.appendChild(tdActions);
-
-      return tr;
     }
 
     function populateMarcosTab() {
       const tab = document.getElementById('editor-tab-marcos');
       if (!tab || !currentData) return;
       tab.innerHTML = '';
-
       const table = document.createElement('table');
       table.className = 'editor-table';
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['Data', 'Marco', 'Status', 'Cor', 'Ordem', ''].forEach(text => {
-        const th = document.createElement('th');
-        th.textContent = text;
-        headRow.appendChild(th);
-      });
+      ['Data', 'Marco', 'Status', 'Cor', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
-
       const tbody = document.createElement('tbody');
-      (currentData.marcos || []).forEach(m => {
-        tbody.appendChild(createMarcoRow(m));
-      });
+      const fields = [{ field: 'data', type: 'date' }, { field: 'marco', type: 'text' }, { field: 'status', type: 'text' }, { field: 'cor', type: 'text' }, { field: 'ordem', type: 'number' }];
+      (currentData.marcos || []).forEach(m => tbody.appendChild(createTableRow(fields, m)));
       table.appendChild(tbody);
-
       tab.appendChild(table);
-
       const addBtn = document.createElement('button');
       addBtn.type = 'button';
       addBtn.className = 'editor-add-btn';
       addBtn.textContent = '+ Adicionar marco';
-      addBtn.addEventListener('click', function () {
-        tbody.appendChild(createMarcoRow({}));
-      });
+      addBtn.addEventListener('click', () => tbody.appendChild(createTableRow(fields, {})));
       tab.appendChild(addBtn);
-    }
-
-    function createRiscoRow(r) {
-      const tr = document.createElement('tr');
-      const fields = [
-        { field: 'risco', type: 'text' },
-        { field: 'descricao', type: 'text' },
-        { field: 'impacto', type: 'text' },
-        { field: 'severidade', type: 'text' },
-        { field: 'ordem', type: 'number' }
-      ];
-      fields.forEach(cfg => {
-        const td = document.createElement('td');
-        const input = document.createElement('input');
-        input.type = cfg.type;
-        input.setAttribute('data-field', cfg.field);
-        let val = r ? r[cfg.field] : '';
-        input.value = val != null ? val : '';
-        td.appendChild(input);
-        tr.appendChild(td);
-      });
-
-      const tdActions = document.createElement('td');
-      const delBtn = document.createElement('button');
-      delBtn.type = 'button';
-      delBtn.className = 'row-delete-btn';
-      delBtn.textContent = 'Excluir';
-      tdActions.appendChild(delBtn);
-      tr.appendChild(tdActions);
-
-      return tr;
     }
 
     function populateRiscosTab() {
       const tab = document.getElementById('editor-tab-riscos');
       if (!tab || !currentData) return;
       tab.innerHTML = '';
-
       const table = document.createElement('table');
       table.className = 'editor-table';
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem', ''].forEach(text => {
-        const th = document.createElement('th');
-        th.textContent = text;
-        headRow.appendChild(th);
-      });
+      ['Risco', 'Descrição', 'Impacto', 'Severidade', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
-
       const tbody = document.createElement('tbody');
-      (currentData.riscos || []).forEach(r => {
-        tbody.appendChild(createRiscoRow(r));
-      });
+      const fields = [{ field: 'risco', type: 'text' }, { field: 'descricao', type: 'text' }, { field: 'impacto', type: 'text' }, { field: 'severidade', type: 'text' }, { field: 'ordem', type: 'number' }];
+      (currentData.riscos || []).forEach(r => tbody.appendChild(createTableRow(fields, r)));
       table.appendChild(tbody);
-
       tab.appendChild(table);
-
       const addBtn = document.createElement('button');
       addBtn.type = 'button';
       addBtn.className = 'editor-add-btn';
       addBtn.textContent = '+ Adicionar risco';
-      addBtn.addEventListener('click', function () {
-        tbody.appendChild(createRiscoRow({}));
-      });
+      addBtn.addEventListener('click', () => tbody.appendChild(createTableRow(fields, {})));
       tab.appendChild(addBtn);
-    }
-
-    function createProximoRow(p) {
-      const tr = document.createElement('tr');
-      const fields = [
-        { field: 'atividade', type: 'text' },
-        { field: 'data', type: 'date' },
-        { field: 'responsavel', type: 'text' },
-        { field: 'ordem', type: 'number' }
-      ];
-      fields.forEach(cfg => {
-        const td = document.createElement('td');
-        const input = document.createElement('input');
-        input.type = cfg.type;
-        input.setAttribute('data-field', cfg.field);
-        let val = p ? p[cfg.field] : '';
-        if (cfg.type === 'date') {
-          input.value = toISODateInput(val);
-        } else {
-          input.value = val != null ? val : '';
-        }
-        td.appendChild(input);
-        tr.appendChild(td);
-      });
-
-      const tdActions = document.createElement('td');
-      const delBtn = document.createElement('button');
-      delBtn.type = 'button';
-      delBtn.className = 'row-delete-btn';
-      delBtn.textContent = 'Excluir';
-      tdActions.appendChild(delBtn);
-      tr.appendChild(tdActions);
-
-      return tr;
     }
 
     function populateProximosTab() {
       const tab = document.getElementById('editor-tab-proximos');
       if (!tab || !currentData) return;
       tab.innerHTML = '';
-
       const table = document.createElement('table');
       table.className = 'editor-table';
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['Atividade', 'Data prevista', 'Responsável', 'Ordem', ''].forEach(text => {
-        const th = document.createElement('th');
-        th.textContent = text;
-        headRow.appendChild(th);
-      });
+      ['Atividade', 'Data prevista', 'Responsável', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
-
       const tbody = document.createElement('tbody');
-      (currentData.proximos || []).forEach(p => {
-        tbody.appendChild(createProximoRow(p));
-      });
+      const fields = [{ field: 'atividade', type: 'text' }, { field: 'data', type: 'date' }, { field: 'responsavel', type: 'text' }, { field: 'ordem', type: 'number' }];
+      (currentData.proximos || []).forEach(p => tbody.appendChild(createTableRow(fields, p)));
       table.appendChild(tbody);
-
       tab.appendChild(table);
-
       const addBtn = document.createElement('button');
       addBtn.type = 'button';
       addBtn.className = 'editor-add-btn';
       addBtn.textContent = '+ Adicionar próximo passo';
-      addBtn.addEventListener('click', function () {
-        tbody.appendChild(createProximoRow({}));
-      });
+      addBtn.addEventListener('click', () => tbody.appendChild(createTableRow(fields, {})));
       tab.appendChild(addBtn);
     }
 
     function openEditor() {
-      if (!currentData) {
-        alert('Para editar, primeiro clique em "Atualizar" e carregue a planilha do projeto.');
-        return;
-      }
+      if (!currentData) { alert('Para editar, primeiro carregue a planilha do projeto.'); return; }
       populateMetaTab();
       populateProcessosTab();
       populateMarcosTab();
       populateRiscosTab();
       populateProximosTab();
-
-      const modal = document.getElementById('editor-modal');
-      if (!modal) return;
-      modal.style.display = 'flex';
-
+      document.getElementById('editor-modal').style.display = 'flex';
       setActiveEditorTab('meta');
     }
 
-    function closeEditor() {
-      const modal = document.getElementById('editor-modal');
-      if (modal) modal.style.display = 'none';
-    }
+    function closeEditor() { document.getElementById('editor-modal').style.display = 'none'; }
 
     function setActiveEditorTab(tabName) {
       const modal = document.getElementById('editor-modal');
-      if (!modal) return;
-      const buttons = modal.querySelectorAll('.editor-tabs button');
-      const tabs = modal.querySelectorAll('.editor-tab');
-      buttons.forEach(btn => {
-        const t = btn.getAttribute('data-tab');
-        btn.classList.toggle('active', t === tabName);
-      });
-      tabs.forEach(div => {
-        const t = div.getAttribute('data-tab');
-        div.classList.toggle('active', t === tabName);
-      });
+      modal.querySelectorAll('.editor-tabs button').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName));
+      modal.querySelectorAll('.editor-tab').forEach(div => div.classList.toggle('active', div.getAttribute('data-tab') === tabName));
     }
 
     function readEditorDataAndSave() {
       if (!currentData) return;
-
-      // Meta
-      const metaInputs = document.querySelectorAll('#editor-tab-meta [data-meta-key]');
-      metaInputs.forEach(input => {
+      document.querySelectorAll('#editor-tab-meta [data-meta-key]').forEach(input => {
         const key = input.getAttribute('data-meta-key');
-        let val = input.value;
-        if (key === 'ProgressoGeralPercentual') {
-          val = Number(val) || 0;
-        }
-        currentData.meta[key] = val;
+        currentData.meta[key] = key === 'ProgressoGeralPercentual' ? (Number(input.value) || 0) : input.value;
+      });
+      
+      ['processos', 'marcos', 'riscos', 'proximos'].forEach(section => {
+        const tab = document.getElementById('editor-tab-' + section);
+        if (!tab) return;
+        const tbody = tab.querySelector('tbody');
+        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
+        const novos = [];
+        rows.forEach(row => {
+          const getVal = (field) => { const inp = row.querySelector('input[data-field="' + field + '"]'); return inp ? inp.value : ''; };
+          const obj = {};
+          row.querySelectorAll('input[data-field]').forEach(inp => {
+            const field = inp.getAttribute('data-field');
+            obj[field] = inp.type === 'number' ? (inp.value.trim() ? Number(inp.value) || 0 : null) : inp.value.trim();
+          });
+          const mainField = section === 'processos' ? 'nome' : section === 'marcos' ? 'marco' : section === 'riscos' ? 'risco' : 'atividade';
+          if (obj[mainField]) novos.push(obj);
+        });
+        currentData[section] = novos;
       });
 
-      // Processos
-      const procTab = document.getElementById('editor-tab-processos');
-      if (procTab) {
-        const tbody = procTab.querySelector('tbody');
-        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
-        const novos = [];
-        rows.forEach(row => {
-          const getVal = (field) => {
-            const input = row.querySelector('input[data-field="' + field + '"]');
-            return input ? input.value : '';
-          };
-          const nome = getVal('nome').trim();
-          if (!nome) return;
-
-          novos.push({
-            id: getVal('id').trim() || null,
-            nome: nome,
-            status: getVal('status').trim(),
-            dataInicio: getVal('dataInicio').trim(),
-            dataFim: getVal('dataFim').trim(),
-            progresso: getVal('progresso').trim() ? Number(getVal('progresso')) || 0 : null,
-            ordem: getVal('ordem').trim() ? Number(getVal('ordem')) || null : null
-          });
-        });
-        currentData.processos = novos;
-      }
-
-      // Marcos
-      const marcosTab = document.getElementById('editor-tab-marcos');
-      if (marcosTab) {
-        const tbody = marcosTab.querySelector('tbody');
-        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
-        const novos = [];
-        rows.forEach(row => {
-          const getVal = (field) => {
-            const input = row.querySelector('input[data-field="' + field + '"]');
-            return input ? input.value : '';
-          };
-          const marco = getVal('marco').trim();
-          if (!marco) return;
-          novos.push({
-            data: getVal('data').trim(),
-            marco: marco,
-            status: getVal('status').trim(),
-            cor: getVal('cor').trim(),
-            ordem: getVal('ordem').trim() ? Number(getVal('ordem')) || null : null
-          });
-        });
-        currentData.marcos = novos;
-      }
-
-      // Riscos
-      const riscosTab = document.getElementById('editor-tab-riscos');
-      if (riscosTab) {
-        const tbody = riscosTab.querySelector('tbody');
-        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
-        const novos = [];
-        rows.forEach(row => {
-          const getVal = (field) => {
-            const input = row.querySelector('input[data-field="' + field + '"]');
-            return input ? input.value : '';
-          };
-          const risco = getVal('risco').trim();
-          if (!risco) return;
-          novos.push({
-            risco: risco,
-            descricao: getVal('descricao').trim(),
-            impacto: getVal('impacto').trim(),
-            severidade: getVal('severidade').trim(),
-            ordem: getVal('ordem').trim() ? Number(getVal('ordem')) || null : null
-          });
-        });
-        currentData.riscos = novos;
-      }
-
-      // Próximos passos
-      const proxTab = document.getElementById('editor-tab-proximos');
-      if (proxTab) {
-        const tbody = proxTab.querySelector('tbody');
-        const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
-        const novos = [];
-        rows.forEach(row => {
-          const getVal = (field) => {
-            const input = row.querySelector('input[data-field="' + field + '"]');
-            return input ? input.value : '';
-          };
-          const atividade = getVal('atividade').trim();
-          if (!atividade) return;
-          novos.push({
-            atividade: atividade,
-            data: getVal('data').trim(),
-            responsavel: getVal('responsavel').trim(),
-            ordem: getVal('ordem').trim() ? Number(getVal('ordem')) || null : null
-          });
-        });
-        currentData.proximos = novos;
-      }
-
-      // Re-renderiza tudo
       applyMeta(currentData.meta);
       renderGantt(currentData.processos);
       renderMarcos(currentData.marcos);
       renderRiscos(currentData.riscos);
       renderNextSteps(currentData.proximos);
-      
-      alert('✅ Alterações salvas com sucesso!');
+      alert('✅ Alterações salvas!');
     }
 
-    // Inicialização
     (function initExcelImport() {
       const btn = document.getElementById('update-button');
       const input = document.getElementById('excel-file');
-
       if (!btn || !input) return;
-
-      btn.addEventListener('click', function () {
-        input.click();
-      });
-
-      input.addEventListener('change', function (event) {
+      btn.addEventListener('click', () => input.click());
+      input.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (!file) return;
-
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function(e) {
           try {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array', cellDates: true });
-
             const parsed = parseSistemaExcel(workbook);
             currentData = parsed;
-
-            // Exibir warnings
             showWarnings(parsed.warnings);
-
-            // Renderizar tudo
             applyMeta(parsed.meta);
             renderGantt(parsed.processos);
             renderMarcos(parsed.marcos);
             renderRiscos(parsed.riscos);
             renderNextSteps(parsed.proximos);
-
-            console.log('Dados processados:', parsed);
-          } catch (error) {
-            alert('Erro ao processar arquivo: ' + error.message);
-            console.error(error);
-          }
+          } catch (error) { alert('Erro: ' + error.message); console.error(error); }
         };
-
         reader.readAsArrayBuffer(file);
-        
-        // Limpa o input para permitir re-upload do mesmo arquivo
         event.target.value = '';
       });
     })();
 
     (function initEditorUI() {
-      const editBtn = document.getElementById('edit-button');
-      const closeBtn = document.getElementById('editor-close');
-      const cancelBtn = document.getElementById('editor-cancel');
-      const saveBtn = document.getElementById('editor-save');
+      const expandAllBtn = document.getElementById('btn-expand-all');
+      const collapseAllBtn = document.getElementById('btn-collapse-all');
+      if (expandAllBtn) expandAllBtn.addEventListener('click', expandAllGantt);
+      if (collapseAllBtn) collapseAllBtn.addEventListener('click', collapseAllGantt);
+      
+      document.getElementById('edit-button').addEventListener('click', openEditor);
+      document.getElementById('editor-close').addEventListener('click', closeEditor);
+      document.getElementById('editor-cancel').addEventListener('click', closeEditor);
+      document.getElementById('editor-save').addEventListener('click', () => { readEditorDataAndSave(); closeEditor(); });
+      
       const modal = document.getElementById('editor-modal');
-
-      if (editBtn) {
-        editBtn.addEventListener('click', openEditor);
-      }
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeEditor);
-      }
-      if (cancelBtn) {
-        cancelBtn.addEventListener('click', closeEditor);
-      }
-      if (saveBtn) {
-        saveBtn.addEventListener('click', function () {
-          readEditorDataAndSave();
-          closeEditor();
-        });
-      }
-
-      if (modal) {
-        const tabButtons = modal.querySelectorAll('.editor-tabs button');
-        tabButtons.forEach(btn => {
-          btn.addEventListener('click', function () {
-            const tab = btn.getAttribute('data-tab');
-            setActiveEditorTab(tab);
-          });
-        });
-
-        // Delegação para botões de excluir linha
-        modal.addEventListener('click', function (e) {
-          const target = e.target;
-          if (target && target.classList.contains('row-delete-btn')) {
-            if (confirm('Deseja realmente excluir esta linha?')) {
-              const tr = target.closest('tr');
-              if (tr) {
-                tr.remove();
-              }
-            }
-          }
-        });
-        
-        // Fechar modal ao clicar fora
-        modal.addEventListener('click', function(e) {
-          if (e.target === modal) {
-            closeEditor();
-          }
-        });
-      }
+      modal.querySelectorAll('.editor-tabs button').forEach(btn => btn.addEventListener('click', () => setActiveEditorTab(btn.getAttribute('data-tab'))));
+      modal.addEventListener('click', function(e) {
+        if (e.target.classList.contains('row-delete-btn') && confirm('Excluir esta linha?')) e.target.closest('tr').remove();
+        if (e.target === modal) closeEditor();
+      });
     })();
 
-    // Atalhos de teclado
     document.addEventListener('keydown', function(e) {
-      // ESC fecha o modal
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('editor-modal');
-        if (modal && modal.style.display === 'flex') {
-          closeEditor();
-        }
-      }
-      
-      // Ctrl/Cmd + S salva e exporta
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        const modal = document.getElementById('editor-modal');
-        if (modal && modal.style.display === 'flex') {
-          readEditorDataAndSave();
-          closeEditor();
-        } else if (currentData) {
-          exportToExcel();
-        }
-      }
+      if (e.key === 'Escape' && document.getElementById('editor-modal').style.display === 'flex') closeEditor();
     });
   </script>
 </body>
