@@ -38,6 +38,7 @@
     /* Layout Grid */
     .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; margin-bottom: 12px; }
     .layout > div { display: flex; flex-direction: column; gap: 10px; }
+    .layout > div:first-child { display: flex; flex-direction: column; }
     .layout > div:first-child > .card { flex: 1; display: flex; flex-direction: column; }
     .gantt-full-width { grid-column: 1 / -1; }
 
@@ -123,6 +124,15 @@
     ul.risk-list li { margin-bottom: 8px; padding: 8px 10px; background: #fff5f5; border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; }
     ul.risk-list li strong { color: var(--accent); }
     ul.risk-list li .desc { color: var(--text-muted); font-size: 10px; margin-top: 2px; }
+
+    /* Next Steps Container com scroll */
+    .next-steps-container { max-height: 180px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+    .next-steps-container table { margin-top: 0; border-radius: 0; }
+    .next-steps-container thead { position: sticky; top: 0; z-index: 1; }
+    .next-steps-container::-webkit-scrollbar { width: 6px; }
+    .next-steps-container::-webkit-scrollbar-track { background: var(--bg); border-radius: 3px; }
+    .next-steps-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .next-steps-container::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
     /* Gantt */
     .gantt-section { background: white; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
@@ -293,10 +303,12 @@
 
         <div class="card">
           <div class="section-title"><span class="emoji">➡️</span>Próximos Passos</div>
-          <table>
-            <thead><tr><th>Atividade</th><th>Data Prevista</th><th>Responsável</th><th>Status</th></tr></thead>
-            <tbody id="next-steps-body"><tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Aguardando dados...</td></tr></tbody>
-          </table>
+          <div class="next-steps-container">
+            <table>
+              <thead><tr><th>História</th><th>Atividade</th><th>Data Prevista</th><th>Responsável</th><th>Status</th></tr></thead>
+              <tbody id="next-steps-body"><tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Aguardando dados...</td></tr></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -426,12 +438,23 @@
 
     function mapStatusFromMomento(momento) {
       if (!momento) return 'Backlog';
-      const m = String(momento).toUpperCase();
+      const m = String(momento).toUpperCase().replace(/\s+/g, ' ').trim();
       if (m.includes('FINALIZADO')) return 'Concluído';
-      if (m.includes('EM ANDAMENTO') || m.includes('EMANDAMENTO')) return 'Em andamento';
+      if (m.includes('EM ANDAMENTO') || m.includes('EMANDAMENTO') || m === 'EM ANDAMENTO') return 'Em Andamento';
       if (m.includes('BLOQUEADO')) return 'Bloqueado';
       if (m.includes('BACKLOG')) return 'Backlog';
       return 'Backlog';
+    }
+    
+    function normalizeStatus(status) {
+      if (!status) return '';
+      const s = String(status).toUpperCase().replace(/\s+/g, '');
+      if (s.includes('EMANDAMENTO')) return 'Em Andamento';
+      if (s.includes('FINALIZADO') || s.includes('CONCLUIDO') || s.includes('CONCLUÍDO')) return 'Concluído';
+      if (s.includes('BLOQUEADO')) return 'Bloqueado';
+      if (s.includes('BACKLOG')) return 'Backlog';
+      if (s.includes('AGUARDANDO')) return 'Aguardando';
+      return status;
     }
 
     function mapColorClass(cor) {
@@ -443,19 +466,19 @@
     }
 
     function mapStatusChipClass(status) {
-      const s = (status || '').toString().toLowerCase();
+      const s = (status || '').toString().toLowerCase().replace(/\s+/g, '');
       if (s.includes('backlog')) return 'status-backlog';
       if (s.includes('aguard')) return 'status-aguardando';
-      if (s.includes('andamento')) return 'status-em-andamento';
+      if (s.includes('andamento') || s.includes('emandamento')) return 'status-em-andamento';
       if (s.includes('conclu') || s.includes('finalizado')) return 'status-concluido';
       return 'status-aguardando';
     }
 
     function mapBarClass(status) {
-      const s = (status || '').toString().toLowerCase();
+      const s = (status || '').toString().toLowerCase().replace(/\s+/g, '');
       if (s.includes('backlog')) return 'bar-backlog';
       if (s.includes('aguard')) return 'bar-aguardando';
-      if (s.includes('andamento')) return 'bar-em-andamento';
+      if (s.includes('andamento') || s.includes('emandamento')) return 'bar-em-andamento';
       if (s.includes('conclu') || s.includes('finalizado')) return 'bar-concluido';
       return 'bar-aguardando';
     }
@@ -567,10 +590,11 @@
         if (!dataInicio || !dataFim) data.warnings.push('Épico "' + epico.nome + '" sem datas definidas');
 
         let statusMapeado = status;
-        const statusUpper = String(status).toUpperCase();
-        if (statusUpper.includes('EMANDAMENTO') || statusUpper === 'EM ANDAMENTO') statusMapeado = 'Em andamento';
+        const statusUpper = String(status).toUpperCase().replace(/\s+/g, '');
+        if (statusUpper.includes('EMANDAMENTO')) statusMapeado = 'Em Andamento';
         else if (statusUpper.includes('BACKLOG')) statusMapeado = 'Backlog';
-        else if (statusUpper.includes('FINALIZADO')) statusMapeado = 'Concluído';
+        else if (statusUpper.includes('FINALIZADO') || statusUpper.includes('CONCLUIDO')) statusMapeado = 'Concluído';
+        else if (statusUpper.includes('AGUARDANDO')) statusMapeado = 'Aguardando';
 
         const historias = itensDoEpico.filter(item => {
           const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
@@ -601,36 +625,75 @@
         data.riscos.push({ risco: 'Bloqueio: ' + item.item, descricao: 'Item ' + item.id + ' está bloqueado. Épico: ' + (item.epico || 'N/A'), impacto: 'Alto', severidade: 'Crítica', ordem: index + 1 });
       });
 
-      // PRÓXIMOS PASSOS - Itens em andamento E backlog (em andamento primeiro)
-      const itensEmAndamento = data.itens.filter(item => {
-        const momento = item.momento ? String(item.momento).toUpperCase() : '';
-        return momento.includes('EM ANDAMENTO') || momento.includes('EMANDAMENTO');
-      });
-      
-      const itensBacklog = data.itens.filter(item => {
-        const momento = item.momento ? String(item.momento).toUpperCase() : '';
-        return momento.includes('BACKLOG');
+      // PRÓXIMOS PASSOS - Apenas TAREFAS (não épicos/histórias), com história pai
+      const tarefas = data.itens.filter(item => {
+        const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
+        const momento = item.momento ? String(item.momento).toUpperCase().replace(/\s+/g, '') : '';
+        const isTarefa = tipo === 'tarefa';
+        const isEmAndamentoOuBacklog = momento.includes('EMANDAMENTO') || momento.includes('BACKLOG');
+        return isTarefa && isEmAndamentoOuBacklog;
       });
 
-      // Adicionar em andamento primeiro
-      itensEmAndamento.forEach((item, index) => {
-        data.proximos.push({ 
-          atividade: item.item, 
-          data: item.dataPrevista || item.dataEntrega || '', 
-          responsavel: item.responsavel || 'A definir', 
-          status: 'Em andamento',
-          ordem: index + 1 
+      // Encontrar a história pai de cada tarefa
+      const tarefasComHistoria = tarefas.map(tarefa => {
+        // Buscar história pai pelo ID (história tem ID que é prefixo da tarefa)
+        let historiaPai = null;
+        data.itens.forEach(item => {
+          const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
+          if ((tipo === 'historia' || tipo === 'história') && tarefa.id && item.id) {
+            // Verificar se o ID da tarefa começa com o ID da história
+            if (String(tarefa.id).startsWith(String(item.id))) {
+              historiaPai = item;
+            }
+          }
         });
+        
+        // Se não encontrou por ID, tentar pelo épico em comum
+        if (!historiaPai && tarefa.epico) {
+          const historiasMesmoEpico = data.itens.filter(item => {
+            const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
+            return (tipo === 'historia' || tipo === 'história') && item.epico === tarefa.epico;
+          });
+          if (historiasMesmoEpico.length > 0) {
+            historiaPai = historiasMesmoEpico[0];
+          }
+        }
+        
+        const momento = tarefa.momento ? String(tarefa.momento).toUpperCase().replace(/\s+/g, '') : '';
+        const status = momento.includes('EMANDAMENTO') ? 'Em Andamento' : 'Backlog';
+        
+        return {
+          atividade: tarefa.item,
+          historia: historiaPai ? historiaPai.item : '-',
+          data: tarefa.dataPrevista || tarefa.dataEntrega || null,
+          responsavel: tarefa.responsavel || 'A definir',
+          status: status,
+          dataObj: toDate(tarefa.dataPrevista || tarefa.dataEntrega)
+        };
       });
 
-      // Depois adicionar backlog
-      itensBacklog.forEach((item, index) => {
-        data.proximos.push({ 
-          atividade: item.item, 
-          data: item.dataPrevista || item.dataEntrega || '', 
-          responsavel: item.responsavel || 'A definir', 
-          status: 'Backlog',
-          ordem: itensEmAndamento.length + index + 1 
+      // Ordenar: primeiro por status (Em Andamento primeiro), depois por data
+      tarefasComHistoria.sort((a, b) => {
+        // Prioridade: Em Andamento vem antes de Backlog
+        if (a.status === 'Em Andamento' && b.status !== 'Em Andamento') return -1;
+        if (a.status !== 'Em Andamento' && b.status === 'Em Andamento') return 1;
+        
+        // Depois ordenar por data
+        if (a.dataObj && b.dataObj) return a.dataObj - b.dataObj;
+        if (a.dataObj && !b.dataObj) return -1;
+        if (!a.dataObj && b.dataObj) return 1;
+        return 0;
+      });
+
+      // Adicionar TODOS os itens (scroll cuida da visualização)
+      tarefasComHistoria.forEach((tarefa, index) => {
+        data.proximos.push({
+          historia: tarefa.historia,
+          atividade: tarefa.atividade,
+          data: tarefa.data,
+          responsavel: tarefa.responsavel,
+          status: tarefa.status,
+          ordem: index + 1
         });
       });
     }
@@ -660,7 +723,11 @@
       
       const statusTextEl = document.getElementById('status-geral-text');
       const statusPill = document.getElementById('status-pill');
-      if (statusTextEl && meta.StatusGeral) statusTextEl.textContent = meta.StatusGeral;
+      if (statusTextEl && meta.StatusGeral) {
+        // Normalizar o texto do status para exibição
+        const statusNormalizado = normalizeStatus(meta.StatusGeral);
+        statusTextEl.textContent = statusNormalizado;
+      }
       
       const dotEl = document.getElementById('status-geral-dot');
       if (dotEl && meta.CorStatusGeral) {
@@ -713,23 +780,30 @@
       const headerMonths = document.getElementById('gantt-header-months');
       if (!grid || !processos || !processos.length) { if (grid) grid.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Nenhum processo disponível</div>'; return; }
       
+      // Calcular range global de datas (incluindo todas as histórias)
       let minStart = null, maxEnd = null;
       const allItems = [...processos];
       processos.forEach(p => { if (p.historias && p.historias.length > 0) allItems.push(...p.historias); });
       allItems.forEach(p => {
         const s = toDate(p.dataInicio), e = toDate(p.dataFim);
-        if (!s || !e) return;
-        if (!minStart || s < minStart) minStart = s;
-        if (!maxEnd || e > maxEnd) maxEnd = e;
+        if (s && (!minStart || s < minStart)) minStart = s;
+        if (e && (!maxEnd || e > maxEnd)) maxEnd = e;
       });
+      
       if (!minStart || !maxEnd) { grid.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Processos sem datas válidas</div>'; return; }
-      const totalMs = maxEnd - minStart;
-      if (totalMs <= 0) return;
+      
+      // Usar o primeiro dia do mês inicial e último dia do mês final
+      const ganttStart = new Date(minStart.getFullYear(), minStart.getMonth(), 1);
+      const ganttEnd = new Date(maxEnd.getFullYear(), maxEnd.getMonth() + 1, 0); // último dia do mês
+      const totalDays = Math.ceil((ganttEnd - ganttStart) / (1000 * 60 * 60 * 24));
+      
+      if (totalDays <= 0) return;
 
+      // Renderizar cabeçalho de meses
       if (headerMonths) {
         headerMonths.innerHTML = '';
-        let d = new Date(minStart.getFullYear(), minStart.getMonth(), 1);
-        const endMonth = new Date(maxEnd.getFullYear(), maxEnd.getMonth(), 1);
+        let d = new Date(ganttStart.getFullYear(), ganttStart.getMonth(), 1);
+        const endMonth = new Date(ganttEnd.getFullYear(), ganttEnd.getMonth(), 1);
         while (d <= endMonth) {
           const div = document.createElement('div');
           div.className = 'gantt-header-month';
@@ -741,10 +815,13 @@
 
       grid.innerHTML = '';
       processos.forEach(p => {
-        renderGanttRow(p, minStart, totalMs, grid, false);
-        if (p.historias && p.historias.length > 0) p.historias.forEach(h => renderGanttRow(h, minStart, totalMs, grid, true, p.id));
+        renderGanttRow(p, ganttStart, totalDays, grid, false);
+        if (p.historias && p.historias.length > 0) {
+          p.historias.forEach(h => renderGanttRow(h, ganttStart, totalDays, grid, true, p.id));
+        }
       });
 
+      // Print table
       const printBody = document.getElementById('gantt-print-body');
       if (printBody) {
         printBody.innerHTML = '';
@@ -761,17 +838,22 @@
       }
     }
 
-    function renderGanttRow(item, minStart, totalMs, container, isHistoria, epicoId) {
+    function renderGanttRow(item, ganttStart, totalDays, container, isHistoria, epicoId) {
       const s = toDate(item.dataInicio), e = toDate(item.dataFim);
       if (!s || !e) return;
-      const startPercent = ((s - minStart) / totalMs) * 100;
-      const endPercent = ((e - minStart) / totalMs) * 100;
-      let left = Math.max(0, Math.min(100, startPercent));
-      let right = Math.max(0, Math.min(100, endPercent));
-      if (right < left) right = left;
-      let width = right - left;
-      if (width < 5) { width = 5; if (left + width > 100) left = Math.max(0, 100 - width); }
-      if (left + width > 100) width = 100 - left;
+      
+      // Calcular dias desde o início do gantt
+      const startDays = Math.floor((s - ganttStart) / (1000 * 60 * 60 * 24));
+      const endDays = Math.floor((e - ganttStart) / (1000 * 60 * 60 * 24));
+      const durationDays = Math.max(1, endDays - startDays + 1); // mínimo 1 dia
+      
+      // Converter para percentual
+      let left = (startDays / totalDays) * 100;
+      let width = (durationDays / totalDays) * 100;
+      
+      // Garantir valores válidos
+      left = Math.max(0, Math.min(99, left));
+      width = Math.max(1.5, Math.min(100 - left, width)); // mínimo 1.5% para visibilidade
       
       const barClass = mapBarClass(item.status);
 
@@ -871,12 +953,12 @@
     function renderNextSteps(steps) {
       const tbody = document.getElementById('next-steps-body');
       if (!tbody) return;
-      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Nenhum próximo passo definido</td></tr>'; return; }
+      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Nenhum próximo passo definido</td></tr>'; return; }
       tbody.innerHTML = '';
       steps.forEach(s => {
         const tr = document.createElement('tr');
-        const statusClass = s.status === 'Em andamento' ? 'blue' : 'yellow';
-        tr.innerHTML = '<td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '-') + '</strong></td><td>' + (s.responsavel || '') + '</td><td><span class="badge ' + statusClass + '"><span class="dot"></span>' + (s.status || '') + '</span></td>';
+        const statusClass = s.status === 'Em Andamento' ? 'blue' : 'yellow';
+        tr.innerHTML = '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (s.historia || '-') + '">' + (s.historia || '-') + '</td><td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '-') + '</strong></td><td>' + (s.responsavel || '') + '</td><td><span class="badge ' + statusClass + '"><span class="dot"></span>' + (s.status || '') + '</span></td>';
         tbody.appendChild(tr);
       });
     }
@@ -1036,11 +1118,11 @@
       table.className = 'editor-table';
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['Atividade', 'Data prevista', 'Responsável', 'Status', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
+      ['História', 'Atividade', 'Data prevista', 'Responsável', 'Status', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
       const tbody = document.createElement('tbody');
-      const fields = [{ field: 'atividade', type: 'text' }, { field: 'data', type: 'date' }, { field: 'responsavel', type: 'text' }, { field: 'status', type: 'text' }, { field: 'ordem', type: 'number' }];
+      const fields = [{ field: 'historia', type: 'text' }, { field: 'atividade', type: 'text' }, { field: 'data', type: 'date' }, { field: 'responsavel', type: 'text' }, { field: 'status', type: 'text' }, { field: 'ordem', type: 'number' }];
       (currentData.proximos || []).forEach(p => tbody.appendChild(createTableRow(fields, p)));
       table.appendChild(tbody);
       tab.appendChild(table);
