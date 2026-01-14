@@ -6,144 +6,236 @@
   <title>Status Report - Projeto</title>
   <style>
     :root {
-      --bg: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      --primary: #1a1f4e;
+      --primary-light: #2d3a8c;
+      --accent: #e94e4e;
+      --accent-light: #ff6b6b;
+      --bg: #f8f9fc;
       --card-bg: #ffffff;
-      --primary: #0052cc;
-      --text-main: #172b4d;
-      --text-muted: #6b778c;
-      --border: #dfe1e6;
-      --green: #36b37e;
-      --yellow: #ffab00;
-      --red: #ff5630;
-      --blue-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gray-chip: #a8b2c1;
-      --shadow-sm: 0 2px 8px rgba(9, 30, 66, 0.08);
-      --shadow-md: 0 8px 24px rgba(9, 30, 66, 0.15);
-      --shadow-lg: 0 12px 32px rgba(9, 30, 66, 0.2);
+      --text-main: #1a1f4e;
+      --text-muted: #64748b;
+      --border: #e2e5ed;
+      --green: #2e7d32;
+      --green-bg: #e8f5e9;
+      --yellow: #f59e0b;
+      --yellow-bg: #fef3c7;
+      --shadow-sm: 0 2px 8px rgba(26, 31, 78, 0.08);
+      --shadow-md: 0 4px 16px rgba(26, 31, 78, 0.12);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     body { background: var(--bg); color: var(--text-main); padding: 12px 16px; line-height: 1.5; min-height: 100vh; font-size: 13px; }
     .container { max-width: 1200px; margin: 0 auto; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-md); color: white; }
+
+    /* Header */
+    .header { background: var(--primary); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; box-shadow: var(--shadow-md); color: white; }
     .header-content { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-    .header-left h1 { font-size: 18px; margin-bottom: 2px; font-weight: 700; letter-spacing: -0.3px; }
-    .header-left h2 { font-size: 11px; font-weight: 400; opacity: 0.9; }
-    .header-right { text-align: right; font-size: 11px; opacity: 0.95; background: rgba(255, 255, 255, 0.15); padding: 6px 10px; border-radius: 8px; backdrop-filter: blur(10px); }
+    .header-left h1 { font-size: 18px; margin-bottom: 2px; font-weight: 700; }
+    .header-left h2 { font-size: 11px; font-weight: 400; opacity: 0.85; }
+    .header-right { text-align: right; font-size: 11px; opacity: 0.9; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 6px; }
     .header-right div:last-child { font-weight: 700; font-size: 12px; margin-top: 2px; }
-    
-    /* CORREÇÃO 1: Layout com alinhamento vertical stretch */
+
+    /* Layout Grid */
     .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; margin-bottom: 12px; }
     .layout > div { display: flex; flex-direction: column; gap: 10px; }
-    .layout > div:first-child { display: flex; flex-direction: column; }
     .layout > div:first-child > .card { flex: 1; display: flex; flex-direction: column; }
-    .layout > div:first-child > .card > .project-description { flex: 1; }
-    
     .gantt-full-width { grid-column: 1 / -1; }
-    .card { background: var(--card-bg); border-radius: 12px; padding: 12px 12px; box-shadow: var(--shadow-sm); margin-bottom: 0; border: 1px solid rgba(0, 0, 0, 0.04); transition: box-shadow 0.2s ease; }
+
+    /* Cards */
+    .card { background: var(--card-bg); border-radius: 8px; padding: 14px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
     .card:hover { box-shadow: var(--shadow-md); }
-    .section-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; color: var(--text-main); padding-bottom: 6px; border-bottom: 1px solid #f0f2f5; }
-    .section-title .emoji { font-size: 16px; }
-    .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; background: linear-gradient(135deg, #e6f4ff 0%, #d1e9ff 100%); color: #0060df; font-weight: 600; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0, 96, 223, 0.15); }
-    .status-pill .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.9); } }
-    .project-description { font-size: 12px; margin: 8px 0; line-height: 1.6; color: var(--text-main); white-space: pre-line; }
-    .project-description .label { font-weight: 700; color: var(--primary); }
-    .project-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; margin: 10px 0 6px; }
-    .date-box { background: #f8f9fa; padding: 6px; border-radius: 6px; border-left: 3px solid var(--primary); }
-    .date-box .label { font-weight: 600; color: var(--text-muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; display: block; }
-    .date-box .value { font-weight: 700; font-size: 12px; color: var(--text-main); }
-    .progress-wrapper { margin-top: auto; padding-top: 10px; }
-    .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-main); margin-bottom: 4px; font-weight: 600; }
-    .progress-label .percentage { color: var(--primary); font-size: 14px; font-weight: 700; }
-    .progress-bar { width: 100%; height: 8px; border-radius: 999px; background: #e9ecef; overflow: hidden; position: relative; }
-    .progress-bar-inner { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary) 0%, #0066ff 100%); border-radius: 999px; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px rgba(0, 82, 204, 0.3); position: relative; overflow: hidden; }
-    .progress-bar-inner::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); animation: shimmer 1.8s infinite; }
-    @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-    table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 11px; margin-top: 4px; overflow: hidden; border-radius: 6px; }
-    th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-    th { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); font-weight: 700; color: var(--text-main); font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
-    tbody tr { transition: background 0.2s ease; }
-    tbody tr:last-child td { border-bottom: none; }
-    .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #f4f5f7; font-weight: 600; }
-    .badge .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .badge.red { background: rgba(255, 86, 48, 0.1); color: var(--red); }
-    .badge.red .status-dot { background: var(--red); }
-    .badge.yellow { background: rgba(255, 171, 0, 0.1); color: #d97706; }
-    .badge.yellow .status-dot { background: var(--yellow); }
-    .badge.green { background: rgba(54, 179, 126, 0.1); color: var(--green); }
-    .badge.green .status-dot { background: var(--green); }
-    ul { margin-left: 0; padding-left: 0; list-style: none; font-size: 11px; color: var(--text-main); }
-    ul li { margin-bottom: 6px; padding-left: 16px; position: relative; line-height: 1.4; }
-    ul li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-weight: bold; font-size: 12px; }
-    ul li strong { color: var(--text-main); }
-    .gantt-section { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid rgba(0, 0, 0, 0.04); }
-    .gantt-wrapper { overflow-x: auto; overflow-y: visible; }
-    .gantt-container { min-width: 100%; width: max-content; }
-    .gantt-header { display: grid; grid-template-columns: 280px minmax(600px, 1fr); background: var(--blue-gradient); color: white; }
-    .gantt-header-left { padding: 8px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; display: flex; align-items: center; position: sticky; left: 0; background: inherit; z-index: 2; }
-    .gantt-header-right { display: flex; min-width: 600px; }
-    .gantt-header-month { flex: 1; min-width: 70px; padding: 8px 4px; text-align: center; font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; border-left: 1px solid rgba(255, 255, 255, 0.15); white-space: nowrap; }
-    .gantt-header-month:first-child { border-left: none; }
-    .gantt-grid { background: white; }
-    .gantt-row { display: grid; grid-template-columns: 280px minmax(600px, 1fr); align-items: stretch; min-height: 48px; border-top: 1px solid #f0f2f6; }
-    .gantt-row.historia-row { min-height: 36px; background: #fafbfc; display: none; }
-    .gantt-row.historia-row.expanded { display: grid; }
-    .gantt-row:first-child { border-top: none; }
-    .gantt-row-left { padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; position: sticky; left: 0; background: white; z-index: 1; border-right: 1px solid #f0f2f6; }
-    .gantt-row.historia-row .gantt-row-left { padding-left: 24px; background: #fafbfc; }
-    .process-title { font-size: 12px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
-    .expand-toggle { cursor: pointer; font-size: 10px; color: var(--text-muted); padding: 2px 6px; border-radius: 4px; background: #f1f3f5; border: 1px solid #dee2e6; transition: all 0.2s ease; user-select: none; flex-shrink: 0; }
-    .expand-toggle:hover { background: #e9ecef; color: var(--text-main); }
-    .expand-toggle.has-historias { color: var(--primary); border-color: var(--primary); }
-    .historia-count { font-size: 10px; color: var(--text-muted); background: #f8f9fa; padding: 2px 6px; border-radius: 999px; font-weight: 600; }
-    .historia-row .process-title { font-size: 11px; font-weight: 600; color: var(--text-muted); }
-    .historia-row .process-title::before { content: '└ '; color: #cbd5e1; margin-right: 4px; }
-    .process-date { font-size: 10px; color: var(--text-muted); font-weight: 500; }
-    .gantt-row-right { padding: 8px 10px; position: relative; min-width: 600px; }
-    .gantt-lane { position: relative; width: 100%; height: 22px; background: #f8f9fa; border-radius: 999px; overflow: hidden; }
-    .gantt-bar { position: absolute; height: 18px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; box-shadow: var(--shadow-sm); white-space: nowrap; padding: 0 10px; top: 2px; transition: all 0.2s ease; }
-    .status-chip { display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.4px; }
-    .status-concluido { background: linear-gradient(135deg, #36b37e 0%, #2d9f6f 100%); }
-    .status-em-andamento { background: var(--blue-gradient); }
-    .status-aguardando { background: linear-gradient(135deg, var(--gray-chip) 0%, #909dad 100%); }
-    .cronograma-print-table { display: none; }
-    .floating-edit-button { position: fixed; bottom: 64px; right: 20px; padding: 8px 18px; border-radius: 999px; border: none; background: #0f766e; color: #ffffff; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
-    .floating-update-button { position: fixed; bottom: 24px; right: 20px; padding: 8px 18px; border-radius: 999px; border: none; background-image: var(--blue-gradient); color: #ffffff; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
-    .alert-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin: 10px 0; font-size: 12px; color: #856404; }
-    .alert-box strong { display: block; margin-bottom: 4px; }
     
-    /* CORREÇÃO 2: Estilos para botões de expandir/colapsar todos */
-    .gantt-controls { display: flex; gap: 8px; padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; flex-wrap: wrap; }
-    .gantt-control-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; border: 1px solid #dee2e6; background: white; color: var(--text-main); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .section-title { 
+      font-size: 12px; 
+      font-weight: 700; 
+      margin-bottom: 10px; 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+      color: var(--primary); 
+      padding-bottom: 8px; 
+      border-bottom: 2px solid var(--accent); 
+    }
+    .section-title .emoji { font-size: 14px; }
+
+    /* Status Badge */
+    .status-pill { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+      padding: 4px 12px; 
+      border-radius: 4px; 
+      font-size: 10px; 
+      background: var(--green-bg); 
+      color: var(--green); 
+      font-weight: 600; 
+      margin-bottom: 10px; 
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .status-pill .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .status-pill.yellow { background: var(--yellow-bg); color: #b45309; }
+    .status-pill.yellow .status-dot { background: var(--yellow); }
+    .status-pill.red { background: #fee2e2; color: var(--accent); }
+    .status-pill.red .status-dot { background: var(--accent); }
+
+    /* Project Description */
+    .project-description { font-size: 12px; margin: 8px 0; line-height: 1.7; color: var(--text-main); flex: 1; }
+    .project-description .label { font-weight: 700; color: var(--primary); display: block; margin-bottom: 4px; }
+    .project-description .ganhos-title { font-weight: 700; color: var(--primary); margin-top: 12px; display: block; margin-bottom: 4px; }
+
+    /* Dates */
+    .project-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 11px; margin: 12px 0 8px; }
+    .date-box { background: var(--bg); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--primary); }
+    .date-box .label { font-weight: 600; color: var(--text-muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; display: block; }
+    .date-box .value { font-weight: 700; font-size: 12px; color: var(--primary); }
+
+    /* Progress */
+    .progress-wrapper { margin-top: auto; padding-top: 12px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-main); margin-bottom: 6px; font-weight: 600; }
+    .progress-label .percentage { color: var(--primary); font-size: 16px; font-weight: 700; }
+    .progress-bar { width: 100%; height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; }
+    .progress-bar-inner { height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 4px; transition: width 1s ease; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 11px; margin-top: 4px; overflow: hidden; border-radius: 6px; }
+    th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--primary); color: white; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; }
+    tbody tr:hover { background: var(--bg); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* Badges */
+    .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .badge.green { background: var(--green-bg); color: var(--green); }
+    .badge.green .dot { background: var(--green); }
+    .badge.yellow { background: var(--yellow-bg); color: #b45309; }
+    .badge.yellow .dot { background: var(--yellow); }
+    .badge.red { background: #fee2e2; color: var(--accent); }
+    .badge.red .dot { background: var(--accent); }
+    .badge.blue { background: #e0e7ff; color: var(--primary); }
+    .badge.blue .dot { background: var(--primary); }
+    .badge.gray { background: #f1f5f9; color: #475569; }
+    .badge.gray .dot { background: #94a3b8; }
+
+    /* Risk List */
+    ul.risk-list { margin: 0; padding: 0; list-style: none; font-size: 11px; }
+    ul.risk-list li { margin-bottom: 8px; padding: 8px 10px; background: #fff5f5; border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; }
+    ul.risk-list li strong { color: var(--accent); }
+    ul.risk-list li .desc { color: var(--text-muted); font-size: 10px; margin-top: 2px; }
+
+    /* Gantt */
+    .gantt-section { background: white; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .gantt-controls { display: flex; gap: 8px; padding: 10px 12px; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .gantt-control-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border); background: white; color: var(--text-main); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .gantt-control-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
     .gantt-control-btn svg { width: 14px; height: 14px; }
+
+    .gantt-wrapper { overflow-x: auto; }
+    .gantt-container { min-width: 100%; width: max-content; }
+    .gantt-header { display: grid; grid-template-columns: 280px minmax(600px, 1fr); background: var(--primary); color: white; }
+    .gantt-header-left { padding: 10px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; display: flex; align-items: center; position: sticky; left: 0; background: inherit; z-index: 2; }
+    .gantt-header-right { display: flex; min-width: 600px; }
+    .gantt-header-month { flex: 1; min-width: 70px; padding: 10px 4px; text-align: center; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; border-left: 1px solid rgba(255,255,255,0.15); }
+    .gantt-header-month:first-child { border-left: none; }
+
+    .gantt-grid { background: white; }
+    .gantt-row { display: grid; grid-template-columns: 280px minmax(600px, 1fr); align-items: stretch; min-height: 52px; border-top: 1px solid var(--border); }
+    .gantt-row:first-child { border-top: none; }
+    .gantt-row.historia-row { min-height: 40px; background: #fafbfc; display: none; }
+    .gantt-row.historia-row.expanded { display: grid; }
+
+    .gantt-row-left { padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; position: sticky; left: 0; background: white; z-index: 1; border-right: 1px solid var(--border); }
+    .gantt-row.historia-row .gantt-row-left { padding-left: 28px; background: #fafbfc; }
+
+    .process-title { font-size: 12px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+    .expand-toggle { cursor: pointer; font-size: 10px; color: var(--text-muted); padding: 2px 6px; border-radius: 4px; background: var(--bg); border: 1px solid var(--border); transition: all 0.2s; user-select: none; }
+    .expand-toggle:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .expand-toggle.has-historias { color: var(--primary); border-color: var(--primary); }
+    .historia-count { font-size: 9px; color: var(--text-muted); background: var(--bg); padding: 2px 6px; border-radius: 10px; font-weight: 600; }
+
+    .historia-row .process-title { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .historia-row .process-title::before { content: '└'; color: #cbd5e1; margin-right: 6px; font-size: 12px; }
+
+    .process-date { font-size: 10px; color: var(--text-muted); }
+
+    .gantt-row-right { padding: 8px 10px; position: relative; min-width: 600px; display: flex; align-items: center; }
+    .gantt-lane { position: relative; width: 100%; height: 24px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+    .gantt-bar { position: absolute; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; box-shadow: var(--shadow-sm); padding: 0 10px; top: 2px; transition: all 0.2s; }
     
-    .editor-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); display: none; align-items: center; justify-content: center; z-index: 1100; }
-    .editor-panel { background: #ffffff; border-radius: 12px; box-shadow: var(--shadow-lg); max-width: 960px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 16px 18px; }
-    .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .editor-header h3 { font-size: 14px; font-weight: 700; }
-    .editor-close-btn { border: none; background: transparent; font-size: 18px; cursor: pointer; line-height: 1; }
-    .editor-tabs { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
-    .editor-tabs button { border: none; border-radius: 999px; padding: 4px 10px; font-size: 11px; cursor: pointer; background: #f3f4f6; color: #4b5563; font-weight: 600; }
-    .editor-tabs button.active { background: #0f766e; color: #ffffff; }
-    .editor-content { flex: 1; overflow: auto; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px; background: #f9fafb; margin-bottom: 10px; }
+    .historia-row .gantt-lane { height: 18px; }
+    .historia-row .gantt-bar { height: 14px; top: 2px; font-size: 0; padding: 0; }
+
+    /* Status chips */
+    .status-chip { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+    .status-concluido { background: var(--green-bg); color: var(--green); }
+    .status-em-andamento { background: #e0e7ff; color: var(--primary); }
+    .status-aguardando { background: #f1f5f9; color: #475569; }
+    .status-backlog { background: var(--yellow-bg); color: #b45309; }
+
+    .bar-concluido { background: linear-gradient(135deg, var(--green) 0%, #4ade80 100%); }
+    .bar-em-andamento { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+    .bar-aguardando { background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%); }
+    .bar-backlog { background: linear-gradient(135deg, var(--yellow) 0%, #fbbf24 100%); }
+
+    /* Print table */
+    .cronograma-print-table { display: none; }
+
+    /* Floating buttons */
+    .floating-edit-button { position: fixed; bottom: 64px; right: 20px; padding: 10px 18px; border-radius: 6px; border: none; background: var(--green); color: white; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
+    .floating-edit-button:hover { background: #1b5e20; }
+    .floating-update-button { position: fixed; bottom: 20px; right: 20px; padding: 10px 18px; border-radius: 6px; border: none; background: var(--primary); color: white; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
+    .floating-update-button:hover { background: var(--primary-light); }
+
+    /* Alert */
+    .alert-box { background: var(--yellow-bg); border: 1px solid var(--yellow); border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 12px; color: #92400e; }
+    .alert-box strong { display: block; margin-bottom: 4px; }
+
+    /* Editor Modal */
+    .editor-backdrop { position: fixed; inset: 0; background: rgba(26, 31, 78, 0.5); display: none; align-items: center; justify-content: center; z-index: 1100; }
+    .editor-panel { background: white; border-radius: 8px; box-shadow: 0 20px 60px rgba(26, 31, 78, 0.3); max-width: 960px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 16px 18px; }
+    .editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); }
+    .editor-header h3 { font-size: 16px; font-weight: 700; color: var(--primary); }
+    .editor-close-btn { border: none; background: transparent; font-size: 24px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .editor-close-btn:hover { color: var(--accent); }
+    .editor-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .editor-tabs button { border: 1px solid var(--border); border-radius: 4px; padding: 6px 12px; font-size: 11px; cursor: pointer; background: white; color: var(--text-main); font-weight: 600; transition: all 0.2s; }
+    .editor-tabs button:hover { border-color: var(--primary); color: var(--primary); }
+    .editor-tabs button.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .editor-content { flex: 1; overflow: auto; border: 1px solid var(--border); border-radius: 6px; padding: 12px; background: var(--bg); margin-bottom: 12px; }
     .editor-tab { display: none; }
     .editor-tab.active { display: block; }
-    .editor-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-    .editor-table th, .editor-table td { border-bottom: 1px solid #e5e7eb; padding: 4px 6px; text-align: left; }
-    .editor-table th { background: #eef2ff; font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: 0.4px; }
-    .editor-table input, .editor-table textarea { width: 100%; font-size: 11px; padding: 3px 4px; border-radius: 4px; border: 1px solid #d1d5db; font-family: inherit; }
+    .editor-table { width: 100%; border-collapse: collapse; font-size: 11px; background: white; border-radius: 6px; overflow: hidden; }
+    .editor-table th, .editor-table td { border-bottom: 1px solid var(--border); padding: 6px 8px; text-align: left; }
+    .editor-table th { background: var(--primary); color: white; font-weight: 600; text-transform: uppercase; font-size: 10px; }
+    .editor-table input, .editor-table textarea { width: 100%; font-size: 11px; padding: 4px 6px; border-radius: 4px; border: 1px solid var(--border); font-family: inherit; }
+    .editor-table input:focus, .editor-table textarea:focus { outline: none; border-color: var(--primary); }
     .editor-table textarea { min-height: 60px; resize: vertical; }
     .editor-footer { display: flex; justify-content: flex-end; gap: 8px; }
-    .editor-footer button { border-radius: 999px; border: none; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer; }
-    .editor-footer .cancel-btn { background: #e5e7eb; color: #374151; }
-    .editor-footer .save-btn { background: #0f766e; color: #ffffff; }
-    .editor-add-btn { margin-top: 6px; padding: 4px 10px; font-size: 11px; border-radius: 999px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; }
-    .row-delete-btn { padding: 2px 8px; font-size: 10px; border-radius: 999px; border: 1px solid #fecaca; background: #fee2e2; color: #b91c1c; cursor: pointer; white-space: nowrap; }
-    @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } .header-content { flex-direction: column; align-items: flex-start; } .header-right { text-align: left; } }
-    @media (max-width: 768px) { body { padding: 10px; } .header { padding: 10px 12px; } .header-left h1 { font-size: 16px; } .project-dates { grid-template-columns: 1fr; } .gantt-header, .gantt-row { grid-template-columns: 1fr; } .gantt-row-right { border-left: none; border-top: 1px solid #f0f2f6; } }
-    @page { size: A4 portrait; margin: 5mm; }
-    @media print { body { background: #ffffff !important; padding: 0 !important; font-size: 10px; } .container { max-width: 100% !important; margin: 0 !important; padding: 0 4mm !important; } .floating-update-button, .floating-edit-button, #excel-file, .alert-box, .gantt-controls { display: none !important; } .gantt-section { display: none !important; } .cronograma-print-table { display: block !important; } .cronograma-print-table table { font-size: 9px; } .cronograma-print-table th, .cronograma-print-table td { padding: 3px 4px; } }
+    .editor-footer button { border-radius: 4px; border: none; padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .editor-footer .cancel-btn { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
+    .editor-footer .cancel-btn:hover { background: var(--border); }
+    .editor-footer .save-btn { background: var(--primary); color: white; }
+    .editor-footer .save-btn:hover { background: var(--primary-light); }
+    .editor-add-btn { margin-top: 8px; padding: 6px 12px; font-size: 11px; border-radius: 4px; border: 1px solid var(--primary); background: white; color: var(--primary); cursor: pointer; font-weight: 600; }
+    .editor-add-btn:hover { background: var(--primary); color: white; }
+    .row-delete-btn { padding: 4px 10px; font-size: 10px; border-radius: 4px; border: 1px solid var(--accent); background: #fee2e2; color: var(--accent); cursor: pointer; font-weight: 600; }
+    .row-delete-btn:hover { background: var(--accent); color: white; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .layout { grid-template-columns: 1fr; }
+      .header-content { flex-direction: column; align-items: flex-start; }
+      .header-right { text-align: left; }
+    }
+
+    @media print {
+      body { background: white !important; padding: 0 !important; font-size: 10px; }
+      .container { max-width: 100% !important; }
+      .floating-update-button, .floating-edit-button, #excel-file, .alert-box, .gantt-controls { display: none !important; }
+      .gantt-section { display: none !important; }
+      .cronograma-print-table { display: block !important; }
+    }
   </style>
 </head>
 <body>
@@ -151,7 +243,7 @@
     <div class="header">
       <div class="header-content">
         <div class="header-left">
-          <h1 id="project-name">Carregue a planilha do sistema</h1>
+          <h1 id="project-name">📊 Carregue a planilha do sistema</h1>
           <h2>Relatório de Status do Projeto</h2>
         </div>
         <div class="header-right">
@@ -160,13 +252,20 @@
         </div>
       </div>
     </div>
+
     <div id="validation-alerts"></div>
+
     <div class="layout">
       <div>
         <div class="card">
-          <div class="section-title"><span class="emoji">🎯</span><span>Resumo Executivo</span></div>
-          <div class="status-pill"><span class="status-dot" id="status-geral-dot"></span><span id="status-geral-text">Aguardando importação...</span></div>
-          <div class="project-description"><span class="label">Descrição do Projeto:</span><br><span id="project-description-text">Clique em "Atualizar" e carregue a planilha extraída do sistema.</span></div>
+          <div class="section-title"><span class="emoji">🎯</span>Resumo Executivo</div>
+          <div class="status-pill" id="status-pill"><span class="status-dot" id="status-geral-dot"></span><span id="status-geral-text">Aguardando importação...</span></div>
+          <div class="project-description">
+            <span class="label">Descrição do Projeto:</span>
+            <span id="project-description-text">Clique em "Atualizar" e carregue a planilha extraída do sistema.</span>
+            <span class="ganhos-title" id="ganhos-title" style="display:none;">Ganhos do Projeto:</span>
+            <span id="project-ganhos-text"></span>
+          </div>
           <div class="project-dates">
             <div class="date-box"><span class="label">Data de Início</span><span class="value" id="project-start-date">--/--/----</span></div>
             <div class="date-box"><span class="label">Previsão de Conclusão</span><span class="value" id="project-end-date">--/--/----</span></div>
@@ -177,25 +276,34 @@
           </div>
         </div>
       </div>
+
       <div>
         <div class="card">
-          <div class="section-title"><span class="emoji">📈</span><span>Marcos Principais</span></div>
-          <table><thead><tr><th>Data</th><th>Marco</th><th>Status</th></tr></thead><tbody id="marcos-body"><tr><td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td></tr></tbody></table>
+          <div class="section-title"><span class="emoji">📈</span>Marcos Principais</div>
+          <table>
+            <thead><tr><th>Data</th><th>Marco</th><th>Status</th></tr></thead>
+            <tbody id="marcos-body"><tr><td colspan="3" style="text-align:center;color:var(--text-muted);">Aguardando dados...</td></tr></tbody>
+          </table>
         </div>
+
         <div class="card">
-          <div class="section-title"><span class="emoji">⚠️</span><span>Riscos e Pendências Críticas</span></div>
-          <ul id="risk-list"><li>Aguardando dados...</li></ul>
+          <div class="section-title"><span class="emoji">⚠️</span>Riscos e Pendências Críticas</div>
+          <ul class="risk-list" id="risk-list"><li>Aguardando dados...</li></ul>
         </div>
+
         <div class="card">
-          <div class="section-title"><span class="emoji">➡️</span><span>Próximos Passos</span></div>
-          <table><thead><tr><th>Atividade</th><th>Data Prevista</th><th>Responsável</th></tr></thead><tbody id="next-steps-body"><tr><td colspan="3" style="text-align: center; color: #6b778c;">Aguardando dados...</td></tr></tbody></table>
+          <div class="section-title"><span class="emoji">➡️</span>Próximos Passos</div>
+          <table>
+            <thead><tr><th>Atividade</th><th>Data Prevista</th><th>Responsável</th><th>Status</th></tr></thead>
+            <tbody id="next-steps-body"><tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Aguardando dados...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
-    <div class="card gantt-full-width" style="padding: 10px 10px 8px; overflow: hidden;">
-      <div class="section-title" style="border: none; margin-bottom: 6px; padding-bottom: 0;"><span class="emoji">📋</span><span>Cronograma Macro (Gantt)</span></div>
+
+    <div class="card gantt-full-width" style="padding:12px;">
+      <div class="section-title" style="margin-bottom:10px;"><span class="emoji">📋</span>Cronograma Macro (Gantt)</div>
       <div class="gantt-section">
-        <!-- CORREÇÃO 2: Botões de Expandir/Colapsar Todos -->
         <div class="gantt-controls">
           <button type="button" class="gantt-control-btn" id="btn-expand-all">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -212,16 +320,20 @@
               <div class="gantt-header-left">ÉPICO/HISTÓRIA</div>
               <div class="gantt-header-right" id="gantt-header-months"><div class="gantt-header-month">--</div></div>
             </div>
-            <div class="gantt-grid" id="gantt-grid"><div style="padding: 20px; text-align: center; color: #6b778c;">Aguardando dados...</div></div>
+            <div class="gantt-grid" id="gantt-grid"><div style="padding:20px;text-align:center;color:var(--text-muted);">Aguardando dados...</div></div>
           </div>
         </div>
       </div>
-      <div class="cronograma-print-table"><table><thead><tr><th>Épico/História</th><th>Período</th><th>Status</th><th>%</th></tr></thead><tbody id="gantt-print-body"></tbody></table></div>
+      <div class="cronograma-print-table">
+        <table><thead><tr><th>Épico/História</th><th>Período</th><th>Status</th><th>%</th></tr></thead><tbody id="gantt-print-body"></tbody></table>
+      </div>
     </div>
   </div>
+
   <button class="floating-edit-button" id="edit-button">✏️ Editar</button>
   <button class="floating-update-button" id="update-button">📥 Atualizar</button>
   <input type="file" id="excel-file" accept=".xlsx,.xls" style="display:none" />
+
   <div class="editor-backdrop" id="editor-modal">
     <div class="editor-panel">
       <div class="editor-header"><h3>Editar dados do projeto</h3><button type="button" class="editor-close-btn" id="editor-close">&times;</button></div>
@@ -245,6 +357,7 @@
       </div>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     document.getElementById('report-date').textContent = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -281,18 +394,26 @@
       return Number(String(value).replace('%', '').trim()) || 0;
     }
 
-    function formatDescription(desc) {
-      if (!desc) return '';
-      let text = String(desc), result = '';
-      const descMatch = text.match(/DESCRIÇÃO:\s*\[\s*([\s\S]*?)\s*\]\s*(?:GANHOS:|$)/i);
-      if (descMatch) result = descMatch[1].trim();
-      const ganhosMatch = text.match(/GANHOS:\s*\[\s*([\s\S]*?)\s*\]\s*(?:%SEMANA|$)/i);
-      if (ganhosMatch && ganhosMatch[1].trim()) {
-        if (result) result += '\n\n';
-        result += 'Ganhos do Projeto:\n' + ganhosMatch[1].trim();
+    // CORREÇÃO: Extrair apenas o texto dentro dos colchetes [ ]
+    function extractBracketContent(text, fieldName) {
+      if (!text) return '';
+      const regex = new RegExp(fieldName + ':\\s*\\[([^\\]]*)]', 'i');
+      const match = String(text).match(regex);
+      if (match && match[1]) {
+        return match[1].trim();
       }
-      if (!result) result = text.replace(/\[DESCRIÇÃO:\s*/gi, '').replace(/\[GANHOS:\s*/gi, '').replace(/\[%SEMANA ANTERIOR:.*?\]/gi, '').replace(/\]/g, '').trim();
-      return result;
+      return '';
+    }
+
+    function formatDescription(desc) {
+      if (!desc) return { descricao: '', ganhos: '' };
+      const text = String(desc);
+      
+      // Extrair apenas o conteúdo dentro dos colchetes
+      const descricao = extractBracketContent(text, 'DESCRIÇÃO');
+      const ganhos = extractBracketContent(text, 'GANHOS');
+      
+      return { descricao, ganhos };
     }
 
     function mapSemaphoreColor(sem) {
@@ -304,12 +425,13 @@
     }
 
     function mapStatusFromMomento(momento) {
-      if (!momento) return 'Aguardando';
+      if (!momento) return 'Backlog';
       const m = String(momento).toUpperCase();
       if (m.includes('FINALIZADO')) return 'Concluído';
       if (m.includes('EM ANDAMENTO') || m.includes('EMANDAMENTO')) return 'Em andamento';
       if (m.includes('BLOQUEADO')) return 'Bloqueado';
-      return 'Aguardando';
+      if (m.includes('BACKLOG')) return 'Backlog';
+      return 'Backlog';
     }
 
     function mapColorClass(cor) {
@@ -322,9 +444,20 @@
 
     function mapStatusChipClass(status) {
       const s = (status || '').toString().toLowerCase();
-      if (s.includes('aguard') || s.includes('backlog') || s.includes('bloqueado')) return 'status-aguardando';
+      if (s.includes('backlog')) return 'status-backlog';
+      if (s.includes('aguard')) return 'status-aguardando';
       if (s.includes('andamento')) return 'status-em-andamento';
-      return 'status-concluido';
+      if (s.includes('conclu') || s.includes('finalizado')) return 'status-concluido';
+      return 'status-aguardando';
+    }
+
+    function mapBarClass(status) {
+      const s = (status || '').toString().toLowerCase();
+      if (s.includes('backlog')) return 'bar-backlog';
+      if (s.includes('aguard')) return 'bar-aguardando';
+      if (s.includes('andamento')) return 'bar-em-andamento';
+      if (s.includes('conclu') || s.includes('finalizado')) return 'bar-concluido';
+      return 'bar-aguardando';
     }
 
     function removeNumericPrefix(name) {
@@ -342,7 +475,13 @@
           const headers = rows[0], values = rows[1] || [];
           const idx = (field) => headers.findIndex(h => h && String(h).includes(field));
           data.meta.NomeProjeto = values[idx('Nome')] || '';
-          data.meta.DescricaoProjeto = formatDescription(values[idx('Descrição')]);
+          
+          // Processar descrição e ganhos separadamente
+          const descricaoRaw = values[idx('Descrição')] || '';
+          const parsed = formatDescription(descricaoRaw);
+          data.meta.DescricaoProjeto = parsed.descricao;
+          data.meta.GanhosProjeto = parsed.ganhos;
+          
           data.meta.ProgressoGeralPercentual = cleanPercentage(values[idx('Percentual Projeto')]);
           data.meta.CorStatusGeral = mapSemaphoreColor(values[idx('Semáforo')]);
           data.meta.StatusGeral = values[idx('Status do projeto')] || '';
@@ -430,7 +569,7 @@
         let statusMapeado = status;
         const statusUpper = String(status).toUpperCase();
         if (statusUpper.includes('EMANDAMENTO') || statusUpper === 'EM ANDAMENTO') statusMapeado = 'Em andamento';
-        else if (statusUpper.includes('BACKLOG')) statusMapeado = 'Aguardando';
+        else if (statusUpper.includes('BACKLOG')) statusMapeado = 'Backlog';
         else if (statusUpper.includes('FINALIZADO')) statusMapeado = 'Concluído';
 
         const historias = itensDoEpico.filter(item => {
@@ -438,15 +577,13 @@
           return tipo === 'historia' || tipo === 'história';
         }).map(h => {
           const statusHistoria = mapStatusFromMomento(h.momento);
-          let progressoHistoria = 0;
-          if (statusHistoria === 'Concluído') progressoHistoria = 100;
-          else if (statusHistoria === 'Em andamento') progressoHistoria = 50;
-          return { nome: h.item || '', status: statusHistoria, dataInicio: h.dataInicio, dataFim: h.dataPrevista || h.dataEntrega, progresso: progressoHistoria };
+          return { nome: h.item || '', status: statusHistoria, dataInicio: h.dataInicio, dataFim: h.dataPrevista || h.dataEntrega };
         }).filter(h => h.dataInicio || h.dataFim);
 
         data.processos.push({ id: 'E' + (index + 1), nome: epico.nome, status: statusMapeado, dataInicio: dataInicio, dataFim: dataFim, progresso: progresso, ordem: index + 1, historias: historias });
       });
 
+      // MARCOS
       data.epicos.forEach((epico, index) => {
         if (epico.progresso >= 100 || String(epico.status).toUpperCase().includes('FINALIZADO')) {
           const itensDoEpico = data.itens.filter(item => item.epico && item.epico.includes(epico.nomeOriginal));
@@ -459,36 +596,81 @@
         }
       });
 
+      // RISCOS - Itens bloqueados
       data.itens.filter(item => item.momento && String(item.momento).toUpperCase().includes('BLOQUEADO')).forEach((item, index) => {
         data.riscos.push({ risco: 'Bloqueio: ' + item.item, descricao: 'Item ' + item.id + ' está bloqueado. Épico: ' + (item.epico || 'N/A'), impacto: 'Alto', severidade: 'Crítica', ordem: index + 1 });
       });
 
-      data.itens.filter(item => item.momento && String(item.momento).toUpperCase().includes('EM ANDAMENTO')).forEach((item, index) => {
-        data.proximos.push({ atividade: item.item, data: item.dataPrevista || item.dataEntrega || '', responsavel: item.responsavel || 'A definir', ordem: index + 1 });
+      // PRÓXIMOS PASSOS - Itens em andamento E backlog (em andamento primeiro)
+      const itensEmAndamento = data.itens.filter(item => {
+        const momento = item.momento ? String(item.momento).toUpperCase() : '';
+        return momento.includes('EM ANDAMENTO') || momento.includes('EMANDAMENTO');
+      });
+      
+      const itensBacklog = data.itens.filter(item => {
+        const momento = item.momento ? String(item.momento).toUpperCase() : '';
+        return momento.includes('BACKLOG');
+      });
+
+      // Adicionar em andamento primeiro
+      itensEmAndamento.forEach((item, index) => {
+        data.proximos.push({ 
+          atividade: item.item, 
+          data: item.dataPrevista || item.dataEntrega || '', 
+          responsavel: item.responsavel || 'A definir', 
+          status: 'Em andamento',
+          ordem: index + 1 
+        });
+      });
+
+      // Depois adicionar backlog
+      itensBacklog.forEach((item, index) => {
+        data.proximos.push({ 
+          atividade: item.item, 
+          data: item.dataPrevista || item.dataEntrega || '', 
+          responsavel: item.responsavel || 'A definir', 
+          status: 'Backlog',
+          ordem: itensEmAndamento.length + index + 1 
+        });
       });
     }
 
     function applyMeta(meta) {
       const nameEl = document.getElementById('project-name');
-      if (nameEl && meta.NomeProjeto) nameEl.textContent = meta.NomeProjeto;
+      if (nameEl && meta.NomeProjeto) nameEl.textContent = '📊 ' + meta.NomeProjeto;
+      
       const descEl = document.getElementById('project-description-text');
-      if (descEl && meta.DescricaoProjeto) descEl.textContent = meta.DescricaoProjeto;
+      if (descEl) descEl.textContent = meta.DescricaoProjeto || 'Sem descrição disponível.';
+      
+      // Ganhos
+      const ganhosTitle = document.getElementById('ganhos-title');
+      const ganhosEl = document.getElementById('project-ganhos-text');
+      if (meta.GanhosProjeto && meta.GanhosProjeto.trim()) {
+        ganhosTitle.style.display = 'block';
+        ganhosEl.textContent = meta.GanhosProjeto;
+      } else {
+        ganhosTitle.style.display = 'none';
+        ganhosEl.textContent = '';
+      }
+      
       const startEl = document.getElementById('project-start-date');
       if (startEl && meta.DataInicio) startEl.textContent = formatDate(meta.DataInicio);
       const endEl = document.getElementById('project-end-date');
       if (endEl && meta.DataFimPrevista) endEl.textContent = formatDate(meta.DataFimPrevista);
+      
       const statusTextEl = document.getElementById('status-geral-text');
-      if (statusTextEl && meta.StatusGeral) statusTextEl.textContent = 'Status Geral: ' + meta.StatusGeral;
+      const statusPill = document.getElementById('status-pill');
+      if (statusTextEl && meta.StatusGeral) statusTextEl.textContent = meta.StatusGeral;
+      
       const dotEl = document.getElementById('status-geral-dot');
       if (dotEl && meta.CorStatusGeral) {
         const colorClass = mapColorClass(meta.CorStatusGeral);
-        if (colorClass === 'red') dotEl.style.background = 'var(--red)';
-        else if (colorClass === 'yellow') dotEl.style.background = 'var(--yellow)';
-        else dotEl.style.background = 'var(--green)';
+        statusPill.className = 'status-pill ' + colorClass;
       }
+      
       const percEl = document.getElementById('project-progress-percent');
       const progressBar = document.getElementById('progress');
-      if (meta.ProgressoGeralPercentual !== undefined && meta.ProgressoGeralPercentual !== null) {
+      if (meta.ProgressoGeralPercentual !== undefined) {
         const val = Number(meta.ProgressoGeralPercentual) || 0;
         if (percEl) percEl.textContent = val + '%';
         if (progressBar) setTimeout(() => { progressBar.style.width = val + '%'; }, 100);
@@ -505,13 +687,13 @@
         alert.innerHTML = '<strong>⚠️ Atenções:</strong>';
         const ul = document.createElement('ul');
         ul.style.marginTop = '8px';
+        ul.style.marginLeft = '16px';
         warnings.forEach(w => { const li = document.createElement('li'); li.textContent = w; li.style.marginBottom = '4px'; ul.appendChild(li); });
         alert.appendChild(ul);
         alertDiv.appendChild(alert);
       }
     }
 
-    // CORREÇÃO 2: Funções para expandir/colapsar todos
     function expandAllGantt() {
       const grid = document.getElementById('gantt-grid');
       if (!grid) return;
@@ -529,7 +711,7 @@
     function renderGantt(processos) {
       const grid = document.getElementById('gantt-grid');
       const headerMonths = document.getElementById('gantt-header-months');
-      if (!grid || !processos || !processos.length) { if (grid) grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Nenhum processo disponível</div>'; return; }
+      if (!grid || !processos || !processos.length) { if (grid) grid.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Nenhum processo disponível</div>'; return; }
       
       let minStart = null, maxEnd = null;
       const allItems = [...processos];
@@ -540,7 +722,7 @@
         if (!minStart || s < minStart) minStart = s;
         if (!maxEnd || e > maxEnd) maxEnd = e;
       });
-      if (!minStart || !maxEnd) { grid.innerHTML = '<div style="padding: 20px; text-align: center; color: #6b778c;">Processos sem datas válidas</div>'; return; }
+      if (!minStart || !maxEnd) { grid.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Processos sem datas válidas</div>'; return; }
       const totalMs = maxEnd - minStart;
       if (totalMs <= 0) return;
 
@@ -572,7 +754,7 @@
           printBody.appendChild(tr);
           if (p.historias && p.historias.length > 0) p.historias.forEach(h => {
             const htr = document.createElement('tr');
-            htr.innerHTML = '<td style="padding-left: 20px;">└ ' + (h.nome || '') + '</td><td>' + formatDate(h.dataInicio) + ' – ' + formatDate(h.dataFim) + '</td><td>' + (h.status || '') + '</td><td>' + (h.progresso != null ? h.progresso + '%' : '') + '</td>';
+            htr.innerHTML = '<td style="padding-left:20px;">└ ' + (h.nome || '') + '</td><td>' + formatDate(h.dataInicio) + ' – ' + formatDate(h.dataFim) + '</td><td>' + (h.status || '') + '</td><td>-</td>';
             printBody.appendChild(htr);
           });
         });
@@ -590,7 +772,8 @@
       let width = right - left;
       if (width < 5) { width = 5; if (left + width > 100) left = Math.max(0, 100 - width); }
       if (left + width > 100) width = 100 - left;
-      const statusClass = mapStatusChipClass(item.status);
+      
+      const barClass = mapBarClass(item.status);
 
       const row = document.createElement('div');
       row.className = 'gantt-row' + (isHistoria ? ' historia-row' : '');
@@ -615,9 +798,11 @@
         });
         titleDiv.appendChild(toggleBtn);
       }
+      
       const nameSpan = document.createElement('span');
       nameSpan.textContent = item.nome || '';
       titleDiv.appendChild(nameSpan);
+      
       if (!isHistoria && item.historias && item.historias.length > 0) {
         const countSpan = document.createElement('span');
         countSpan.className = 'historia-count';
@@ -627,7 +812,7 @@
       leftDiv.appendChild(titleDiv);
 
       const statusSpan = document.createElement('span');
-      statusSpan.className = 'status-chip ' + statusClass;
+      statusSpan.className = 'status-chip ' + mapStatusChipClass(item.status);
       statusSpan.textContent = item.status || '';
       leftDiv.appendChild(statusSpan);
 
@@ -641,10 +826,15 @@
       const laneDiv = document.createElement('div');
       laneDiv.className = 'gantt-lane';
       const barDiv = document.createElement('div');
-      barDiv.className = 'gantt-bar ' + statusClass;
+      barDiv.className = 'gantt-bar ' + barClass;
       barDiv.style.left = left + '%';
       barDiv.style.width = width + '%';
-      barDiv.textContent = item.progresso != null ? item.progresso + '%' : '';
+      
+      // CORREÇÃO: Mostrar % apenas em Épicos, não em Histórias
+      if (!isHistoria && item.progresso != null) {
+        barDiv.textContent = item.progresso + '%';
+      }
+      
       laneDiv.appendChild(barDiv);
       rightDiv.appendChild(laneDiv);
 
@@ -656,11 +846,12 @@
     function renderMarcos(marcos) {
       const tbody = document.getElementById('marcos-body');
       if (!tbody) return;
-      if (!marcos || !marcos.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum marco disponível</td></tr>'; return; }
+      if (!marcos || !marcos.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-muted);">Nenhum marco disponível</td></tr>'; return; }
       tbody.innerHTML = '';
       marcos.forEach(m => {
         const tr = document.createElement('tr');
-        tr.innerHTML = '<td><strong>' + (formatDate(m.data) || '') + '</strong></td><td>' + (m.marco || '') + '</td><td><span class="badge ' + mapColorClass(m.cor) + '"><span class="status-dot"></span> ' + (m.status || '') + '</span></td>';
+        const badgeClass = mapColorClass(m.cor);
+        tr.innerHTML = '<td><strong>' + (formatDate(m.data) || '') + '</strong></td><td>' + (m.marco || '') + '</td><td><span class="badge ' + badgeClass + '"><span class="dot"></span>' + (m.status || '') + '</span></td>';
         tbody.appendChild(tr);
       });
     }
@@ -672,13 +863,7 @@
       ul.innerHTML = '';
       riscos.forEach(r => {
         const li = document.createElement('li');
-        let texto = r.risco ? '<strong>' + r.risco + '</strong>' : '';
-        if (r.descricao) texto += (texto ? ' – ' : '') + r.descricao;
-        const extras = [];
-        if (r.impacto) extras.push('Impacto ' + r.impacto);
-        if (r.severidade) extras.push('Severidade ' + r.severidade);
-        if (extras.length) texto += ' (' + extras.join(', ') + ')';
-        li.innerHTML = texto;
+        li.innerHTML = '<strong>' + (r.risco || '') + '</strong><div class="desc">' + (r.descricao || '') + (r.impacto ? ' • Impacto: ' + r.impacto : '') + (r.severidade ? ' • Severidade: ' + r.severidade : '') + '</div>';
         ul.appendChild(li);
       });
     }
@@ -686,11 +871,12 @@
     function renderNextSteps(steps) {
       const tbody = document.getElementById('next-steps-body');
       if (!tbody) return;
-      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #6b778c;">Nenhum próximo passo definido</td></tr>'; return; }
+      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">Nenhum próximo passo definido</td></tr>'; return; }
       tbody.innerHTML = '';
       steps.forEach(s => {
         const tr = document.createElement('tr');
-        tr.innerHTML = '<td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '') + '</strong></td><td>' + (s.responsavel || '') + '</td>';
+        const statusClass = s.status === 'Em andamento' ? 'blue' : 'yellow';
+        tr.innerHTML = '<td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '-') + '</strong></td><td>' + (s.responsavel || '') + '</td><td><span class="badge ' + statusClass + '"><span class="dot"></span>' + (s.status || '') + '</span></td>';
         tbody.appendChild(tr);
       });
     }
@@ -711,6 +897,7 @@
       const fields = [
         { key: 'NomeProjeto', label: 'Nome do Projeto', type: 'text' },
         { key: 'DescricaoProjeto', label: 'Descrição do Projeto', type: 'textarea' },
+        { key: 'GanhosProjeto', label: 'Ganhos do Projeto', type: 'textarea' },
         { key: 'DataInicio', label: 'Data de Início', type: 'date' },
         { key: 'DataFimPrevista', label: 'Previsão de Conclusão', type: 'date' },
         { key: 'StatusGeral', label: 'Status Geral', type: 'text' },
@@ -723,7 +910,8 @@
         const tr = document.createElement('tr');
         const tdLabel = document.createElement('td');
         tdLabel.textContent = f.label;
-        tdLabel.style.width = '40%';
+        tdLabel.style.width = '30%';
+        tdLabel.style.fontWeight = '600';
         const tdInput = document.createElement('td');
         if (f.type === 'textarea') {
           const textarea = document.createElement('textarea');
@@ -848,11 +1036,11 @@
       table.className = 'editor-table';
       const thead = document.createElement('thead');
       const headRow = document.createElement('tr');
-      ['Atividade', 'Data prevista', 'Responsável', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
+      ['Atividade', 'Data prevista', 'Responsável', 'Status', 'Ordem', ''].forEach(t => { const th = document.createElement('th'); th.textContent = t; headRow.appendChild(th); });
       thead.appendChild(headRow);
       table.appendChild(thead);
       const tbody = document.createElement('tbody');
-      const fields = [{ field: 'atividade', type: 'text' }, { field: 'data', type: 'date' }, { field: 'responsavel', type: 'text' }, { field: 'ordem', type: 'number' }];
+      const fields = [{ field: 'atividade', type: 'text' }, { field: 'data', type: 'date' }, { field: 'responsavel', type: 'text' }, { field: 'status', type: 'text' }, { field: 'ordem', type: 'number' }];
       (currentData.proximos || []).forEach(p => tbody.appendChild(createTableRow(fields, p)));
       table.appendChild(tbody);
       tab.appendChild(table);
@@ -897,7 +1085,6 @@
         const rows = tbody ? Array.from(tbody.querySelectorAll('tr')) : [];
         const novos = [];
         rows.forEach(row => {
-          const getVal = (field) => { const inp = row.querySelector('input[data-field="' + field + '"]'); return inp ? inp.value : ''; };
           const obj = {};
           row.querySelectorAll('input[data-field]').forEach(inp => {
             const field = inp.getAttribute('data-field');
@@ -914,7 +1101,7 @@
       renderMarcos(currentData.marcos);
       renderRiscos(currentData.riscos);
       renderNextSteps(currentData.proximos);
-      alert('✅ Alterações salvas!');
+      alert('✅ Alterações salvas com sucesso!');
     }
 
     (function initExcelImport() {
@@ -938,7 +1125,7 @@
             renderMarcos(parsed.marcos);
             renderRiscos(parsed.riscos);
             renderNextSteps(parsed.proximos);
-          } catch (error) { alert('Erro: ' + error.message); console.error(error); }
+          } catch (error) { alert('Erro ao processar: ' + error.message); console.error(error); }
         };
         reader.readAsArrayBuffer(file);
         event.target.value = '';
@@ -946,11 +1133,8 @@
     })();
 
     (function initEditorUI() {
-      const expandAllBtn = document.getElementById('btn-expand-all');
-      const collapseAllBtn = document.getElementById('btn-collapse-all');
-      if (expandAllBtn) expandAllBtn.addEventListener('click', expandAllGantt);
-      if (collapseAllBtn) collapseAllBtn.addEventListener('click', collapseAllGantt);
-      
+      document.getElementById('btn-expand-all').addEventListener('click', expandAllGantt);
+      document.getElementById('btn-collapse-all').addEventListener('click', collapseAllGantt);
       document.getElementById('edit-button').addEventListener('click', openEditor);
       document.getElementById('editor-close').addEventListener('click', closeEditor);
       document.getElementById('editor-cancel').addEventListener('click', closeEditor);
