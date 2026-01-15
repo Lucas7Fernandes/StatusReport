@@ -12,13 +12,14 @@
       --accent-light: #ff6b6b;
       --bg: #f8f9fc;
       --card-bg: #ffffff;
-      --text-main: #1a1f4e;
+      --text-main: #1e293b;
+      --text-secondary: #475569;
       --text-muted: #64748b;
       --border: #e2e5ed;
-      --green: #2e7d32;
-      --green-bg: #e8f5e9;
-      --yellow: #f59e0b;
-      --yellow-bg: #fef3c7;
+      --green: #16a34a;
+      --green-bg: #dcfce7;
+      --yellow: #ca8a04;
+      --yellow-bg: #fef9c3;
       --shadow-sm: 0 2px 8px rgba(26, 31, 78, 0.08);
       --shadow-md: 0 4px 16px rgba(26, 31, 78, 0.12);
     }
@@ -59,26 +60,64 @@
     }
     .section-title .emoji { font-size: 14px; }
 
-    /* Status Badge */
+    /* Status Badge / Semáforo */
     .status-pill { 
       display: inline-flex; 
       align-items: center; 
-      gap: 6px; 
-      padding: 4px 12px; 
-      border-radius: 4px; 
-      font-size: 10px; 
+      gap: 8px; 
+      padding: 6px 14px; 
+      border-radius: 6px; 
+      font-size: 11px; 
       background: var(--green-bg); 
       color: var(--green); 
-      font-weight: 600; 
+      font-weight: 700; 
       margin-bottom: 10px; 
       text-transform: uppercase;
       letter-spacing: 0.3px;
+      cursor: help;
+      position: relative;
+      transition: all 0.2s ease;
     }
-    .status-pill .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .status-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .status-pill .status-dot { 
+      width: 10px; 
+      height: 10px; 
+      border-radius: 50%; 
+      background: var(--green); 
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+      animation: pulse-green 2s infinite;
+    }
     .status-pill.yellow { background: var(--yellow-bg); color: #b45309; }
-    .status-pill.yellow .status-dot { background: var(--yellow); }
-    .status-pill.red { background: #fee2e2; color: var(--accent); }
-    .status-pill.red .status-dot { background: var(--accent); }
+    .status-pill.yellow .status-dot { background: var(--yellow); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); animation: pulse-yellow 2s infinite; }
+    .status-pill.red { background: #fee2e2; color: #dc2626; }
+    .status-pill.red .status-dot { background: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2); animation: pulse-red 2s infinite; }
+    
+    @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(46, 125, 50, 0.1); } }
+    @keyframes pulse-yellow { 0%, 100% { box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.1); } }
+    @keyframes pulse-red { 0%, 100% { box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.1); } }
+    
+    /* Tooltip do Semáforo */
+    .status-pill::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      margin-bottom: 6px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .status-pill:hover::after { opacity: 1; visibility: visible; }
 
     /* Project Description */
     .project-description { font-size: 12px; margin: 8px 0; line-height: 1.7; color: var(--text-main); flex: 1; }
@@ -121,9 +160,28 @@
 
     /* Risk List */
     ul.risk-list { margin: 0; padding: 0; list-style: none; font-size: 11px; }
-    ul.risk-list li { margin-bottom: 8px; padding: 8px 10px; background: #fff5f5; border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; }
+    ul.risk-list li { margin-bottom: 8px; padding: 10px 12px; background: #fff5f5; border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; position: relative; }
     ul.risk-list li strong { color: var(--accent); }
-    ul.risk-list li .desc { color: var(--text-muted); font-size: 10px; margin-top: 2px; }
+    ul.risk-list li .desc { color: var(--text-muted); font-size: 10px; margin-top: 4px; line-height: 1.4; }
+    
+    /* Severidade dos riscos */
+    ul.risk-list li.risco-critico { background: #fef2f2; border-left-color: #dc2626; }
+    ul.risk-list li.risco-critico strong { color: #dc2626; }
+    ul.risk-list li.risco-critico::before { content: '🔴'; position: absolute; right: 10px; top: 10px; font-size: 10px; }
+    
+    ul.risk-list li.risco-alto { background: #fff7ed; border-left-color: #ea580c; }
+    ul.risk-list li.risco-alto strong { color: #ea580c; }
+    ul.risk-list li.risco-alto::before { content: '🟠'; position: absolute; right: 10px; top: 10px; font-size: 10px; }
+    
+    ul.risk-list li.risco-medio { background: #fefce8; border-left-color: #ca8a04; }
+    ul.risk-list li.risco-medio strong { color: #ca8a04; }
+    ul.risk-list li.risco-medio::before { content: '🟡'; position: absolute; right: 10px; top: 10px; font-size: 10px; }
+    
+    ul.risk-list li.risco-baixo { background: #f0fdf4; border-left-color: #16a34a; }
+    ul.risk-list li.risco-baixo strong { color: #16a34a; }
+    ul.risk-list li.risco-baixo::before { content: '🟢'; position: absolute; right: 10px; top: 10px; font-size: 10px; }
+    
+    .riscos-counter { margin-left: auto; font-size: 10px; font-weight: 600; color: white; background: var(--accent); padding: 2px 8px; border-radius: 10px; }
 
     /* Next Steps Container com scroll */
     .next-steps-container { max-height: 180px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
@@ -133,13 +191,38 @@
     .next-steps-container::-webkit-scrollbar-track { background: var(--bg); border-radius: 3px; }
     .next-steps-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     .next-steps-container::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+    
+    /* Contador de itens */
+    .items-counter { margin-left: auto; font-size: 10px; font-weight: 600; color: var(--text-muted); background: var(--bg); padding: 2px 8px; border-radius: 10px; }
+    
+    /* Indicador de atraso */
+    .date-overdue { color: #dc2626 !important; font-weight: 700 !important; }
+    .date-overdue::before { content: '⚠ '; }
+    .row-overdue { background: #fef2f2 !important; }
+    .row-overdue:hover { background: #fee2e2 !important; }
 
     /* Gantt */
     .gantt-section { background: white; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
-    .gantt-controls { display: flex; gap: 8px; padding: 10px 12px; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .gantt-controls { display: flex; gap: 8px; padding: 10px 12px; background: var(--bg); border-bottom: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
     .gantt-control-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border); background: white; color: var(--text-main); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .gantt-control-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .gantt-control-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
     .gantt-control-btn svg { width: 14px; height: 14px; }
+    
+    .gantt-legend { display: flex; gap: 12px; margin-left: auto; font-size: 10px; align-items: center; }
+    .gantt-legend-item { display: flex; align-items: center; gap: 4px; color: var(--text-muted); }
+    .gantt-legend-dot { width: 12px; height: 8px; border-radius: 2px; }
+    .gantt-legend-dot.concluido { background: linear-gradient(135deg, var(--green) 0%, #4ade80 100%); }
+    .gantt-legend-dot.andamento { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+    .gantt-legend-dot.backlog { background: linear-gradient(135deg, var(--yellow) 0%, #fbbf24 100%); }
+    .gantt-legend-dot.aguardando { background: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%); }
+    .gantt-legend-item.today { color: var(--accent); font-weight: 600; }
+    .gantt-legend-item.today::before { content: ''; width: 2px; height: 12px; background: var(--accent); margin-right: 2px; }
+
+    .gantt-filter { display: flex; gap: 4px; padding: 2px; background: var(--bg); border-radius: 4px; border: 1px solid var(--border); }
+    .gantt-filter-btn { padding: 4px 8px; border: none; background: transparent; font-size: 10px; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 3px; transition: all 0.2s; }
+    .gantt-filter-btn:hover { color: var(--text-main); }
+    .gantt-filter-btn.active { background: white; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
     .gantt-wrapper { overflow-x: auto; }
     .gantt-container { min-width: 100%; width: max-content; }
@@ -170,8 +253,57 @@
     .process-date { font-size: 10px; color: var(--text-muted); }
 
     .gantt-row-right { padding: 8px 10px; position: relative; min-width: 600px; display: flex; align-items: center; }
-    .gantt-lane { position: relative; width: 100%; height: 24px; background: var(--bg); border-radius: 4px; overflow: hidden; }
-    .gantt-bar { position: absolute; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; box-shadow: var(--shadow-sm); padding: 0 10px; top: 2px; transition: all 0.2s; }
+    .gantt-lane { position: relative; width: 100%; height: 24px; background: var(--bg); border-radius: 4px; overflow: visible; }
+    .gantt-bar { position: absolute; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; box-shadow: var(--shadow-sm); padding: 0 10px; top: 2px; transition: all 0.2s; cursor: pointer; }
+    .gantt-bar:hover { transform: scaleY(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10; }
+    
+    /* Tooltip das barras */
+    .gantt-bar::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .gantt-bar:hover::after { opacity: 1; visibility: visible; }
+    
+    /* Linha de Hoje */
+    .gantt-today-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .gantt-today-line::before {
+      content: 'HOJE';
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
     
     .historia-row .gantt-lane { height: 18px; }
     .historia-row .gantt-bar { height: 14px; top: 2px; font-size: 0; padding: 0; }
@@ -192,10 +324,55 @@
     .cronograma-print-table { display: none; }
 
     /* Floating buttons */
-    .floating-edit-button { position: fixed; bottom: 64px; right: 20px; padding: 10px 18px; border-radius: 6px; border: none; background: var(--green); color: white; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
-    .floating-edit-button:hover { background: #1b5e20; }
-    .floating-update-button { position: fixed; bottom: 20px; right: 20px; padding: 10px 18px; border-radius: 6px; border: none; background: var(--primary); color: white; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; z-index: 1000; }
-    .floating-update-button:hover { background: var(--primary-light); }
+    .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; align-items: flex-end; }
+    
+    .floating-btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: 600; font-size: 12px; box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+    
+    .floating-btn-import { background: var(--primary); color: white; }
+    .floating-btn-import:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    
+    .floating-btn-reimport { background: white; color: var(--primary); border: 1px solid var(--border); padding: 8px 14px; font-size: 11px; }
+    .floating-btn-reimport:hover { background: var(--bg); border-color: var(--primary); }
+    
+    .floating-btn-edit { background: var(--green); color: white; }
+    .floating-btn-edit:hover { background: #1b5e20; }
+    
+    .floating-btn-email { background: #7c3aed; color: white; }
+    .floating-btn-email:hover { background: #6d28d9; }
+    
+    /* Estados dos botões */
+    .floating-buttons.no-data .floating-btn-edit,
+    .floating-buttons.no-data .floating-btn-email,
+    .floating-buttons.no-data .floating-btn-reimport { display: none; }
+    
+    .floating-buttons.has-data .floating-btn-import { display: none; }
+    
+    /* Animação de entrada */
+    .floating-btn { animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* Modal de E-mail Preview */
+    .email-modal { position: fixed; inset: 0; background: rgba(26, 31, 78, 0.5); display: none; align-items: center; justify-content: center; z-index: 1200; }
+    .email-panel { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(26, 31, 78, 0.3); max-width: 700px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; }
+    .email-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+    .email-header h3 { font-size: 16px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .email-close-btn { border: none; background: transparent; font-size: 24px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .email-preview { flex: 1; overflow: auto; padding: 20px; background: #f5f5f5; }
+    .email-preview-content { background: white; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-family: Arial, Helvetica, sans-serif; }
+    .email-footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-top: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
+    .email-footer-info { font-size: 11px; color: var(--text-muted); }
+    .email-footer-actions { display: flex; gap: 8px; }
+    .email-btn { padding: 10px 20px; border-radius: 6px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .email-btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
+    .email-btn-secondary:hover { background: var(--border); }
+    .email-btn-primary { background: #7c3aed; color: white; }
+    .email-btn-primary:hover { background: #6d28d9; }
+    .email-btn-success { background: var(--green); color: white; }
+    .email-btn-success:hover { background: #1b5e20; }
+    
+    .copy-success { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--green); color: white; padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg); z-index: 1300; display: none; }
+    .copy-success.show { display: block; animation: fadeInOut 2s ease; }
+    @keyframes fadeInOut { 0% { opacity: 0; transform: translateX(-50%) translateY(10px); } 10% { opacity: 1; transform: translateX(-50%) translateY(0); } 90% { opacity: 1; } 100% { opacity: 0; } }
 
     /* Alert */
     .alert-box { background: var(--yellow-bg); border: 1px solid var(--yellow); border-radius: 6px; padding: 12px; margin: 10px 0; font-size: 12px; color: #92400e; }
@@ -297,12 +474,18 @@
         </div>
 
         <div class="card">
-          <div class="section-title"><span class="emoji">⚠️</span>Riscos e Pendências Críticas</div>
+          <div class="section-title">
+            <span class="emoji">⚠️</span>Riscos e Pendências Críticas
+            <span class="riscos-counter" id="riscos-counter">0</span>
+          </div>
           <ul class="risk-list" id="risk-list"><li>Aguardando dados...</li></ul>
         </div>
 
         <div class="card">
-          <div class="section-title"><span class="emoji">➡️</span>Próximos Passos</div>
+          <div class="section-title">
+            <span class="emoji">➡️</span>Próximos Passos
+            <span class="items-counter" id="proximos-counter"></span>
+          </div>
           <div class="next-steps-container">
             <table>
               <thead><tr><th>História</th><th>Atividade</th><th>Data Prevista</th><th>Responsável</th><th>Status</th></tr></thead>
@@ -325,6 +508,20 @@
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             Colapsar Todos
           </button>
+          
+          <div class="gantt-filter">
+            <button type="button" class="gantt-filter-btn active" data-filter="todos">Todos</button>
+            <button type="button" class="gantt-filter-btn" data-filter="andamento">Em Andamento</button>
+            <button type="button" class="gantt-filter-btn" data-filter="backlog">Backlog</button>
+            <button type="button" class="gantt-filter-btn" data-filter="concluido">Concluído</button>
+          </div>
+          
+          <div class="gantt-legend">
+            <div class="gantt-legend-item"><div class="gantt-legend-dot concluido"></div>Concluído</div>
+            <div class="gantt-legend-item"><div class="gantt-legend-dot andamento"></div>Em Andamento</div>
+            <div class="gantt-legend-item"><div class="gantt-legend-dot backlog"></div>Backlog</div>
+            <div class="gantt-legend-item today">Hoje</div>
+          </div>
         </div>
         <div class="gantt-wrapper">
           <div class="gantt-container">
@@ -342,9 +539,36 @@
     </div>
   </div>
 
-  <button class="floating-edit-button" id="edit-button">✏️ Editar</button>
-  <button class="floating-update-button" id="update-button">📥 Atualizar</button>
+  <!-- Botões Flutuantes -->
+  <div class="floating-buttons no-data" id="floating-buttons">
+    <button class="floating-btn floating-btn-edit" id="edit-button">✏️ Editar</button>
+    <button class="floating-btn floating-btn-email" id="email-button">📧 E-mail</button>
+    <button class="floating-btn floating-btn-reimport" id="reimport-button">🔄 Reimportar</button>
+    <button class="floating-btn floating-btn-import" id="update-button">📥 Importar Projeto</button>
+  </div>
   <input type="file" id="excel-file" accept=".xlsx,.xls" style="display:none" />
+  
+  <!-- Modal de E-mail Preview -->
+  <div class="email-modal" id="email-modal">
+    <div class="email-panel">
+      <div class="email-header">
+        <h3>📧 Preview do E-mail</h3>
+        <button type="button" class="email-close-btn" id="email-close">&times;</button>
+      </div>
+      <div class="email-preview">
+        <div class="email-preview-content" id="email-content"></div>
+      </div>
+      <div class="email-footer">
+        <div class="email-footer-info">💡 Copie o conteúdo e cole diretamente no corpo do seu e-mail</div>
+        <div class="email-footer-actions">
+          <button type="button" class="email-btn email-btn-secondary" id="email-cancel">Fechar</button>
+          <button type="button" class="email-btn email-btn-primary" id="email-copy">📋 Copiar HTML</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="copy-success" id="copy-success">✓ Copiado para a área de transferência!</div>
 
   <div class="editor-backdrop" id="editor-modal">
     <div class="editor-panel">
@@ -727,6 +951,18 @@
         // Normalizar o texto do status para exibição
         const statusNormalizado = normalizeStatus(meta.StatusGeral);
         statusTextEl.textContent = statusNormalizado;
+        
+        // Tooltip explicativo do semáforo
+        const tooltips = {
+          'verde': 'Projeto no prazo e sem impedimentos',
+          'amarelo': 'Projeto com atenção necessária',
+          'vermelho': 'Projeto com riscos críticos ou atrasos'
+        };
+        const corStatus = meta.CorStatusGeral ? String(meta.CorStatusGeral).toLowerCase() : 'verde';
+        let tooltipKey = 'verde';
+        if (corStatus.includes('verm') || corStatus.includes('red')) tooltipKey = 'vermelho';
+        else if (corStatus.includes('amar') || corStatus.includes('yellow')) tooltipKey = 'amarelo';
+        statusPill.setAttribute('data-tooltip', tooltips[tooltipKey]);
       }
       
       const dotEl = document.getElementById('status-geral-dot');
@@ -775,10 +1011,17 @@
       grid.querySelectorAll('.expand-toggle.has-historias').forEach(btn => btn.textContent = '▶');
     }
 
+    // Variáveis globais para o Gantt
+    let ganttStartGlobal = null;
+    let ganttTotalDaysGlobal = 0;
+    let ganttProcessosGlobal = [];
+
     function renderGantt(processos) {
       const grid = document.getElementById('gantt-grid');
       const headerMonths = document.getElementById('gantt-header-months');
       if (!grid || !processos || !processos.length) { if (grid) grid.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Nenhum processo disponível</div>'; return; }
+      
+      ganttProcessosGlobal = processos;
       
       // Calcular range global de datas (incluindo todas as histórias)
       let minStart = null, maxEnd = null;
@@ -796,6 +1039,9 @@
       const ganttStart = new Date(minStart.getFullYear(), minStart.getMonth(), 1);
       const ganttEnd = new Date(maxEnd.getFullYear(), maxEnd.getMonth() + 1, 0); // último dia do mês
       const totalDays = Math.ceil((ganttEnd - ganttStart) / (1000 * 60 * 60 * 24));
+      
+      ganttStartGlobal = ganttStart;
+      ganttTotalDaysGlobal = totalDays;
       
       if (totalDays <= 0) return;
 
@@ -820,6 +1066,9 @@
           p.historias.forEach(h => renderGanttRow(h, ganttStart, totalDays, grid, true, p.id));
         }
       });
+      
+      // Adicionar linha de hoje em cada lane
+      addTodayLines(ganttStart, totalDays);
 
       // Print table
       const printBody = document.getElementById('gantt-print-body');
@@ -836,6 +1085,30 @@
           });
         });
       }
+    }
+    
+    function addTodayLines(ganttStart, totalDays) {
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+      
+      const todayDays = Math.floor((hoje - ganttStart) / (1000 * 60 * 60 * 24));
+      if (todayDays < 0 || todayDays > totalDays) return; // Hoje está fora do range
+      
+      const todayPercent = (todayDays / totalDays) * 100;
+      
+      // Adicionar linha em cada gantt-lane
+      const lanes = document.querySelectorAll('.gantt-lane');
+      lanes.forEach((lane, index) => {
+        const line = document.createElement('div');
+        line.className = 'gantt-today-line';
+        line.style.left = todayPercent + '%';
+        // Mostrar label apenas na primeira lane
+        if (index > 0) {
+          line.style.setProperty('--hide-label', 'none');
+          line.innerHTML = '<style>.gantt-today-line::before { display: none; }</style>';
+        }
+        lane.appendChild(line);
+      });
     }
 
     function renderGanttRow(item, ganttStart, totalDays, container, isHistoria, epicoId) {
@@ -856,9 +1129,13 @@
       width = Math.max(1.5, Math.min(100 - left, width)); // mínimo 1.5% para visibilidade
       
       const barClass = mapBarClass(item.status);
+      
+      // Tooltip da barra
+      const tooltipText = (item.nome || '') + ' | ' + formatDate(s) + ' - ' + formatDate(e) + ' | ' + (item.status || '') + (item.progresso != null && !isHistoria ? ' | ' + item.progresso + '%' : '');
 
       const row = document.createElement('div');
       row.className = 'gantt-row' + (isHistoria ? ' historia-row' : '');
+      row.setAttribute('data-status', (item.status || '').toLowerCase().replace(/\s+/g, ''));
       if (isHistoria && epicoId) row.setAttribute('data-epico-id', epicoId);
 
       const leftDiv = document.createElement('div');
@@ -911,6 +1188,7 @@
       barDiv.className = 'gantt-bar ' + barClass;
       barDiv.style.left = left + '%';
       barDiv.style.width = width + '%';
+      barDiv.setAttribute('data-tooltip', tooltipText);
       
       // CORREÇÃO: Mostrar % apenas em Épicos, não em Histórias
       if (!isHistoria && item.progresso != null) {
@@ -940,11 +1218,35 @@
 
     function renderRiscos(riscos) {
       const ul = document.getElementById('risk-list');
+      const counter = document.getElementById('riscos-counter');
       if (!ul) return;
-      if (!riscos || !riscos.length) { ul.innerHTML = '<li>Nenhum risco identificado</li>'; return; }
+      
+      if (counter) counter.textContent = riscos ? riscos.length : 0;
+      
+      if (!riscos || !riscos.length) { 
+        ul.innerHTML = '<li style="background: #f0fdf4; border-left-color: #16a34a;"><strong style="color: #16a34a;">Nenhum risco identificado</strong></li>'; 
+        if (counter) counter.textContent = '0';
+        return; 
+      }
+      
       ul.innerHTML = '';
       riscos.forEach(r => {
         const li = document.createElement('li');
+        
+        // Classificar severidade
+        const severidade = (r.severidade || r.impacto || '').toLowerCase();
+        let classeRisco = 'risco-medio'; // default
+        if (severidade.includes('crític') || severidade.includes('critic') || severidade.includes('muito alto')) {
+          classeRisco = 'risco-critico';
+        } else if (severidade.includes('alto') || severidade.includes('high')) {
+          classeRisco = 'risco-alto';
+        } else if (severidade.includes('médio') || severidade.includes('medio') || severidade.includes('medium')) {
+          classeRisco = 'risco-medio';
+        } else if (severidade.includes('baixo') || severidade.includes('low')) {
+          classeRisco = 'risco-baixo';
+        }
+        
+        li.className = classeRisco;
         li.innerHTML = '<strong>' + (r.risco || '') + '</strong><div class="desc">' + (r.descricao || '') + (r.impacto ? ' • Impacto: ' + r.impacto : '') + (r.severidade ? ' • Severidade: ' + r.severidade : '') + '</div>';
         ul.appendChild(li);
       });
@@ -952,13 +1254,40 @@
 
     function renderNextSteps(steps) {
       const tbody = document.getElementById('next-steps-body');
+      const counter = document.getElementById('proximos-counter');
       if (!tbody) return;
-      if (!steps || !steps.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Nenhum próximo passo definido</td></tr>'; return; }
+      
+      if (counter) {
+        const total = steps ? steps.length : 0;
+        const visivel = Math.min(5, total);
+        counter.textContent = total > 5 ? visivel + ' de ' + total : total + ' itens';
+      }
+      
+      if (!steps || !steps.length) { 
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Nenhum próximo passo definido</td></tr>'; 
+        if (counter) counter.textContent = '0 itens';
+        return; 
+      }
+      
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+      
       tbody.innerHTML = '';
       steps.forEach(s => {
         const tr = document.createElement('tr');
         const statusClass = s.status === 'Em Andamento' ? 'blue' : 'yellow';
-        tr.innerHTML = '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (s.historia || '-') + '">' + (s.historia || '-') + '</td><td>' + (s.atividade || '') + '</td><td><strong>' + (formatDate(s.data) || '-') + '</strong></td><td>' + (s.responsavel || '') + '</td><td><span class="badge ' + statusClass + '"><span class="dot"></span>' + (s.status || '') + '</span></td>';
+        
+        // Verificar se está atrasado
+        const dataItem = toDate(s.data);
+        const isOverdue = dataItem && dataItem < hoje && s.status !== 'Concluído';
+        
+        if (isOverdue) {
+          tr.className = 'row-overdue';
+        }
+        
+        const dateClass = isOverdue ? 'date-overdue' : '';
+        
+        tr.innerHTML = '<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (s.historia || '-') + '">' + (s.historia || '-') + '</td><td>' + (s.atividade || '') + '</td><td class="' + dateClass + '"><strong>' + (formatDate(s.data) || '-') + '</strong></td><td>' + (s.responsavel || '') + '</td><td><span class="badge ' + statusClass + '"><span class="dot"></span>' + (s.status || '') + '</span></td>';
         tbody.appendChild(tr);
       });
     }
@@ -1186,11 +1515,27 @@
       alert('✅ Alterações salvas com sucesso!');
     }
 
+    function updateFloatingButtonsState() {
+      const container = document.getElementById('floating-buttons');
+      if (currentData) {
+        container.classList.remove('no-data');
+        container.classList.add('has-data');
+      } else {
+        container.classList.remove('has-data');
+        container.classList.add('no-data');
+      }
+    }
+
     (function initExcelImport() {
       const btn = document.getElementById('update-button');
+      const reimportBtn = document.getElementById('reimport-button');
       const input = document.getElementById('excel-file');
       if (!btn || !input) return;
-      btn.addEventListener('click', () => input.click());
+      
+      const triggerImport = () => input.click();
+      btn.addEventListener('click', triggerImport);
+      reimportBtn.addEventListener('click', triggerImport);
+      
       input.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1207,6 +1552,7 @@
             renderMarcos(parsed.marcos);
             renderRiscos(parsed.riscos);
             renderNextSteps(parsed.proximos);
+            updateFloatingButtonsState();
           } catch (error) { alert('Erro ao processar: ' + error.message); console.error(error); }
         };
         reader.readAsArrayBuffer(file);
@@ -1222,6 +1568,16 @@
       document.getElementById('editor-cancel').addEventListener('click', closeEditor);
       document.getElementById('editor-save').addEventListener('click', () => { readEditorDataAndSave(); closeEditor(); });
       
+      // Filtros do Gantt
+      document.querySelectorAll('.gantt-filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.gantt-filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          const filter = this.getAttribute('data-filter');
+          filterGantt(filter);
+        });
+      });
+      
       const modal = document.getElementById('editor-modal');
       modal.querySelectorAll('.editor-tabs button').forEach(btn => btn.addEventListener('click', () => setActiveEditorTab(btn.getAttribute('data-tab'))));
       modal.addEventListener('click', function(e) {
@@ -1229,9 +1585,276 @@
         if (e.target === modal) closeEditor();
       });
     })();
+    
+    function filterGantt(filter) {
+      const rows = document.querySelectorAll('.gantt-row:not(.historia-row)');
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status') || '';
+        let show = true;
+        
+        if (filter === 'andamento') {
+          show = status.includes('andamento');
+        } else if (filter === 'backlog') {
+          show = status.includes('backlog');
+        } else if (filter === 'concluido') {
+          show = status.includes('conclu') || status.includes('finalizado');
+        }
+        // 'todos' mostra tudo
+        
+        row.style.display = show ? '' : 'none';
+        
+        // Também ocultar/mostrar histórias relacionadas
+        const epicoId = row.querySelector('.expand-toggle')?.getAttribute('data-epico-id');
+        if (epicoId) {
+          const historias = document.querySelectorAll('.historia-row[data-epico-id="' + epicoId + '"]');
+          historias.forEach(h => {
+            if (!show) {
+              h.style.display = 'none';
+            } else {
+              // Respeitar o estado expandido/colapsado
+              h.style.display = '';
+            }
+          });
+        }
+      });
+    }
 
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && document.getElementById('editor-modal').style.display === 'flex') closeEditor();
+      if (e.key === 'Escape') {
+        if (document.getElementById('editor-modal').style.display === 'flex') closeEditor();
+        if (document.getElementById('email-modal').style.display === 'flex') closeEmailModal();
+      }
+    });
+    
+    // ==================== FUNCIONALIDADE DE E-MAIL ====================
+    
+    function openEmailModal() {
+      if (!currentData) { alert('Para gerar o e-mail, primeiro carregue a planilha do projeto.'); return; }
+      
+      const emailContent = generateEmailHTML();
+      document.getElementById('email-content').innerHTML = emailContent;
+      document.getElementById('email-modal').style.display = 'flex';
+    }
+    
+    function closeEmailModal() {
+      document.getElementById('email-modal').style.display = 'none';
+    }
+    
+    function copyEmailToClipboard() {
+      const content = document.getElementById('email-content').innerHTML;
+      
+      // Criar elemento temporário para copiar
+      const blob = new Blob([content], { type: 'text/html' });
+      const clipboardItem = new ClipboardItem({ 'text/html': blob });
+      
+      navigator.clipboard.write([clipboardItem]).then(() => {
+        showCopySuccess();
+      }).catch(err => {
+        // Fallback para texto puro
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+        const textContent = tempDiv.innerText;
+        navigator.clipboard.writeText(textContent).then(() => {
+          showCopySuccess();
+        }).catch(() => {
+          alert('Erro ao copiar. Tente selecionar manualmente o conteúdo.');
+        });
+      });
+    }
+    
+    function showCopySuccess() {
+      const toast = document.getElementById('copy-success');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+    
+    function generateEmailHTML() {
+      const meta = currentData.meta || {};
+      const processos = currentData.processos || [];
+      const marcos = currentData.marcos || [];
+      const riscos = currentData.riscos || [];
+      const proximos = currentData.proximos || [];
+      
+      const dataRelatorio = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+      const progresso = meta.ProgressoGeralPercentual || 0;
+      const statusNorm = normalizeStatus(meta.StatusGeral || '');
+      
+      // Cores do semáforo
+      const corStatus = meta.CorStatusGeral ? String(meta.CorStatusGeral).toLowerCase() : 'verde';
+      let semaforoCor = '#16a34a'; // verde
+      let semaforoLabel = '🟢';
+      if (corStatus.includes('verm') || corStatus.includes('red')) { semaforoCor = '#dc2626'; semaforoLabel = '🔴'; }
+      else if (corStatus.includes('amar') || corStatus.includes('yellow')) { semaforoCor = '#ca8a04'; semaforoLabel = '🟡'; }
+      
+      // Contadores
+      const epicosConcluidos = processos.filter(p => (p.status || '').toLowerCase().includes('conclu')).length;
+      const totalEpicos = processos.length;
+      const riscosAtivos = riscos.length;
+      
+      // Calcular dias restantes
+      const dataFim = toDate(meta.DataFimPrevista);
+      const hoje = new Date();
+      let diasRestantes = '-';
+      if (dataFim) {
+        const diff = Math.ceil((dataFim - hoje) / (1000 * 60 * 60 * 24));
+        diasRestantes = diff > 0 ? diff + ' dias' : (diff === 0 ? 'Hoje' : Math.abs(diff) + ' dias atrás');
+      }
+      
+      let html = `
+<div style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b;">
+  
+  <!-- Header -->
+  <div style="background: linear-gradient(135deg, #1a1f4e 0%, #2d3a8c 100%); padding: 20px 24px; border-radius: 8px 8px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 18px; font-weight: 700;">📊 ${meta.NomeProjeto || 'Status Report'}</h1>
+    <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 12px;">Relatório de Status • ${dataRelatorio}</p>
+  </div>
+  
+  <!-- KPIs -->
+  <div style="background: #f8f9fc; padding: 16px 24px; border-left: 1px solid #e2e5ed; border-right: 1px solid #e2e5ed;">
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="text-align: center; padding: 8px;">
+          <div style="font-size: 24px; font-weight: 700; color: #1a1f4e;">${progresso}%</div>
+          <div style="font-size: 10px; color: #64748b; text-transform: uppercase;">Progresso</div>
+        </td>
+        <td style="text-align: center; padding: 8px; border-left: 1px solid #e2e5ed;">
+          <div style="font-size: 24px; font-weight: 700; color: #1a1f4e;">${epicosConcluidos}/${totalEpicos}</div>
+          <div style="font-size: 10px; color: #64748b; text-transform: uppercase;">Épicos</div>
+        </td>
+        <td style="text-align: center; padding: 8px; border-left: 1px solid #e2e5ed;">
+          <div style="font-size: 24px; font-weight: 700; color: ${riscosAtivos > 0 ? '#dc2626' : '#16a34a'};">${riscosAtivos}</div>
+          <div style="font-size: 10px; color: #64748b; text-transform: uppercase;">Riscos</div>
+        </td>
+        <td style="text-align: center; padding: 8px; border-left: 1px solid #e2e5ed;">
+          <div style="font-size: 24px; font-weight: 700; color: #1a1f4e;">${diasRestantes}</div>
+          <div style="font-size: 10px; color: #64748b; text-transform: uppercase;">Restantes</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <!-- Status Geral -->
+  <div style="background: white; padding: 20px 24px; border-left: 1px solid #e2e5ed; border-right: 1px solid #e2e5ed;">
+    <div style="display: inline-block; background: ${semaforoCor}15; color: ${semaforoCor}; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;">
+      ${semaforoLabel} ${statusNorm || 'N/A'}
+    </div>
+    
+    <!-- Barra de Progresso -->
+    <div style="margin-top: 16px;">
+      <div style="background: #e2e5ed; height: 8px; border-radius: 4px; overflow: hidden;">
+        <div style="background: linear-gradient(90deg, #1a1f4e 0%, #2d3a8c 100%); height: 100%; width: ${progresso}%; border-radius: 4px;"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Cronograma Resumido -->
+  <div style="background: white; padding: 20px 24px; border-left: 1px solid #e2e5ed; border-right: 1px solid #e2e5ed; border-top: 1px solid #e2e5ed;">
+    <h2 style="font-size: 14px; color: #1a1f4e; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e94e4e;">📋 Cronograma</h2>
+    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+      <tr style="background: #1a1f4e; color: white;">
+        <th style="padding: 8px 10px; text-align: left; font-weight: 600;">Épico</th>
+        <th style="padding: 8px 10px; text-align: center; font-weight: 600; width: 80px;">Status</th>
+        <th style="padding: 8px 10px; text-align: right; font-weight: 600; width: 60px;">%</th>
+      </tr>`;
+      
+      processos.forEach((p, i) => {
+        const bgColor = i % 2 === 0 ? '#ffffff' : '#f8f9fc';
+        const statusColor = getStatusColor(p.status);
+        html += `
+      <tr style="background: ${bgColor};">
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed;">${p.nome || ''}</td>
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed; text-align: center;">
+          <span style="background: ${statusColor.bg}; color: ${statusColor.text}; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600;">${p.status || ''}</span>
+        </td>
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed; text-align: right; font-weight: 600;">${p.progresso != null ? p.progresso + '%' : '-'}</td>
+      </tr>`;
+      });
+      
+      html += `
+    </table>
+  </div>`;
+  
+      // Riscos (se houver)
+      if (riscos.length > 0) {
+        html += `
+  <!-- Riscos -->
+  <div style="background: white; padding: 20px 24px; border-left: 1px solid #e2e5ed; border-right: 1px solid #e2e5ed; border-top: 1px solid #e2e5ed;">
+    <h2 style="font-size: 14px; color: #1a1f4e; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e94e4e;">⚠️ Riscos e Pendências</h2>`;
+        
+        riscos.forEach(r => {
+          html += `
+    <div style="background: #fef2f2; border-left: 3px solid #dc2626; padding: 10px 12px; margin-bottom: 8px; border-radius: 0 4px 4px 0;">
+      <div style="font-weight: 600; color: #dc2626; font-size: 12px;">${r.risco || ''}</div>
+      ${r.descricao ? `<div style="color: #64748b; font-size: 11px; margin-top: 4px;">${r.descricao}</div>` : ''}
+    </div>`;
+        });
+        
+        html += `
+  </div>`;
+      }
+      
+      // Próximos Passos (top 5)
+      if (proximos.length > 0) {
+        const top5 = proximos.slice(0, 5);
+        html += `
+  <!-- Próximos Passos -->
+  <div style="background: white; padding: 20px 24px; border-left: 1px solid #e2e5ed; border-right: 1px solid #e2e5ed; border-top: 1px solid #e2e5ed;">
+    <h2 style="font-size: 14px; color: #1a1f4e; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e94e4e;">➡️ Próximos Passos</h2>
+    <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+      <tr style="background: #f8f9fc;">
+        <th style="padding: 8px 10px; text-align: left; font-weight: 600; color: #64748b;">Atividade</th>
+        <th style="padding: 8px 10px; text-align: center; font-weight: 600; color: #64748b; width: 90px;">Data</th>
+        <th style="padding: 8px 10px; text-align: center; font-weight: 600; color: #64748b; width: 80px;">Status</th>
+      </tr>`;
+        
+        top5.forEach(p => {
+          const statusColor = p.status === 'Em Andamento' ? { bg: '#e0e7ff', text: '#1a1f4e' } : { bg: '#fef9c3', text: '#ca8a04' };
+          const dataFormatada = formatDate(p.data) || '-';
+          html += `
+      <tr>
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed;">${p.atividade || ''}</td>
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed; text-align: center; font-weight: 600;">${dataFormatada}</td>
+        <td style="padding: 8px 10px; border-bottom: 1px solid #e2e5ed; text-align: center;">
+          <span style="background: ${statusColor.bg}; color: ${statusColor.text}; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600;">${p.status || ''}</span>
+        </td>
+      </tr>`;
+        });
+        
+        html += `
+    </table>
+  </div>`;
+      }
+      
+      // Footer
+      html += `
+  <!-- Footer -->
+  <div style="background: #1a1f4e; padding: 16px 24px; border-radius: 0 0 8px 8px; text-align: center;">
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 11px;">
+      📅 Período: ${formatDate(meta.DataInicio) || '-'} a ${formatDate(meta.DataFimPrevista) || '-'} • 
+      Responsável: ${meta.Responsavel || meta.Owner || '-'}
+    </p>
+  </div>
+  
+</div>`;
+      
+      return html;
+    }
+    
+    function getStatusColor(status) {
+      const s = (status || '').toLowerCase();
+      if (s.includes('conclu') || s.includes('finalizado')) return { bg: '#dcfce7', text: '#16a34a' };
+      if (s.includes('andamento')) return { bg: '#e0e7ff', text: '#1a1f4e' };
+      if (s.includes('backlog')) return { bg: '#fef9c3', text: '#ca8a04' };
+      return { bg: '#f1f5f9', text: '#475569' };
+    }
+    
+    // Event listeners do E-mail
+    document.getElementById('email-button').addEventListener('click', openEmailModal);
+    document.getElementById('email-close').addEventListener('click', closeEmailModal);
+    document.getElementById('email-cancel').addEventListener('click', closeEmailModal);
+    document.getElementById('email-copy').addEventListener('click', copyEmailToClipboard);
+    document.getElementById('email-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeEmailModal();
     });
   </script>
 </body>
