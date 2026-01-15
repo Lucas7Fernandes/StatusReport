@@ -337,12 +337,48 @@
     .floating-btn-edit { background: var(--green); color: white; }
     .floating-btn-edit:hover { background: #1b5e20; }
     
-    .floating-btn-email { background: #7c3aed; color: white; }
-    .floating-btn-email:hover { background: #6d28d9; }
+    .floating-btn-share { background: #7c3aed; color: white; position: relative; }
+    .floating-btn-share:hover { background: #6d28d9; }
+    
+    /* Dropdown de compartilhamento */
+    .share-dropdown { 
+      position: absolute; 
+      bottom: 100%; 
+      right: 0; 
+      background: white; 
+      border-radius: 8px; 
+      box-shadow: var(--shadow-lg); 
+      padding: 8px 0; 
+      margin-bottom: 8px; 
+      min-width: 180px;
+      display: none;
+      border: 1px solid var(--border);
+    }
+    .share-dropdown.show { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .share-option { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      padding: 10px 16px; 
+      cursor: pointer; 
+      transition: background 0.2s;
+      font-size: 13px;
+      color: var(--text-main);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .share-option:hover { background: var(--bg); }
+    .share-option-icon { font-size: 18px; }
+    .share-option-label { font-weight: 500; }
+    .share-option-desc { font-size: 10px; color: var(--text-muted); }
     
     /* Estados dos botões */
     .floating-buttons.no-data .floating-btn-edit,
-    .floating-buttons.no-data .floating-btn-email,
+    .floating-buttons.no-data .floating-btn-share,
     .floating-buttons.no-data .floating-btn-reimport { display: none; }
     
     .floating-buttons.has-data .floating-btn-import { display: none; }
@@ -542,7 +578,26 @@
   <!-- Botões Flutuantes -->
   <div class="floating-buttons no-data" id="floating-buttons">
     <button class="floating-btn floating-btn-edit" id="edit-button">✏️ Editar</button>
-    <button class="floating-btn floating-btn-email" id="email-button">📧 E-mail</button>
+    <div style="position: relative;">
+      <button class="floating-btn floating-btn-share" id="share-button">📤 Compartilhar</button>
+      <div class="share-dropdown" id="share-dropdown">
+        <button class="share-option" id="share-email">
+          <span class="share-option-icon">📧</span>
+          <div>
+            <div class="share-option-label">E-mail</div>
+            <div class="share-option-desc">Outlook, Gmail, etc.</div>
+          </div>
+        </button>
+        <div style="border-top: 1px solid #e2e5ed; margin: 6px 0;"></div>
+        <button class="share-option" id="share-download">
+          <span class="share-option-icon">📄</span>
+          <div>
+            <div class="share-option-label">Baixar HTML</div>
+            <div class="share-option-desc">Dashboard completo offline</div>
+          </div>
+        </button>
+      </div>
+    </div>
     <button class="floating-btn floating-btn-reimport" id="reimport-button">🔄 Reimportar</button>
     <button class="floating-btn floating-btn-import" id="update-button">📥 Importar Projeto</button>
   </div>
@@ -768,6 +823,14 @@
           const headers = rows[0];
           const idx = (field) => headers.findIndex(h => h && String(h).includes(field));
           const dataInicioIdx = idx('Data de Início') >= 0 ? idx('Data de Início') : idx('Data Início');
+          // Buscar índice da coluna História (pode ser 'História', 'Historia', 'Parent', 'Item Pai')
+          const historiaIdx = headers.findIndex(h => h && (
+            String(h).toLowerCase() === 'história' || 
+            String(h).toLowerCase() === 'historia' ||
+            String(h).toLowerCase() === 'parent' ||
+            String(h).toLowerCase().includes('item pai')
+          ));
+          
           for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             if (!row || !row[idx('Item')]) continue;
@@ -777,6 +840,7 @@
               tipo: row[idx('Tipo')] || '',
               momento: row[idx('Momento')] || '',
               epico: row[idx('Épico')] || '',
+              historia: historiaIdx >= 0 ? (row[historiaIdx] || '') : '', // Capturar história pai diretamente
               dataInicio: row[dataInicioIdx] || null,
               dataPrevista: row[idx('Data Prevista')] || null,
               dataEntrega: row[idx('Data de Entrega')] || null,
@@ -860,26 +924,57 @@
 
       // Encontrar a história pai de cada tarefa
       const tarefasComHistoria = tarefas.map(tarefa => {
-        // Buscar história pai pelo ID (história tem ID que é prefixo da tarefa)
-        let historiaPai = null;
-        data.itens.forEach(item => {
-          const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
-          if ((tipo === 'historia' || tipo === 'história') && tarefa.id && item.id) {
-            // Verificar se o ID da tarefa começa com o ID da história
-            if (String(tarefa.id).startsWith(String(item.id))) {
-              historiaPai = item;
+        let historiaPaiNome = '-';
+        
+        // 1. Primeiro, verificar se já temos a história diretamente na coluna
+        if (tarefa.historia && String(tarefa.historia).trim()) {
+          historiaPaiNome = String(tarefa.historia).trim();
+        } else {
+          // 2. Buscar história pai pelo padrão de ID hierárquico
+          // Em ADO, IDs de tarefas geralmente seguem padrão: História tem ID mais curto
+          // e tarefas filhas têm IDs que começam com o mesmo prefixo
+          let historiaPai = null;
+          
+          if (tarefa.id) {
+            const tarefaIdStr = String(tarefa.id);
+            // Buscar todas as histórias do mesmo épico
+            const historiasMesmoEpico = data.itens.filter(item => {
+              const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
+              return (tipo === 'historia' || tipo === 'história') && item.epico === tarefa.epico;
+            });
+            
+            // Tentar encontrar por prefixo de ID
+            historiasMesmoEpico.forEach(item => {
+              if (item.id && tarefaIdStr.startsWith(String(item.id) + '.')) {
+                historiaPai = item;
+              }
+            });
+            
+            // Se não encontrou por prefixo, verificar por proximidade de ID
+            if (!historiaPai && historiasMesmoEpico.length > 0) {
+              // Ordenar histórias por ID e encontrar a mais próxima anterior
+              const historiasOrdenadas = historiasMesmoEpico
+                .filter(h => h.id)
+                .sort((a, b) => {
+                  const idA = parseInt(String(a.id).replace(/\D/g, '')) || 0;
+                  const idB = parseInt(String(b.id).replace(/\D/g, '')) || 0;
+                  return idA - idB;
+                });
+              
+              const tarefaIdNum = parseInt(tarefaIdStr.replace(/\D/g, '')) || 0;
+              
+              for (let i = historiasOrdenadas.length - 1; i >= 0; i--) {
+                const historiaIdNum = parseInt(String(historiasOrdenadas[i].id).replace(/\D/g, '')) || 0;
+                if (historiaIdNum < tarefaIdNum) {
+                  historiaPai = historiasOrdenadas[i];
+                  break;
+                }
+              }
             }
           }
-        });
-        
-        // Se não encontrou por ID, tentar pelo épico em comum
-        if (!historiaPai && tarefa.epico) {
-          const historiasMesmoEpico = data.itens.filter(item => {
-            const tipo = item.tipo ? String(item.tipo).toLowerCase().trim() : '';
-            return (tipo === 'historia' || tipo === 'história') && item.epico === tarefa.epico;
-          });
-          if (historiasMesmoEpico.length > 0) {
-            historiaPai = historiasMesmoEpico[0];
+          
+          if (historiaPai) {
+            historiaPaiNome = historiaPai.item || '-';
           }
         }
         
@@ -888,7 +983,7 @@
         
         return {
           atividade: tarefa.item,
-          historia: historiaPai ? historiaPai.item : '-',
+          historia: historiaPaiNome,
           data: tarefa.dataPrevista || tarefa.dataEntrega || null,
           responsavel: tarefa.responsavel || 'A definir',
           status: status,
@@ -1626,14 +1721,36 @@
       }
     });
     
-    // ==================== FUNCIONALIDADE DE E-MAIL ====================
+    // ==================== FUNCIONALIDADE DE COMPARTILHAMENTO ====================
+    
+    let currentShareType = 'email';
+    
+    function openShareModal(type) {
+      if (!currentData) { alert('Para compartilhar, primeiro carregue a planilha do projeto.'); return; }
+      
+      currentShareType = type;
+      const content = type === 'teams' ? generateTeamsHTML() : generateEmailHTML();
+      document.getElementById('email-content').innerHTML = content;
+      
+      // Atualizar título do modal
+      const title = type === 'teams' ? '💬 Preview para Teams' : '📧 Preview para E-mail';
+      document.querySelector('.email-header h3').innerHTML = title;
+      
+      // Atualizar texto do botão
+      const btnText = type === 'teams' ? '📋 Copiar para Teams' : '📋 Copiar HTML';
+      document.getElementById('email-copy').innerHTML = btnText;
+      
+      // Atualizar dica
+      const tip = type === 'teams' 
+        ? '💡 Copie e cole diretamente no chat do Teams (Ctrl+V)' 
+        : '💡 Copie o conteúdo e cole diretamente no corpo do seu e-mail';
+      document.querySelector('.email-footer-info').textContent = tip;
+      
+      document.getElementById('email-modal').style.display = 'flex';
+    }
     
     function openEmailModal() {
-      if (!currentData) { alert('Para gerar o e-mail, primeiro carregue a planilha do projeto.'); return; }
-      
-      const emailContent = generateEmailHTML();
-      document.getElementById('email-content').innerHTML = emailContent;
-      document.getElementById('email-modal').style.display = 'flex';
+      openShareModal('email');
     }
     
     function closeEmailModal() {
@@ -1666,6 +1783,43 @@
       const toast = document.getElementById('copy-success');
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+    
+    // ==================== DOWNLOAD HTML PREENCHIDO ====================
+    
+    function downloadFilledHTML() {
+      if (!currentData) { alert('Nenhum projeto carregado.'); return; }
+      
+      // Clonar o HTML atual da página
+      const clone = document.documentElement.cloneNode(true);
+      
+      // Remover elementos desnecessários
+      const elementsToRemove = clone.querySelectorAll('.floating-buttons, .email-modal, .editor-backdrop, .copy-success, #excel-file, script');
+      elementsToRemove.forEach(el => el.remove());
+      
+      // Adicionar estilo para ocultar controles do Gantt na versão exportada
+      const style = clone.querySelector('style');
+      if (style) {
+        style.textContent += `
+          .gantt-controls { display: none !important; }
+          .gantt-filter { display: none !important; }
+        `;
+      }
+      
+      const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
+      
+      // Criar blob e download
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `status-report-${(currentData.meta.NomeProjeto || 'projeto').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showCopySuccess();
     }
     
     function generateEmailHTML() {
@@ -1848,8 +2002,32 @@
       return { bg: '#f1f5f9', text: '#475569' };
     }
     
-    // Event listeners do E-mail
-    document.getElementById('email-button').addEventListener('click', openEmailModal);
+    // Event listeners do Compartilhamento
+    const shareButton = document.getElementById('share-button');
+    const shareDropdown = document.getElementById('share-dropdown');
+    
+    shareButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      shareDropdown.classList.toggle('show');
+    });
+    
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', function(e) {
+      if (!shareButton.contains(e.target) && !shareDropdown.contains(e.target)) {
+        shareDropdown.classList.remove('show');
+      }
+    });
+    
+    document.getElementById('share-email').addEventListener('click', function() {
+      shareDropdown.classList.remove('show');
+      openShareModal('email');
+    });
+    
+    document.getElementById('share-download').addEventListener('click', function() {
+      shareDropdown.classList.remove('show');
+      downloadFilledHTML();
+    });
+    
     document.getElementById('email-close').addEventListener('click', closeEmailModal);
     document.getElementById('email-cancel').addEventListener('click', closeEmailModal);
     document.getElementById('email-copy').addEventListener('click', copyEmailToClipboard);
